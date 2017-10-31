@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">RajDhaniPetroleum</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgotPassword">Forgot Password</string>
+    <string name="Name">Name</string>
+    <string name="Designation">Designation</string>
+    <string name="Contact">Contact</string>
+    <string name="BasicInfo">Basic information</string>
+    <string name="birth">Age</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_dash_board">DashBoard</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>

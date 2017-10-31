@@ -1,0 +1,169 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    tools:context="com.enhabyto.rajpetroleum.BasicInformation">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/bi_textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:text="@string/BasicInfo"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:textAllCaps="true"
+            android:textSize="24sp" />
+
+
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.github.florent37.materialtextfield.MaterialTextField
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bi_n"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:mtf_labelColor="@color/white"
+        app:mtf_image="@drawable/name_icon"
+        android:layout_below="@+id/bi_textView1"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/bi_NameEditText"
+            android:textCursorDrawable="@color/black"
+            android:textColorHighlight="@color/black"
+            android:hint="@string/Name"
+            android:inputType="textCapWords"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="17sp" />
+
+    </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bi_d"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:mtf_labelColor="@color/white"
+            app:mtf_image="@drawable/designation_icon"
+            android:layout_below="@+id/bi_n"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/bi_DesignationEditText"
+                android:textCursorDrawable="@color/black"
+                android:textColorHighlight="@color/black"
+                android:hint="@string/Designation"
+                android:inputType="textCapWords"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="17sp" />
+
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bi_c"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:mtf_labelColor="@color/white"
+            app:mtf_image="@drawable/contact_icon"
+            android:layout_below="@+id/bi_d"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/bi_ContactEditText"
+                android:textCursorDrawable="@color/black"
+                android:textColorHighlight="@color/black"
+                android:hint="@string/Contact"
+                android:textColor="@color/black"
+                android:maxLength="10"
+                android:inputType="phone"
+                android:textStyle="bold"
+                android:textSize="17sp" />
+
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bi_b"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:mtf_labelColor="@color/white"
+            app:mtf_image="@drawable/birth_icon"
+            android:layout_below="@+id/bi_c"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/bi_AgeEditText"
+                android:textCursorDrawable="@color/black"
+                android:textColorHighlight="@color/black"
+                android:hint="@string/birth"
+                android:textColor="@color/black"
+                android:maxLength="2"
+                android:inputType="date"
+                android:textStyle="bold"
+                android:textSize="17sp" />
+
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/bi_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@color/white"
+            fancy:fb_focusColor="@color/black"
+            fancy:fb_fontIconResource="&#xf1d8;"
+            fancy:fb_iconPosition="right"
+            fancy:fb_radius="3dp"
+            fancy:fb_text="Submit"
+            fancy:fb_textColor="@color/black"
+            android:layout_below="@+id/bi_b"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="16dp"
+            />
+
+
+
+    </RelativeLayout>
+
+
+</ScrollView>
