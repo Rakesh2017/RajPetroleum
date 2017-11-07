@@ -24,8 +24,8 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
             <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
                 android:id="@+id/app_bar_dash_logoutButton"
                 android:background="@drawable/logout_icon"
                 android:layout_alignParentEnd="true"

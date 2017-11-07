@@ -1,0 +1,1170 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="@color/white"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    tools:context="com.enhabyto.rajpetroleum.CreateTruck">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            >
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ct_RelativeLayout1"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white">
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/ct_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="droidsansbold.ttf"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="@string/truckNumber"
+            android:textColor="@color/black"
+            android:textAllCaps="true"
+            android:textSize="16sp" />
+
+
+        <EditText
+            android:id="@+id/ct_truckNumberEditText1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ct_text"
+            android:background="@drawable/rounded_edit_text_black"
+            android:hint="Enter Unique Truck Number"
+            android:inputType="phone"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/blackFifty"
+            android:textSize="20sp" />
+
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/ct_openCreateTruckButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/ct_truckNumberEditText1"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@color/lightRed"
+            fancy:fb_focusColor="@color/black"
+            fancy:fb_fontIconResource="&#xf1d9;"
+            fancy:fb_iconPosition="right"
+            fancy:fb_radius="3dp"
+            fancy:fb_text="Load Data"
+            fancy:fb_textColor="@color/black"
+            android:layout_marginTop="8dp"
+            />
+
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/white"
+            android:id="@+id/ct_RelativeLayout2"
+            android:layout_below="@+id/ct_RelativeLayout1"
+            android:layout_marginBottom="24dp"
+            android:visibility="gone"
+            >
+
+            <!--Tanker Number-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_tankerNumberTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Truck number"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_tankerNumberEditText2"
+                android:layout_below="@+id/ct_tankerNumberTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Truck Number"
+                android:inputType="number"
+                android:focusable="false"
+                android:padding="5dp"
+                android:textColor="@color/naturalBlue"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--chassis-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_chassisTextView"
+                android:layout_below="@+id/ct_tankerNumberEditText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Chassis Number"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_chassisEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ct_chassisTextView"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Chassis Number"
+                android:inputType="number"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--Engine-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_engineNumberTextView"
+                android:layout_below="@+id/ct_chassisEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Engine Number"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_engineNumberEditText"
+                android:layout_below="@+id/ct_engineNumberTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Truck's Engine Number"
+                android:inputType="textPersonName"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--Owner-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_ownerNameTextView"
+                android:layout_below="@+id/ct_engineNumberEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Owner Name"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_ownerNameEditText"
+                android:layout_below="@+id/ct_ownerNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Truck's Registerd Owner Name"
+                android:inputType="textPersonName"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--attached-->
+
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_attachedWithTextView"
+                android:layout_below="@+id/ct_ownerNameEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Attached with"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_attachedWithEditText"
+                android:layout_below="@+id/ct_attachedWithTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Petrol/Diesel/other"
+                android:inputType="text"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+
+            <!--chambers-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_chambersTextView"
+                android:layout_below="@+id/ct_attachedWithEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Chambers"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/ct_chambersEditText"
+                    android:layout_below="@+id/ct_chambersTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edit_text_black"
+                    android:hint="1/2/3/4/5"
+                    android:inputType="number"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/blackFifty"
+                    android:maxLength="1"
+                    android:textSize="20sp" />
+
+
+            <!--Capacity-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_capacityTextView"
+                android:layout_below="@+id/ct_attachedWithEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Capacity"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_capacityEditText"
+                android:layout_below="@+id/ct_capacityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="number of litres"
+                android:layout_alignParentEnd="true"
+                android:inputType="number"
+                android:padding="5dp"
+                android:gravity="end"
+                android:maxLength="5"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--registration certificate-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_rcTextView"
+                android:layout_below="@+id/ct_chambersEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="Registration Certificate"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_rcEditText"
+                android:layout_below="@+id/ct_rcTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Truck RC"
+                android:inputType="number"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--rc valid-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_rcValidTextView"
+                android:layout_below="@+id/ct_rcEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Valid"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_rcValidEditText"
+                android:layout_below="@+id/ct_rcValidTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:inputType="date"
+                android:padding="5dp"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:layout_weight="1"
+                android:textSize="20sp" />
+
+
+            <!--rc renew-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_rcRenewTextView"
+                android:layout_below="@+id/ct_rcEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Renew"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_rcRenewEditText"
+                android:layout_below="@+id/ct_rcRenewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:layout_alignParentEnd="true"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--calibration created-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_caliTextView"
+                android:layout_below="@+id/ct_rcValidEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Calibration Created"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_caliEditText"
+                android:layout_below="@+id/ct_caliTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Calibration Date (dd/mm/yyyy)"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--cali valid-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_caliValidTextView"
+                android:layout_below="@+id/ct_caliEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Valid"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_caliValidEditText"
+                android:layout_below="@+id/ct_caliValidTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:inputType="number"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:layout_weight="1"
+                android:textSize="20sp" />
+
+
+            <!--cali renew-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_caliRenewTextView"
+                android:layout_below="@+id/ct_caliEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Renew"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_caliRenewEditText"
+                android:layout_below="@+id/ct_caliRenewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:layout_alignParentEnd="true"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--fit created-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_fitTextView"
+                android:layout_below="@+id/ct_caliValidEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Fitness Tested On"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_fitEditText"
+                android:layout_below="@+id/ct_fitTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Fitness Test Date (dd/mm/yyyy)"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--fit valid-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_fitValidTextView"
+                android:layout_below="@+id/ct_fitEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Valid"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_fitValidEditText"
+                android:layout_below="@+id/ct_fitValidTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:layout_weight="1"
+                android:textSize="20sp" />
+
+
+            <!--fitness renew-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_fitRenewTextView"
+                android:layout_below="@+id/ct_fitEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Renew"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_fitRenewEditText"
+                android:layout_below="@+id/ct_fitRenewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:layout_alignParentEnd="true"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--Pollution created-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_pollutionTextView"
+                android:layout_below="@+id/ct_fitValidEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Pollution Tested On"
+                android:textStyle="bold"
+
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_pollutionEditText"
+                android:layout_below="@+id/ct_pollutionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Pollution Test Date (dd/mm/yyyy)"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--fit valid-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_pollutionValidTextView"
+                android:layout_below="@+id/ct_pollutionEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Valid"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_pollutionValidEditText"
+                android:layout_below="@+id/ct_pollutionValidTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:layout_weight="1"
+                android:textSize="20sp" />
+
+
+            <!--fitness renew-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_pollutionRenewTextView"
+                android:layout_below="@+id/ct_pollutionEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Renew"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_pollutionRenewEditText"
+                android:layout_below="@+id/ct_pollutionRenewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:layout_alignParentEnd="true"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--Insurance created-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_insuranceNameTextView"
+                android:layout_below="@+id/ct_pollutionValidEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Insurance Company Name"
+                android:textStyle="bold"
+
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_insuranceNameEditText"
+                android:layout_below="@+id/ct_insuranceNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Insurance Company Name"
+                android:inputType="textMultiLine"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--Insurance amount paid-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_insuranceAmountTextView"
+                android:layout_below="@+id/ct_insuranceNameEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Insurance Amount Paid"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_insuranceAmountEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/ct_insuranceAmountTextView"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Total Amount in Indian Rupees"
+                android:inputType="number"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--insurance valid-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_insuranceValidTextView"
+                android:layout_below="@+id/ct_insuranceAmountEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Valid"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_insuranceValidEditText"
+                android:layout_below="@+id/ct_insuranceValidTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:layout_weight="1"
+                android:textSize="20sp" />
+
+
+            <!--insurance renew-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_insuranceRenewTextView"
+                android:layout_below="@+id/ct_insuranceAmountEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Renew"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_insuranceRenewEditText"
+                android:layout_below="@+id/ct_insuranceRenewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:layout_alignParentEnd="true"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--Hydro created-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_hydroTextView"
+                android:layout_below="@+id/ct_insuranceRenewEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Hydro Tested On"
+                android:textStyle="bold"
+
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_hydroEditText"
+                android:layout_below="@+id/ct_hydroTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Hydro Test Date (dd/mm/yyyy)"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:inputType="date"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--Hydro valid-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_hydroValidTextView"
+                android:layout_below="@+id/ct_hydroEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Valid"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_hydroValidEditText"
+                android:layout_below="@+id/ct_hydroValidTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:layout_weight="1"
+                android:textSize="20sp" />
+
+
+            <!--Hydro renew-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_hydroRenewTextView"
+                android:layout_below="@+id/ct_hydroEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Renew"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_hydroRenewEditText"
+                android:layout_below="@+id/ct_hydroRenewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:layout_alignParentEnd="true"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+
+            <!--Road created-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_roadTextView"
+                android:layout_below="@+id/ct_hydroRenewEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Road Tested On"
+                android:textStyle="bold"
+
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_roadEditText"
+                android:layout_below="@+id/ct_roadTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Road Test Date (dd/mm/yyyy)"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--Road valid-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_roadValidTextView"
+                android:layout_below="@+id/ct_roadEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Valid"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_roadValidEditText"
+                android:layout_below="@+id/ct_roadValidTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:layout_weight="1"
+                android:textSize="20sp" />
+
+
+            <!--Road renew-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_roadRenewTextView"
+                android:layout_below="@+id/ct_roadEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Renew"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_roadRenewEditText"
+                android:layout_below="@+id/ct_roadRenewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:layout_alignParentEnd="true"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--Explosive created-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_explosiveTextView"
+                android:layout_below="@+id/ct_roadRenewEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Explosive Tested On"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_explosiveEditText"
+                android:layout_below="@+id/ct_explosiveTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Explosive Test Date (dd/mm/yyyy)"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--Explosive valid-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_explosiveValidTextView"
+                android:layout_below="@+id/ct_explosiveEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Valid"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_explosiveValidEditText"
+                android:layout_below="@+id/ct_explosiveValidTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:layout_weight="1"
+                android:textSize="20sp" />
+
+
+            <!--Explosive renew-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_explosiveRenewTextView"
+                android:layout_below="@+id/ct_explosiveEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Renew"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_explosiveRenewEditText"
+                android:layout_below="@+id/ct_explosiveRenewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:layout_alignParentEnd="true"
+                android:inputType="date"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--National Permit-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_npTextView"
+                android:layout_below="@+id/ct_explosiveRenewEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="National Permit"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_npEditText"
+                android:layout_below="@+id/ct_npTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Truck National Permit"
+                android:inputType="number"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--State Permit-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_spTextView"
+                android:layout_below="@+id/ct_npEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="State Permit"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_spEditText"
+                android:layout_below="@+id/ct_spTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Truck State Permit"
+                android:inputType="number"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--Labour Permit-->
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_labTextView"
+                android:layout_below="@+id/ct_spEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Labour Permit"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_labEditText"
+                android:layout_below="@+id/ct_labTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Truck Labour Permit"
+                android:inputType="number"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/ct_submitTruckButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ct_labEditText"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/lightGreen"
+                fancy:fb_focusColor="@color/black"
+                fancy:fb_fontIconResource="&#xf0d1;"
+                fancy:fb_iconPosition="right"
+                fancy:fb_radius="3dp"
+                fancy:fb_textColor="@color/black"
+                android:layout_marginTop="16dp"
+                fancy:fb_text="Update"
+                />
+
+
+
+
+
+
+
+
+
+        </RelativeLayout>
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</FrameLayout>

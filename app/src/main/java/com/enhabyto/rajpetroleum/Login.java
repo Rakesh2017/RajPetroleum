@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tapadoo.alerter.Alerter;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import dmax.dialog.SpotsDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -37,11 +42,15 @@ public class Login extends AppCompatActivity {
     private FancyButton forgotPass_btn;
 
     private SharedPreferences.Editor editor1;
+
     private AlertDialog dialog;
 
     private DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
 
     private FirebaseAuth mAuth;
+    DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
+    String connected;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +80,20 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.show();
+
                 email_tx = email_et.getText().toString().trim();
                 password_tx = password_et.getText().toString().trim();
+           /*     connectedRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        connected = dataSnapshot.getValue(String.class);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });*/
 
                 if (!isNetworkAvailable()){
                     Alerter.create(Login.this)
@@ -84,6 +105,8 @@ public class Login extends AppCompatActivity {
                     dialog.dismiss();
                     return;
                 }
+
+
                 if (!isValidEmail(email_tx)){
                     Alerter.create(Login.this)
                             .setTitle("Invalid Email Format!")
@@ -106,80 +129,110 @@ public class Login extends AppCompatActivity {
                     return;
                 }
 
-                mAuth.signInWithEmailAndPassword(email_tx, password_tx)
-                        .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                 //   Log.d("123", "signInWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    DatabaseReference d_refAdminProfile;
-                                    assert user != null;
-                                    d_refAdminProfile = d_root.child("admin").child(user.getUid()).child("profile");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                      /*  if (!TextUtils.equals(connected, "connected")){
+                            Alerter.create(Login.this)
+                                    .setTitle("Unable to Connect to Server!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.blackFifty)
+                                    .setIcon(R.drawable.no_internet)
+                                    .show();
+                            Toast.makeText(Login.this, ""+connected, Toast.LENGTH_SHORT).show();
+                          //  Log.w("123", connected);
+                            dialog.dismiss();
+                            return;
+                        }*/
+
+                        mAuth.signInWithEmailAndPassword(email_tx, password_tx)
+                                .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // Sign in success, update UI with the signed-in user's information
+                                            //   Log.d("123", "signInWithEmail:success");
+                                            FirebaseUser user = mAuth.getCurrentUser();
+                                            DatabaseReference d_refAdminProfile;
+                                            assert user != null;
+                                            d_refAdminProfile = d_root.child("admin").child(user.getUid()).child("profile");
 
 
 
-                                    d_refAdminProfile.addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            String name_tx = dataSnapshot.child("name").getValue(String.class);
-                                            String designation_tx = dataSnapshot.child("designation").getValue(String.class);
-                                            String contact_tx = dataSnapshot.child("contact").getValue(String.class);
-                                            String age_tx = dataSnapshot.child("age").getValue(String.class);
+                                            d_refAdminProfile.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    String name_tx = dataSnapshot.child("name").getValue(String.class);
+                                                    String designation_tx = dataSnapshot.child("designation").getValue(String.class);
+                                                    String contact_tx = dataSnapshot.child("contact").getValue(String.class);
+                                                    String age_tx = dataSnapshot.child("age").getValue(String.class);
 
 
-                                            if (TextUtils.isEmpty(name_tx) || TextUtils.isEmpty(contact_tx) || TextUtils.isEmpty(designation_tx) || TextUtils.isEmpty(age_tx)){
-                                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_Login,new BasicInformation()).addToBackStack(null).commit();
+                                                    if (TextUtils.isEmpty(name_tx) || TextUtils.isEmpty(contact_tx) || TextUtils.isEmpty(designation_tx) || TextUtils.isEmpty(age_tx)){
+                                                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_Login,new BasicInformation()).addToBackStack(null).commit();
+                                                        dialog.dismiss();
+                                                    }
+                                                    else {
+                                                        SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
+                                                        SharedPreferences.Editor editor = dataSave.edit();
+                                                        editor.putString("LaunchApplication", "DashBoard");
+                                                        editor.commit();
+                                                        Intent intent = new Intent(Login.this, DashBoard.class);
+                                                        startActivity(intent);
+                                                    }
 
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+                                            // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_Login,new BasicInformation()).addToBackStack(null).commit();
+
+                                            editor1.putString("A",email_tx).apply();
+                                            dialog.dismiss();
+
+                                        } else {
+                                            // If sign in fails, display a message to the user.
+                                            SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = dataSave.edit();
+                                            editor.putString("LaunchApplication", "Login");
+                                            editor.commit();
+                                            forgotPass_btn.setVisibility(View.VISIBLE);
+                                            String message = "";
+                                            try {
+                                                message = task.getException().getMessage();
                                             }
-                                            else {
-
-                                                Intent intent = new Intent(Login.this, DashBoard.class);
-                                                startActivity(intent);
+                                            catch (NullPointerException e){
+                                                e.printStackTrace();
                                             }
-
+                                            Alerter.create(Login.this)
+                                                    .setTitle("Authentication Failed!")
+                                                    .setText(message)
+                                                    .setContentGravity(1)
+                                                    .setBackgroundColorRes(R.color.blackFifty)
+                                                    .setIcon(R.drawable.error)
+                                                    .show();
 
                                         }
+                                        dialog.dismiss();
 
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
-                                        }
-                                    });
-
-
-
-                                   // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_Login,new BasicInformation()).addToBackStack(null).commit();
-
-                                    editor1.putString("A",email_tx).apply();
-                                    dialog.dismiss();
-
-                                } else {
-                                    // If sign in fails, display a message to the user.
-
-                                    forgotPass_btn.setVisibility(View.VISIBLE);
-                                    String message = "";
-                                    try {
-                                        message = task.getException().getMessage();
+                                        // ...
                                     }
-                                    catch (NullPointerException e){
-                                        e.printStackTrace();
-                                    }
-                                    Alerter.create(Login.this)
-                                            .setTitle("Authentication Failed!")
-                                            .setText(message)
-                                            .setContentGravity(1)
-                                            .setBackgroundColorRes(R.color.blackFifty)
-                                            .setIcon(R.drawable.error)
-                                            .show();
+                                });
 
-                                }
-                                dialog.dismiss();
 
-                                // ...
-                            }
-                        });
+
+                    }
+                },1500);
+
+
+
+
 
 
 
@@ -211,7 +264,7 @@ public class Login extends AppCompatActivity {
             startActivity(intent);
         }
 
-
     }
+
 
 }//end

@@ -8,10 +8,19 @@
         <item name="colorAccent">@color/white</item>
     </style>
 
+    <style name="DashBoardTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/black</item>
+    </style>
+
+
+
 
     <style name="logging" parent="android:Theme.DeviceDefault.Dialog">
         <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
-        <item name="DialogTitleText">Logging in</item>
+        <item name="DialogTitleText">Logging in\nSetting up Components</item>
         <item name="DialogSpotColor">@color/white</item>
         <item name="DialogSpotCount">4</item>
     </style>
@@ -29,6 +38,50 @@
         <item name="DialogSpotColor">@color/white</item>
         <item name="DialogSpotCount">4</item>
     </style>
+
+    <style name="creatingDriverAccount" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">Creating Driver Account</item>
+        <item name="DialogSpotColor">@color/white</item>
+        <item name="DialogSpotCount">4</item>
+    </style>
+
+    <style name="loadingData" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">Loading Data</item>
+        <item name="DialogSpotColor">@color/white</item>
+        <item name="DialogSpotCount">4</item>
+    </style>
+
+    <style name="dialog_uploadingLicence" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">Uploading Licence Image</item>
+        <item name="DialogSpotColor">@color/white</item>
+        <item name="DialogSpotCount">4</item>
+    </style>
+
+    <style name="dialog_uploadingHazardousLicence" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">Uploading Hazardous Licence \nImage</item>
+        <item name="DialogSpotColor">@color/white</item>
+        <item name="DialogSpotCount">4</item>
+    </style>
+
+    <style name="dialog_updatingTruck" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">Updating Truck Details</item>
+        <item name="DialogSpotColor">@color/white</item>
+        <item name="DialogSpotCount">4</item>
+    </style>
+
+    <style name="dialog_updatingPump" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">Updating Pump Details</item>
+        <item name="DialogSpotColor">@color/white</item>
+        <item name="DialogSpotCount">4</item>
+    </style>
+
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 

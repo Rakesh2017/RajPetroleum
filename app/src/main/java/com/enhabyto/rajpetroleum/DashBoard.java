@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.View;
@@ -27,10 +28,15 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.tapadoo.alerter.Alerter;
 
+import java.util.List;
+
 import dmax.dialog.SpotsDialog;
+import util.android.textviews.FontTextView;
 
 public class DashBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -54,13 +60,15 @@ public class DashBoard extends AppCompatActivity
         toggle.syncState();
 
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
 
         ImageButton logout_btn = findViewById(R.id.app_bar_dash_logoutButton);
-        nav_profileImageView = navigationView.getHeaderView(0).findViewById(R.id.nav_profile_image);
+        nav_profileImageView = navigationView.getHeaderView(0).findViewById(R.id.nav1_profile_image);
+
+
 
         Glide.with(getApplication().getApplicationContext())
                 .load(R.drawable.profile_image)
@@ -85,14 +93,18 @@ public class DashBoard extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
-        }
-        moveTaskToBack(true);
-        finish();
+
+                super.onBackPressed();
+                moveTaskToBack(true);
+                finish();
+            }
+
+
     }
 
     @Override
@@ -123,21 +135,27 @@ public class DashBoard extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_dashboard) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_CreateDriver) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateDriver()).addToBackStack(null).commit();
 
-        } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_CreateAdmin) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_TruckDetails) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateTruck()).addToBackStack(null).commit();
 
-        } else if (id == R.id.nav_send) {
+
+        } else if (id == R.id.nav_pumpDetails) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreatePump()).addToBackStack(null).commit();
+
+
+        } else if (id == R.id.nav_FuelRate) {
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -154,9 +172,9 @@ public class DashBoard extends AppCompatActivity
                         .title("Logout")
                         .content("Are You Sure to Logout?")
                         .positiveText("Yes")
-                        .positiveColor(getResources().getColor(R.color.lightGreen))
+                        .positiveColor(getResources().getColor(R.color.lightRed))
                         .negativeText("No")
-                        .negativeColor(getResources().getColor(R.color.lightRed))
+                        .negativeColor(getResources().getColor(R.color.lightGreen))
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override
                 public void onClick(@NonNull final MaterialDialog dialog, @NonNull DialogAction which) {

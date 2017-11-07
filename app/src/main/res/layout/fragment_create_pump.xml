@@ -1,0 +1,452 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    tools:context="com.enhabyto.rajpetroleum.CreatePump">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="24dp"
+            android:background="@color/white"
+
+            >
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:id="@+id/cp_relativeLayout1"
+            android:layout_marginTop="16dp"
+            >
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cp_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="pump name"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cp_pumpNameEditText1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cp_text"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Pump Name"
+                android:inputType="text"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/ct_openCreatePumpButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/cp_pumpNameEditText1"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/lightRed"
+                fancy:fb_focusColor="@color/black"
+                fancy:fb_fontIconResource="&#xf1d9;"
+                fancy:fb_iconPosition="right"
+                fancy:fb_radius="3dp"
+                fancy:fb_text="Load Data"
+                fancy:fb_textColor="@color/black"
+                android:layout_marginTop="8dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:id="@+id/cp_relativeLayout2"
+            android:layout_below="@+id/cp_relativeLayout1"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            android:visibility="gone"
+            >
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cp_pumpNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Pump Name"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cp_pumpNameEditText2"
+                android:layout_below="@+id/cp_pumpNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:inputType="number"
+                android:padding="5dp"
+                android:textColor="@color/naturalBlue"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--person-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cp_contactNameTextView"
+                android:layout_below="@+id/cp_pumpNameEditText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Contact Name"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cp_contactNameEditText"
+                android:layout_below="@+id/cp_contactNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:inputType="textCapWords"
+                android:hint="Enter Person Name"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <!--contact-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cp_contactTextView"
+                android:layout_below="@+id/cp_contactNameEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Contact"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cp_contactEditText"
+                android:layout_below="@+id/cp_contactTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:hint="Enter Phone Number"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--contact whatsapp-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cp_contactAppTextView"
+                android:layout_below="@+id/cp_contactEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Whatsapp Contact"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cp_contactAppEditText"
+                android:layout_below="@+id/cp_contactAppTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:inputType="phone"
+                android:hint="Enter Whatsapp Phone Number"
+                android:padding="5dp"
+                android:maxLength="10"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--landline-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cp_landlineTextView"
+                android:layout_below="@+id/cp_contactAppEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Landline"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cp_landlineEditText"
+                android:layout_below="@+id/cp_landlineTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:inputType="phone"
+                android:hint="Enter Landline Number"
+                android:maxLength="11"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+            <!--SAP-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cp_sapTextView"
+                android:layout_below="@+id/cp_landlineEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="SAP code"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cp_sapEditText"
+                android:layout_below="@+id/cp_sapTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:inputType="text"
+                android:hint="Enter SAP code"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--address-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cp_addressTextView"
+                android:layout_below="@+id/cp_sapEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Address"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cp_addressEditText"
+                android:layout_below="@+id/cp_addressTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:inputType="textPostalAddress"
+                android:hint="address, city, state"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+
+            <!--GSTIN-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cp_gstTextView"
+                android:layout_below="@+id/cp_addressEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="GSTIN"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cp_gstEditText"
+                android:layout_below="@+id/cp_gstTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:inputType="text"
+                android:hint="Enter GSTIN number"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--TIN-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cp_tinTextView"
+                android:layout_below="@+id/cp_gstEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="TIN"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cp_tinEditText"
+                android:layout_below="@+id/cp_tinTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:inputType="text"
+                android:hint="Enter TIN number"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <!--Company-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cp_companyTextView"
+                android:layout_below="@+id/cp_tinEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Company Name"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cp_companyEditText"
+                android:layout_below="@+id/cp_companyTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:inputType="textMultiLine"
+                android:hint="Enter Company Name"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
+                android:layout_below="@id/cp_companyEditText"
+                android:weightSum="2"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:id="@+id/cp_linear1"
+                >
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cp_selectPumpImage"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    fancy:fb_borderColor="@color/black"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/blackFifty"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf0c1;"
+                    fancy:fb_iconPosition="right"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="select image"
+                    fancy:fb_textColor="@color/black" />
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cp_uploadPumpImage"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    fancy:fb_borderColor="@color/black"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/blackFifty"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf0ee;"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="upload image"
+                    fancy:fb_textColor="@color/black" />
+
+
+
+            </LinearLayout>
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/ct_submitPumpButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cp_linear1"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="16dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/lightGreen"
+                fancy:fb_focusColor="@color/black"
+                fancy:fb_fontIconResource="&#xf06d;"
+                fancy:fb_iconPosition="right"
+                fancy:fb_radius="3dp"
+                fancy:fb_textColor="@color/black"
+                android:layout_marginTop="16dp"
+                fancy:fb_text="Update"
+                />
+
+
+        </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+</FrameLayout>

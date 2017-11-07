@@ -1,0 +1,769 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="@color/white"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    tools:context="com.enhabyto.rajpetroleum.CreateDriver">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:background="@color/white">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:weightSum="2"
+                android:orientation="vertical"
+                android:id="@+id/cd_mainLinearLayout"
+                >
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cd_OpenCreateDriverButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/lightRed"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf234;"
+                    fancy:fb_iconPosition="right"
+                    fancy:fb_radius="3dp"
+                    android:layout_weight="1"
+                    fancy:fb_text="Create New Driver Profile"
+                    fancy:fb_textColor="@color/black"
+                    android:layout_marginTop="20dp"
+                    />
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cd_OpenUpdateProfileButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:layout_weight="1"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/lightRed"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf0d1;"
+                    fancy:fb_iconPosition="right"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="Update Driver's Profile"
+                    fancy:fb_textColor="@color/black"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="16dp"
+                    />
+
+            </LinearLayout>
+
+
+
+            <!--Create Driver-->
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:id="@+id/cd_profileRelativeLayout"
+                android:layout_below="@+id/cd_mainLinearLayout"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"
+                >
+
+
+                <util.android.textviews.FontTextView
+                android:id="@+id/cd_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="@string/createDriver"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:textSize="24sp" />
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_contactTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_text"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:text="@string/Contact"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cd_ContactEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_contactTextView"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="This will be unique identity of driver"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_PasswordTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_ContactEditText"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:text="@string/password"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cd_PasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_PasswordTextView"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Password"
+                android:inputType="textPassword"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/cd_CreateDriverButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/lightGreen"
+                fancy:fb_focusColor="@color/black"
+                fancy:fb_fontIconResource="&#xf234;"
+                fancy:fb_iconPosition="right"
+                fancy:fb_radius="3dp"
+                fancy:fb_text="Create Driver Profile"
+                fancy:fb_textColor="@color/black"
+                android:layout_below="@+id/cd_PasswordEditText"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                />
+            </RelativeLayout>
+
+
+
+            <!--Profile Information-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cd_LoadInfoRelativeLayout"
+            android:layout_below="@+id/cd_mainLinearLayout"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:visibility="gone"
+            >
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Update Driver Information"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:textSize="20sp" />
+
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_Contact1TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_text1"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:text="@string/Contact"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cd_Contact1EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_Contact1TextView"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Driver's Mobile Number"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/naturalBlue"
+                android:textSize="20sp" />
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/cd_checkInfoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="#BFBFBF"
+                fancy:fb_focusColor="@color/black"
+                fancy:fb_fontIconResource="&#xf1d8;"
+                fancy:fb_iconPosition="right"
+                fancy:fb_radius="3dp"
+                fancy:fb_text="Load Existing Data(if any)"
+                fancy:fb_textColor="@color/black"
+                android:layout_below="@+id/cd_Contact1EditText"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="16dp"
+                />
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:id="@+id/cd_driverDataRelativeLayout"
+            android:layout_below="@+id/cd_LoadInfoRelativeLayout"
+            android:visibility="gone"
+            >
+
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_NameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:text="@string/Name"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cd_NameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_NameTextView"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Driver Name"
+                android:inputType="textCapSentences"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_AddressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_NameEditText"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:text="Address"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cd_AddressEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_AddressTextView"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Driver's Address"
+                android:inputType="textCapSentences"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_BirthTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_AddressEditText"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:text="Date of Birth"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cd_BirthEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_BirthTextView"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:inputType="date"
+                android:maxLength="10"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_LisTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_BirthEditText"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:text="Driving Licence Number"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cd_LisEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/cd_LisTextView"
+                android:layout_below="@+id/cd_LisTextView"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Driver's Licence Number"
+                android:inputType="textCapSentences"
+                android:padding="5dp"
+                android:maxLength="18"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_LisValidToTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/cd_LisEditText"
+                android:layout_below="@id/cd_LisEditText"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:text="Valid Upto"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cd_LisValidToEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/cd_LisEditText"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:layout_below="@id/cd_LisValidToTextView"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:inputType="date"
+                android:maxLength="10"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_below="@+id/cd_LisEditText"
+                android:layout_alignStart="@id/cd_LisEditText"
+                android:layout_toStartOf="@id/cd_LisValidToEditText"
+                android:layout_alignTop="@id/cd_LisValidToEditText"
+                android:layout_alignBottom="@id/cd_LisValidToEditText"
+                android:layout_marginEnd="16dp"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                >
+
+             <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/cd_selectlis"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
+                fancy:fb_borderColor="@color/black"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/blackFifty"
+                fancy:fb_focusColor="@color/black"
+                fancy:fb_fontIconResource="&#xf03e;"
+                fancy:fb_iconPosition="right"
+                fancy:fb_radius="3dp"
+                fancy:fb_text="select\nimage"
+                fancy:fb_textColor="@color/black" />
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cd_uploadlis"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    fancy:fb_borderColor="@color/black"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/blackFifty"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf0ee;"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="upload\nimage"
+                    fancy:fb_textColor="@color/black" />
+
+
+
+            </LinearLayout>
+
+
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_HazLisTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_LisValidToEditText"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:text="Hazardous Driving Licence Number"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cd_HazLisEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/cd_HazLisTextView"
+                android:layout_below="@+id/cd_HazLisTextView"
+                android:maxLength="18"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="Enter Driver's Hazardous Licence Number"
+                android:inputType="textCapSentences"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_HazLisValidToTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/cd_HazLisEditText"
+                android:layout_below="@id/cd_HazLisEditText"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:text="Valid Upto"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/cd_HazLisValidToEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:onClick="onClick"
+                android:layout_alignEnd="@id/cd_HazLisEditText"
+                android:layout_below="@id/cd_HazLisValidToTextView"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="dd/mm/yyyy"
+                android:inputType="date"
+                android:maxLength="10"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_below="@+id/cd_HazLisEditText"
+                android:layout_alignStart="@id/cd_HazLisEditText"
+                android:layout_toStartOf="@id/cd_HazLisValidToEditText"
+                android:layout_alignTop="@id/cd_HazLisValidToEditText"
+                android:layout_alignBottom="@id/cd_HazLisValidToEditText"
+                android:layout_marginEnd="16dp"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                >
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cd_Hazselectlis"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="4dp"
+                    fancy:fb_borderColor="@color/black"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/blackFifty"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf03e;"
+                    fancy:fb_iconPosition="right"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="select\nimage"
+                    fancy:fb_textColor="@color/black" />
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cd_Hazuploadlis"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    fancy:fb_borderColor="@color/black"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/blackFifty"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf0ee;"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="upload\nimage"
+                    fancy:fb_textColor="@color/black" />
+
+
+            </LinearLayout>
+
+
+            <util.android.textviews.FontTextView
+            android:id="@+id/cd_EducationTextView"
+            android:layout_below="@id/cd_HazLisValidToEditText"
+            android:text="Education"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black"
+            android:fontFamily="droidsansbold.ttf"
+            />
+
+        <EditText
+            android:id="@+id/cd_EducationEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/cd_LisTextView"
+            android:layout_below="@+id/cd_EducationTextView"
+            android:background="@drawable/rounded_edit_text_black"
+            android:layout_marginEnd="16dp"
+            android:hint="Driver's Education level"
+            android:inputType="textCapSentences"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/blackFifty"
+            android:textSize="20sp" />
+
+
+
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/cd_MaritalStatusTextView"
+            android:layout_below="@id/cd_EducationEditText"
+            android:text="Marital Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black"
+            android:fontFamily="droidsansbold.ttf"
+            />
+
+        <EditText
+            android:id="@+id/cd_MaritalStatusEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/cd_LisTextView"
+            android:layout_below="@+id/cd_MaritalStatusTextView"
+            android:background="@drawable/rounded_edit_text_black"
+            android:layout_marginEnd="16dp"
+            android:hint="Married/Unmarried/Single/other"
+            android:inputType="textCapSentences"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/blackFifty"
+            android:textSize="20sp" />
+
+
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_OtherDocTextView"
+                android:layout_below="@id/cd_MaritalStatusEditText"
+                android:text="Any Other Document"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/black"
+                android:fontFamily="droidsansbold.ttf"
+                />
+
+            <EditText
+                android:id="@+id/cd_OtherDocEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/cd_LisTextView"
+                android:layout_below="@+id/cd_OtherDocTextView"
+                android:background="@drawable/rounded_edit_text_black"
+                android:layout_marginEnd="16dp"
+                android:hint="Name of document"
+                android:inputType="textCapSentences"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_below="@+id/cd_OtherDocEditText"
+                android:layout_marginEnd="16dp"
+                android:weightSum="2"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:id="@+id/cd_linear1"
+                >
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cd_SelectOther"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    fancy:fb_borderColor="@color/black"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/blackFifty"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf0c1;"
+                    fancy:fb_iconPosition="right"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="select image"
+                    fancy:fb_textColor="@color/black" />
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cd_UploadOther"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    fancy:fb_borderColor="@color/black"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/blackFifty"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf0ee;"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="upload image"
+                    fancy:fb_textColor="@color/black" />
+
+
+
+            </LinearLayout>
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/cd_SubmitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/lightGreen"
+                fancy:fb_focusColor="@color/black"
+                fancy:fb_fontIconResource="&#xf0d1;"
+                fancy:fb_iconPosition="right"
+                fancy:fb_radius="3dp"
+                fancy:fb_text="Update"
+                fancy:fb_textColor="@color/black"
+                android:layout_below="@+id/cd_linear1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"
+                />
+        </RelativeLayout>
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</FrameLayout>

@@ -9,6 +9,13 @@
     <string name="Contact">Contact</string>
     <string name="BasicInfo">Basic information</string>
     <string name="birth">Age</string>
+    <string name="dashboard">DashBoard</string>
+    <string name="createDriver">Create Driver</string>
+    <string name="createAdmin">Create Admin</string>
+    <string name="TruckDetails">Truck Details</string>
+    <string name="PumpDetails">Pump Details</string>
+    <string name="FuelRate">Fuel Rate</string>
+    <string name="truckNumber">Truck Number</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

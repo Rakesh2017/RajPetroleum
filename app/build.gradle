@@ -26,6 +26,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:11.0.4'
     implementation 'com.google.firebase:firebase-database:11.0.4'
     implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.google.firebase:firebase-storage:11.0.4'
     testImplementation 'junit:junit:4.12'
     compile 'com.android.support:design:26.1.0'
     compile 'com.github.medyo:fancybuttons:1.8.4'
@@ -39,10 +40,17 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.2'
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.daimajia.easing:library:2.0@aar'
+    compile 'com.daimajia.androidanimations:library:2.3@aar'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }
+
+
+
+
+
 
 
 
