@@ -285,6 +285,13 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                         dataRef_pumpDetails.child("pump_name").setValue(pumpName2_tx);
                         dataRef_pumpDetails.child("address").setValue(address_tx);
 
+                        Alerter.create(getActivity())
+                                .setTitle("Pump Details Updated")
+                                .setContentGravity(1)
+                                .setBackgroundColorRes(R.color.black)
+                                .setIcon(R.drawable.success_icon)
+                                .show();
+
                         dialog_updatePump.dismiss();
 
 
