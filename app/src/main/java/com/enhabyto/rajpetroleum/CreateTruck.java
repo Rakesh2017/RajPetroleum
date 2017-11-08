@@ -12,11 +12,15 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -30,7 +34,9 @@ import com.google.firebase.storage.StorageReference;
 import com.tapadoo.alerter.Alerter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import dmax.dialog.SpotsDialog;
@@ -63,13 +69,15 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
     RelativeLayout relativeLayout;
 
     DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference dataRef_spinner = d_root.child("truck_details");
+
     DatabaseReference d_parent = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
 
     Calendar myCalendar = Calendar.getInstance();
     String myFormat = "dd/MM/yyyy"; // your format
     DatePickerDialog.OnDateSetListener date_birth;
-
-
+    Spinner spinner;
+    String selected_val;
 
 
     FancyButton submit_btn, loadData_btn;
@@ -126,6 +134,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
         calibrationValid_et = view.findViewById(R.id.ct_caliValidEditText);
         calibrationRenew_et = view.findViewById(R.id.ct_caliRenewEditText);
         relativeLayout = view.findViewById(R.id.ct_RelativeLayout2);
+        spinner = view.findViewById(R.id.ct_spinner);
 
         submit_btn = view.findViewById(R.id.ct_submitTruckButton);
         loadData_btn = view.findViewById(R.id.ct_openCreateTruckButton);
@@ -184,6 +193,42 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
 
         dialog_updateTruck = new SpotsDialog(getActivity(),R.style.dialog_updatingTruck);
         dialog_loading = new SpotsDialog(getActivity(),R.style.loadingData);
+
+        spinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?>arg0, View view, int arg2, long arg3) {
+
+                            selected_val = spinner.getSelectedItem().toString();
+                            if (!TextUtils.equals(selected_val,"Select Truck")){
+                                truckNumber_et1.setText(selected_val);
+
+                            }
+
+
+
+                            // Toast.makeText(getApplicationContext(), selected_val ,
+                            //      Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> arg0) {
+                            // TODO Auto-generated method stub
+
+                        }
+                    });
+
+                }
+                return false;
+            }
+        });
+
+
+
+
 
 
 
@@ -812,6 +857,45 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
         assert connectivityManager != null;
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public void onStart(){
+        super.onStart();
+
+
+        dataRef_spinner.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Is better to use a List, because you don't know the size
+                // of the iterator returned by dataSnapshot.getChildren() to
+                // initialize the array
+                try {
+                    final List<String> areas = new ArrayList<String>();
+                    areas.add("Select Truck");
+                    for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+                        String areaName = areaSnapshot.child("truck_number").getValue(String.class);
+                        areas.add(areaName);
+
+
+                    }
+
+                    ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, areas);
+                    areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(areasAdapter);
+                }
+                catch (NullPointerException e){
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+
     }
     //end
 }

@@ -59,6 +59,8 @@
                 android:textColorHint="@color/blackFifty"
                 android:textSize="20sp" />
 
+
+
             <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/ct_openCreatePumpButton"
                 android:layout_width="wrap_content"
@@ -79,6 +81,20 @@
                 fancy:fb_text="Load Data"
                 fancy:fb_textColor="@color/black"
                 android:layout_marginTop="8dp"
+                />
+
+            <!-- Spinner Element -->
+            <Spinner
+                android:id="@+id/cp_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cp_pumpNameEditText1"
+                android:layout_marginTop="10dp"
+                android:prompt="@string/spinnerTitle"
+                android:layout_toStartOf="@+id/ct_openCreatePumpButton"
+                android:layout_marginEnd="16dp"
+                android:spinnerMode="dropdown"
+                android:gravity="center"
                 />
 
         </RelativeLayout>

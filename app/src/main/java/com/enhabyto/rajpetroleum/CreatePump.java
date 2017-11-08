@@ -4,18 +4,25 @@ package com.enhabyto.rajpetroleum;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -30,6 +37,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.tapadoo.alerter.Alerter;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
@@ -54,14 +65,16 @@ public class CreatePump extends Fragment implements View.OnClickListener{
 
     DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
     DatabaseReference dataRef_pumpDetails;
-    AlertDialog dialog_updatePump, dialog_loading;
+    DatabaseReference dataRef_spinner = d_root.child("pump_details");
+    AlertDialog dialog_updatePump, dialog_loading, dialog_uploadingPump;
 
     DatabaseReference d_parent = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
     String connected;
 
     int PICK_IMAGE_REQUEST = 111;
     Uri ImageFilePath;
-
+    Spinner spinner;
+    String selected_val;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReferenceFromUrl("gs://rajpetroleum-4d3fa.appspot.com/");
 
@@ -87,6 +100,7 @@ public class CreatePump extends Fragment implements View.OnClickListener{
         gst_et = view.findViewById(R.id.cp_gstEditText);
         tin_et = view.findViewById(R.id.cp_tinEditText);
         company_et = view.findViewById(R.id.cp_companyEditText);
+        spinner = view.findViewById(R.id.cp_spinner);
 
         pumpName2_et.setKeyListener(null);
 
@@ -103,6 +117,47 @@ public class CreatePump extends Fragment implements View.OnClickListener{
 
         dialog_updatePump = new SpotsDialog(getActivity(),R.style.dialog_updatingPump);
         dialog_loading = new SpotsDialog(getActivity(),R.style.loadingData);
+        dialog_uploadingPump = new SpotsDialog(getActivity(),R.style.dialog_uploadingPumpImage);
+
+        spinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                   spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                       @Override
+                       public void onItemSelected(AdapterView<?>arg0, View view, int arg2, long arg3) {
+
+                               selected_val = spinner.getSelectedItem().toString();
+                           if (!TextUtils.equals(selected_val,"Select Pump")){
+                               pumpName1_et.setText(selected_val);
+
+                           }
+
+
+                               //YOUR CODE HERE
+
+
+                           // Toast.makeText(getApplicationContext(), selected_val ,
+                           //      Toast.LENGTH_SHORT).show();
+                       }
+
+                       @Override
+                       public void onNothingSelected(AdapterView<?> arg0) {
+                           // TODO Auto-generated method stub
+
+                       }
+                   });
+
+                }
+                return false;
+            }
+        });
+
+
+
+
+
+
 
         return view;
     }
@@ -297,6 +352,7 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                         dialog_updatePump.dismiss();
 
 
+
                     }
                 },1500);
 
@@ -308,14 +364,15 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+
                 break;
 
 
             case R.id.cp_uploadPumpImage:
                 if(ImageFilePath != null) {
-
-
-                    StorageReference childRef = storageRef.child("pump_details/").child(pumpName2_tx+"/").child("pump_image.jpg");
+                    dialog_uploadingPump.show();
+                    String pumpName = pumpName1_et.getText().toString().trim();
+                    StorageReference childRef = storageRef.child("pump_details/").child(pumpName).child("/pump_image.jpg");
 
                     //uploading the image
                     UploadTask uploadTask = childRef.putFile(ImageFilePath);
@@ -323,19 +380,19 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        //    dialog_uploadingHazardousLicenceImage.dismiss();
+                            dialog_uploadingPump.dismiss();
                             Alerter.create(getActivity())
                                     .setTitle("Image Successfully uploaded")
                                     .setContentGravity(1)
                                     .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.success_icon)
                                     .show();
-                            selectImage_btn.setText("select\nimage");
+                            selectImage_btn.setText("select image");
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                           // dialog_uploadingHazardousLicenceImage.dismiss();
+                           dialog_uploadingPump.dismiss();
                             Alerter.create(getActivity())
                                     .setTitle("Upload Failed"+e.getMessage())
                                     .setContentGravity(1)
@@ -346,7 +403,7 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                     });
                 }
                 else {
-                 //   dialog_uploadingHazardousLicenceImage.dismiss();
+                 dialog_uploadingPump.dismiss();
                     Alerter.create(getActivity())
                             .setTitle("First Select Image")
                             .setContentGravity(1)
@@ -378,6 +435,46 @@ public class CreatePump extends Fragment implements View.OnClickListener{
             ImageFilePath = data.getData();
             selectImage_btn.setText("Selected");
         }
+    }
+
+    public void onStart(){
+        super.onStart();
+
+
+                dataRef_spinner.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Is better to use a List, because you don't know the size
+                        // of the iterator returned by dataSnapshot.getChildren() to
+                        // initialize the array
+                        try {
+                            final List<String> areas = new ArrayList<String>();
+                            areas.add("Select Pump");
+                            for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
+                                String areaName = areaSnapshot.child("pump_name").getValue(String.class);
+                                areas.add(areaName);
+
+
+                            }
+
+
+                            ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, areas);
+                            areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinner.setAdapter(areasAdapter);
+                        }
+                        catch (NullPointerException e){
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        throw databaseError.toException();
+                    }
+                });
+
     }
 
     //end

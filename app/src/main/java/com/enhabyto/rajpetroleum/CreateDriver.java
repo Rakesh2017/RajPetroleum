@@ -79,6 +79,9 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
     DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
     DatabaseReference d_driverCredentials = d_root.child("driver_credentials");
     DatabaseReference d_driverProfiles = d_root.child("driver_profiles");
+    DatabaseReference d_parent = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
+    String connected;
+
 
     String contact_tx, password_tx, firebase_identity;
     String contact1_tx, name_tx, address_tx, birth_tx, drivingLis_tx, drivingLisValid_tx, hazardousDrivingLis_tx, hazardousDrivingLisValid_tx, education_tx, marital_tx, document_tx;
@@ -285,6 +288,18 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                     return;
                 }
 
+                d_parent.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        connected = dataSnapshot.getValue(String.class);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
                 d_driverCredentials.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -302,6 +317,17 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                     @Override
                     public void run() {
 
+                        if (!TextUtils.equals(connected, "connected")){
+                            Alerter.create(getActivity())
+                                    .setTitle("Unable to Connect to Server!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.no_internet)
+                                    .show();
+                            //    Log.w("123", connected);
+                            dialog.dismiss();
+                            return;
+                        }
 
                         if (contact_tx.equals(firebase_identity)){
 
@@ -391,6 +417,17 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
                     return;
                 }
+                d_parent.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        connected = dataSnapshot.getValue(String.class);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
 
                         d_driverCredentials.addValueEventListener(new ValueEventListener() {
@@ -484,6 +521,17 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                     @Override
                     public void run() {
                       //  Toast.makeText(getContext(), ""+firebase_identity, Toast.LENGTH_SHORT).show();
+                        if (!TextUtils.equals(connected, "connected")){
+                            Alerter.create(getActivity())
+                                    .setTitle("Unable to Connect to Server!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.no_internet)
+                                    .show();
+                            //    Log.w("123", connected);
+                            dialog_loading_data.dismiss();
+                            return;
+                        }
 
                     try {
 

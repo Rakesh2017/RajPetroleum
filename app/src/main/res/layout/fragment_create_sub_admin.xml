@@ -1,0 +1,583 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.enhabyto.rajpetroleum.CreateSubAdmin">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            >
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:weightSum="2"
+                android:orientation="vertical"
+                android:id="@+id/cs_mainLinearLayout"
+                >
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cs_createSubButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/lightRed"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf234;"
+                    fancy:fb_iconPosition="right"
+                    fancy:fb_radius="3dp"
+                    android:layout_weight="1"
+                    fancy:fb_text="Create New Sub-Admin"
+                    fancy:fb_textColor="@color/black"
+                    android:layout_marginTop="20dp"
+                    />
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cs_updateSubProfileButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:layout_weight="1"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/lightRed"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf0d1;"
+                    fancy:fb_iconPosition="right"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="Update Sub-Admin Profile"
+                    fancy:fb_textColor="@color/black"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="16dp"
+                    />
+
+            </LinearLayout>
+
+
+            <!--Create Sub Admin-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:id="@+id/cs_CreateProfileRelativeLayout"
+                android:layout_below="@+id/cs_mainLinearLayout"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"
+                >
+
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cd_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:gravity="center"
+                    android:text="Create Sub-Admin"
+                    android:textColor="@color/black"
+                    android:textAllCaps="true"
+                    android:textSize="24sp" />
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_contactTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cd_text"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:text="@string/Contact"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/cs_contactEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cs_contactTextView"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/rounded_edit_text_black"
+                    android:hint="Unique Identity of Sub_admin"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/blackFifty"
+                    android:textSize="20sp" />
+
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_passwordTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cs_contactEditText"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:text="@string/password"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/cs_passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cs_passwordTextView"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/rounded_edit_text_black"
+                    android:hint="Enter Password"
+                    android:inputType="textPassword"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/blackFifty"
+                    android:textSize="20sp" />
+
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cd_CreateDriverButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/lightGreen"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf234;"
+                    fancy:fb_iconPosition="right"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="Create Driver Profile"
+                    fancy:fb_textColor="@color/black"
+                    android:layout_below="@+id/cs_passwordEditText"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    />
+            </RelativeLayout>
+
+
+            <!--Profile Information-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cs_loadInfoRelativeLayout"
+                android:layout_below="@+id/cs_mainLinearLayout"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+
+                >
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cd_text1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="26dp"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:gravity="center"
+                    android:text="Update Driver Information"
+                    android:textColor="@color/black"
+                    android:textAllCaps="true"
+                    android:textSize="20sp" />
+
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_contact1TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cd_text1"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:text="@string/Contact"
+                    android:textColor="@color/black"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/cs_contact1EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cs_contact1TextView"
+                    android:background="@drawable/rounded_edit_text_black"
+                    android:hint="Enter Sub-Admin Mobile Number"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/naturalBlue"
+                    android:textSize="20sp" />
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cd_checkInfoButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="16dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/lightRed"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf1d8;"
+                    fancy:fb_iconPosition="right"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="Load Data"
+                    fancy:fb_textColor="@color/black"
+                    android:layout_below="@+id/cs_contact1EditText"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="16dp"
+                    />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:id="@+id/cd_driverDataRelativeLayout"
+                android:layout_below="@+id/cs_loadInfoRelativeLayout"
+
+                >
+
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_nameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:text="@string/Name"
+                    android:textColor="@color/blackNinety"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/cs_nameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cs_nameTextView"
+                    android:background="@drawable/rounded_edit_text_black"
+                    android:hint="Enter Sub_admin Name"
+                    android:inputType="textCapSentences"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/blackFifty"
+                    android:textSize="20sp" />
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_addressTextView"
+                    android:layout_below="@+id/cs_nameEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:text="Address"
+                    android:textColor="@color/blackNinety"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/cs_addressEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cs_addressTextView"
+                    android:background="@drawable/rounded_edit_text_black"
+                    android:hint="Enter permanent address"
+                    android:inputType="textCapSentences"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/blackFifty"
+                    android:textSize="20sp" />
+
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_birthTextView"
+                    android:layout_below="@+id/cs_addressEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:text="Date of birth"
+                    android:textColor="@color/blackNinety"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/cs_birthEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cs_birthTextView"
+                    android:background="@drawable/rounded_edit_text_black"
+                    android:hint="Enter DOB"
+                    android:inputType="textCapSentences"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/blackFifty"
+                    android:textSize="20sp" />
+
+
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_rightsTextView"
+                    android:layout_below="@+id/cs_birthEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:gravity="center"
+                    android:text="Privileges"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <!--Driver Priveleges-->
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_driverTextView"
+                    android:layout_below="@+id/cs_rightsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:text="Create Driver"
+                    android:textColor="@color/blackNinety"
+                    android:textSize="16sp" />
+
+                 <!--Selector-->
+                <co.ceryle.radiorealbutton.RadioRealButtonGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cs_driverSelector"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_below="@+id/cs_driverTextView"
+                    app:rrbg_animateDrawables_enter="overshoot"
+                    app:rrbg_animateTexts_enter="overshoot"
+                    app:rrbg_dividerColor="@color/black"
+                    app:rrbg_dividerSize="1dp"
+                    app:rrbg_radius="10dp"
+                    app:rrbg_selectorColor="@color/lightGreen"
+                    app:rrbg_selectorSize="6dp">
+
+                    <co.ceryle.radiorealbutton.RadioRealButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cs_driverYes"
+                        app:rrb_drawableHeight="36dp"
+                        app:rrb_drawablePadding="8dp"
+                        app:rrb_drawableWidth="36dp"
+                        app:rrb_ripple="true"
+                        app:rrb_rippleColor="@color/black"
+                        app:rrb_text="Yes"
+                        app:rrb_textColor="@color/black"/>
+
+                    <co.ceryle.radiorealbutton.RadioRealButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cs_driverNo"
+                        app:rrb_drawableGravity="right"
+                        app:rrb_drawableHeight="36dp"
+                        app:rrb_drawablePadding="8dp"
+                        app:rrb_drawableWidth="36dp"
+                        app:rrb_ripple="true"
+                        app:rrb_rippleColor="@color/black"
+                        app:rrb_text="No"
+                        app:rrb_textColor="@color/black"/>
+                </co.ceryle.radiorealbutton.RadioRealButtonGroup>
+
+
+
+
+                <!--Driver Priveleges-->
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_pumpTextView"
+                    android:layout_below="@+id/cs_driverSelector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:text="Create Pump"
+                    android:textColor="@color/blackNinety"
+                    android:textSize="16sp" />
+
+                <!--Selector-->
+                <co.ceryle.radiorealbutton.RadioRealButtonGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cs_pumpSelector"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_below="@+id/cs_pumpTextView"
+                    app:rrbg_animateDrawables_enter="overshoot"
+                    app:rrbg_animateTexts_enter="overshoot"
+                    app:rrbg_dividerColor="@color/black"
+                    app:rrbg_dividerSize="1dp"
+                    app:rrbg_radius="10dp"
+                    app:rrbg_selectorColor="@color/lightGreen"
+                    app:rrbg_selectorSize="6dp">
+
+                    <co.ceryle.radiorealbutton.RadioRealButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cs_pumpYes"
+                        app:rrb_drawableHeight="36dp"
+                        app:rrb_drawablePadding="8dp"
+                        app:rrb_drawableWidth="36dp"
+                        app:rrb_ripple="true"
+                        app:rrb_rippleColor="@color/black"
+                        app:rrb_text="Yes"
+                        app:rrb_textColor="@color/black"/>
+
+                    <co.ceryle.radiorealbutton.RadioRealButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cs_pumpNo"
+                        app:rrb_drawableGravity="right"
+                        app:rrb_drawableHeight="36dp"
+                        app:rrb_drawablePadding="8dp"
+                        app:rrb_drawableWidth="36dp"
+                        app:rrb_ripple="true"
+                        app:rrb_rippleColor="@color/black"
+                        app:rrb_text="No"
+                        app:rrb_textColor="@color/black"/>
+                </co.ceryle.radiorealbutton.RadioRealButtonGroup>
+
+
+
+                <!--Driver Priveleges-->
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_truckTextView"
+                    android:layout_below="@+id/cs_pumpSelector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:text="Create Truck"
+                    android:textColor="@color/blackNinety"
+                    android:textSize="16sp" />
+
+                <!--Selector-->
+                <co.ceryle.radiorealbutton.RadioRealButtonGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cs_truckSelector"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_below="@+id/cs_truckTextView"
+                    app:rrbg_animateDrawables_enter="overshoot"
+                    app:rrbg_animateTexts_enter="overshoot"
+                    app:rrbg_dividerColor="@color/black"
+                    app:rrbg_dividerSize="1dp"
+                    app:rrbg_radius="10dp"
+                    app:rrbg_selectorColor="@color/lightGreen"
+                    app:rrbg_selectorSize="6dp">
+
+                    <co.ceryle.radiorealbutton.RadioRealButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cs_truckYes"
+                        app:rrb_drawableHeight="36dp"
+                        app:rrb_drawablePadding="8dp"
+                        app:rrb_drawableWidth="36dp"
+                        app:rrb_ripple="true"
+                        app:rrb_rippleColor="@color/black"
+                        app:rrb_text="Yes"
+                        app:rrb_textColor="@color/black"/>
+
+                    <co.ceryle.radiorealbutton.RadioRealButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cs_truckNo"
+                        app:rrb_drawableGravity="right"
+                        app:rrb_drawableHeight="36dp"
+                        app:rrb_drawablePadding="8dp"
+                        app:rrb_drawableWidth="36dp"
+                        app:rrb_ripple="true"
+                        app:rrb_rippleColor="@color/black"
+                        app:rrb_text="No"
+                        app:rrb_textColor="@color/black"/>
+                </co.ceryle.radiorealbutton.RadioRealButtonGroup>
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cs_submitButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/lightGreen"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf038;"
+                    fancy:fb_iconPosition="right"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="Update"
+                    fancy:fb_textColor="@color/black"
+                    android:layout_below="@+id/cs_truckSelector"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="24dp"
+                    />
+
+
+
+            </RelativeLayout>
+
+
+
+
+
+
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+</FrameLayout>

@@ -67,6 +67,13 @@
         <item name="DialogSpotCount">4</item>
     </style>
 
+    <style name="dialog_uploadingPumpImage" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">Uploading Pump Image</item>
+        <item name="DialogSpotColor">@color/white</item>
+        <item name="DialogSpotCount">4</item>
+    </style>
+
     <style name="dialog_updatingTruck" parent="android:Theme.DeviceDefault.Dialog">
         <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
         <item name="DialogTitleText">Updating Truck Details</item>

@@ -142,6 +142,8 @@ public class DashBoard extends AppCompatActivity
 
 
         } else if (id == R.id.nav_CreateAdmin) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateSubAdmin()).addToBackStack(null).commit();
+
 
         } else if (id == R.id.nav_TruckDetails) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateTruck()).addToBackStack(null).commit();

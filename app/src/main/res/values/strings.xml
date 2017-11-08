@@ -11,11 +11,13 @@
     <string name="birth">Age</string>
     <string name="dashboard">DashBoard</string>
     <string name="createDriver">Create Driver</string>
-    <string name="createAdmin">Create Admin</string>
+    <string name="createAdmin">Create Sub-Admin</string>
     <string name="TruckDetails">Truck Details</string>
     <string name="PumpDetails">Pump Details</string>
     <string name="FuelRate">Fuel Rate</string>
     <string name="truckNumber">Truck Number</string>
+    <string name="spinnerTitle">Select</string>
+    <string name="myPreferenceTitle">myPreferenceTitle</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

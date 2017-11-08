@@ -81,6 +81,18 @@
             android:layout_marginTop="8dp"
             />
 
+        <!-- Spinner Element -->
+        <Spinner
+            android:id="@+id/ct_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ct_truckNumberEditText1"
+            android:layout_marginTop="10dp"
+            android:prompt="@string/spinnerTitle"
+            android:layout_toStartOf="@+id/ct_openCreateTruckButton"
+            android:layout_marginEnd="16dp"
+            />
+
     </RelativeLayout>
 
         <RelativeLayout
