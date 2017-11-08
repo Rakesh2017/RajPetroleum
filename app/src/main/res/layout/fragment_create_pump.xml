@@ -102,7 +102,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Pump Name"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -128,7 +128,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Contact Name"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -155,7 +155,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Contact"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -184,7 +184,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Whatsapp Contact"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -213,7 +213,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Landline"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -240,7 +240,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="SAP code"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -268,7 +268,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Address"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -297,7 +297,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="GSTIN"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -325,7 +325,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="TIN"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -353,7 +353,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Company Name"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText

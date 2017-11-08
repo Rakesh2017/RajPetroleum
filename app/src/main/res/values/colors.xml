@@ -9,6 +9,7 @@
     <color name="blackFifty">#50000000</color>
     <color name="white">#ffffff</color>
     <color name="whiteFifty">#50ffffff</color>
+    <color name="blackNinety">#90000000</color>
     <color name="lightGreen">#3dbb93</color>
     <color name="lightRed">#e25b68</color>
     <color name="naturalBlue">#5B90F6</color>

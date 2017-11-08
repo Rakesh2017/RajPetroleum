@@ -363,7 +363,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                             Alerter.create(getActivity())
                                     .setTitle("Unable to Connect to Server!")
                                     .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.blackFifty)
+                                    .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.no_internet)
                                     .show();
                             //    Log.w("123", connected);
@@ -446,7 +446,15 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                         dataRef_truckDetails.child("national_permit").setValue(nationalPermit_tx);
                         dataRef_truckDetails.child("state_permit").setValue(statePermit_tx);
                         dataRef_truckDetails.child("labour_permit").setValue(labourPermit_tx);
+                        Alerter.create(getActivity())
+                                .setTitle("Truck Details Updated")
+                                .setContentGravity(1)
+                                .setBackgroundColorRes(R.color.black)
+                                .setIcon(R.drawable.success_icon)
+                                .show();
                         dialog_updateTruck.dismiss();
+
+
 
                     }
                 },2000);

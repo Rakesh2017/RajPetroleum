@@ -88,6 +88,8 @@ public class CreatePump extends Fragment implements View.OnClickListener{
         tin_et = view.findViewById(R.id.cp_tinEditText);
         company_et = view.findViewById(R.id.cp_companyEditText);
 
+        pumpName2_et.setKeyListener(null);
+
         selectImage_btn = view.findViewById(R.id.cp_selectPumpImage);
         uploadImage_btn = view.findViewById(R.id.cp_uploadPumpImage);
 

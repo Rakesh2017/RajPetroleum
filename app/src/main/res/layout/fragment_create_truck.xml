@@ -105,7 +105,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Truck number"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -133,7 +133,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Chassis Number"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -160,7 +160,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Engine Number"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -188,7 +188,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Owner Name"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -216,7 +216,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Attached with"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -245,7 +245,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Chambers"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
                 <EditText
@@ -274,7 +274,7 @@
                 android:gravity="center"
                 android:text="Capacity"
                 android:layout_alignParentEnd="true"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -304,7 +304,7 @@
                 android:gravity="center"
                 android:textStyle="bold"
                 android:text="Registration Certificate"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -332,7 +332,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Valid"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -363,7 +363,7 @@
                 android:gravity="center"
                 android:text="Renew"
                 android:layout_alignParentEnd="true"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -393,7 +393,7 @@
                 android:gravity="center"
                 android:text="Calibration Created"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -425,7 +425,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Valid"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -454,7 +454,7 @@
                 android:gravity="center"
                 android:text="Renew"
                 android:layout_alignParentEnd="true"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -485,7 +485,7 @@
                 android:gravity="center"
                 android:text="Fitness Tested On"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -514,7 +514,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Valid"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -545,7 +545,7 @@
                 android:gravity="center"
                 android:text="Renew"
                 android:layout_alignParentEnd="true"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -577,7 +577,7 @@
                 android:text="Pollution Tested On"
                 android:textStyle="bold"
 
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -606,7 +606,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Valid"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -637,7 +637,7 @@
                 android:gravity="center"
                 android:text="Renew"
                 android:layout_alignParentEnd="true"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -668,7 +668,7 @@
                 android:text="Insurance Company Name"
                 android:textStyle="bold"
 
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -695,7 +695,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Insurance Amount Paid"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -723,7 +723,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Valid"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -754,7 +754,7 @@
                 android:gravity="center"
                 android:text="Renew"
                 android:layout_alignParentEnd="true"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -786,7 +786,7 @@
                 android:text="Hydro Tested On"
                 android:textStyle="bold"
 
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -815,7 +815,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Valid"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -846,7 +846,7 @@
                 android:gravity="center"
                 android:text="Renew"
                 android:layout_alignParentEnd="true"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -879,7 +879,7 @@
                 android:text="Road Tested On"
                 android:textStyle="bold"
 
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -908,7 +908,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Valid"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -939,7 +939,7 @@
                 android:gravity="center"
                 android:text="Renew"
                 android:layout_alignParentEnd="true"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -971,7 +971,7 @@
                 android:gravity="center"
                 android:text="Explosive Tested On"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -1000,7 +1000,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Valid"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -1031,7 +1031,7 @@
                 android:gravity="center"
                 android:text="Renew"
                 android:layout_alignParentEnd="true"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -1061,7 +1061,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="National Permit"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -1088,7 +1088,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="State Permit"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -1115,7 +1115,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:text="Labour Permit"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText

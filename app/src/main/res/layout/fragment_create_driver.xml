@@ -261,12 +261,12 @@
                 android:paddingTop="10dp"
                 fancy:fb_borderColor="#FFFFFF"
                 fancy:fb_borderWidth="1dp"
-                fancy:fb_defaultColor="#BFBFBF"
+                fancy:fb_defaultColor="@color/lightRed"
                 fancy:fb_focusColor="@color/black"
                 fancy:fb_fontIconResource="&#xf1d8;"
                 fancy:fb_iconPosition="right"
                 fancy:fb_radius="3dp"
-                fancy:fb_text="Load Existing Data(if any)"
+                fancy:fb_text="Load Data"
                 fancy:fb_textColor="@color/black"
                 android:layout_below="@+id/cd_Contact1EditText"
                 android:layout_marginTop="7dp"
@@ -295,7 +295,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="droidsansbold.ttf"
                 android:text="@string/Name"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -323,7 +323,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="droidsansbold.ttf"
                 android:text="Address"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -351,7 +351,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="droidsansbold.ttf"
                 android:text="Date of Birth"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -382,7 +382,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="droidsansbold.ttf"
                 android:text="Driving Licence Number"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -412,7 +412,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="droidsansbold.ttf"
                 android:text="Valid Upto"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -494,7 +494,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="droidsansbold.ttf"
                 android:text="Hazardous Driving Licence Number"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -524,7 +524,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="droidsansbold.ttf"
                 android:text="Valid Upto"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:textSize="16sp" />
 
             <EditText
@@ -605,7 +605,7 @@
             android:layout_marginStart="16dp"
             android:textSize="16sp"
             android:layout_marginTop="16dp"
-            android:textColor="@color/black"
+            android:textColor="@color/blackNinety"
             android:fontFamily="droidsansbold.ttf"
             />
 
@@ -636,7 +636,7 @@
             android:layout_marginStart="16dp"
             android:textSize="16sp"
             android:layout_marginTop="16dp"
-            android:textColor="@color/black"
+            android:textColor="@color/blackNinety"
             android:fontFamily="droidsansbold.ttf"
             />
 
@@ -666,7 +666,7 @@
                 android:layout_marginStart="16dp"
                 android:textSize="16sp"
                 android:layout_marginTop="16dp"
-                android:textColor="@color/black"
+                android:textColor="@color/blackNinety"
                 android:fontFamily="droidsansbold.ttf"
                 />
 
