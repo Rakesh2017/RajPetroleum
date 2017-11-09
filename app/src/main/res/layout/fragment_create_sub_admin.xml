@@ -30,8 +30,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
                 android:weightSum="2"
                 android:orientation="vertical"
@@ -39,10 +37,9 @@
                 >
 
                 <mehdi.sakout.fancybuttons.FancyButton
-                    android:id="@+id/cs_createSubButton"
+                    android:id="@+id/cs_openCreateSubButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:paddingBottom="10dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
@@ -61,7 +58,7 @@
                     />
 
                 <mehdi.sakout.fancybuttons.FancyButton
-                    android:id="@+id/cs_updateSubProfileButton"
+                    android:id="@+id/cs_openUpdateSubProfileButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="10dp"
@@ -115,7 +112,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cd_text"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:text="@string/Contact"
@@ -127,10 +123,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cs_contactTextView"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
                     android:background="@drawable/rounded_edit_text_black"
-                    android:hint="Unique Identity of Sub_admin"
+                    android:hint="Unique Identity of Sub-admin"
                     android:inputType="phone"
                     android:maxLength="10"
                     android:padding="5dp"
@@ -144,7 +138,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cs_contactEditText"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:text="@string/password"
@@ -156,8 +149,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cs_passwordTextView"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginStart="16dp"
                     android:background="@drawable/rounded_edit_text_black"
                     android:hint="Enter Password"
                     android:inputType="textPassword"
@@ -169,11 +160,9 @@
 
 
                 <mehdi.sakout.fancybuttons.FancyButton
-                    android:id="@+id/cd_CreateDriverButton"
+                    android:id="@+id/cs_createSubAdminButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
@@ -203,7 +192,7 @@
                 android:layout_below="@+id/cs_mainLinearLayout"
                 android:layout_marginTop="16dp"
                 android:background="@color/white"
-
+                android:visibility="gone"
                 >
 
                 <util.android.textviews.FontTextView
@@ -213,7 +202,7 @@
                     android:layout_marginTop="26dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:gravity="center"
-                    android:text="Update Driver Information"
+                    android:text="Update Sub-Admin Profile"
                     android:textColor="@color/black"
                     android:textAllCaps="true"
                     android:textSize="20sp" />
@@ -224,7 +213,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cd_text1"
-                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:text="@string/Contact"
@@ -249,7 +237,7 @@
 
 
                 <mehdi.sakout.fancybuttons.FancyButton
-                    android:id="@+id/cd_checkInfoButton"
+                    android:id="@+id/cs_checkInfoButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -278,9 +266,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:id="@+id/cd_driverDataRelativeLayout"
+                android:id="@+id/cs_subAdminDataRelativeLayout"
                 android:layout_below="@+id/cs_loadInfoRelativeLayout"
-
+                android:visibility="gone"
                 >
 
 
@@ -346,8 +334,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cs_birthTextView"
                     android:background="@drawable/rounded_edit_text_black"
-                    android:hint="Enter DOB"
+                    android:hint="Enter DOB (dd/mm/yyyy)"
                     android:inputType="textCapSentences"
+                    android:maxLength="10"
                     android:padding="5dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/blackFifty"
@@ -374,6 +363,7 @@
                     android:layout_below="@+id/cs_rightsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:text="Create Driver"
                     android:textColor="@color/blackNinety"
@@ -425,13 +415,14 @@
 
 
 
-                <!--Driver Priveleges-->
+                <!--pump Priveleges-->
 
                 <util.android.textviews.FontTextView
                     android:id="@+id/cs_pumpTextView"
                     android:layout_below="@+id/cs_driverSelector"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:text="Create Pump"
                     android:textColor="@color/blackNinety"
@@ -482,13 +473,14 @@
 
 
 
-                <!--Driver Priveleges-->
+                <!--truck Priveleges-->
 
                 <util.android.textviews.FontTextView
                     android:id="@+id/cs_truckTextView"
                     android:layout_below="@+id/cs_pumpSelector"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:text="Create Truck"
                     android:textColor="@color/blackNinety"
@@ -557,7 +549,7 @@
                     fancy:fb_textColor="@color/black"
                     android:layout_below="@+id/cs_truckSelector"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="30dp"
                     />
 
 

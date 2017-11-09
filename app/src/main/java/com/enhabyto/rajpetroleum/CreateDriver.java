@@ -587,7 +587,29 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                 marital_tx  = marital_et.getText().toString().trim();
                 document_tx = document_et.getText().toString().trim();
 
+                if (!isNetworkAvailable()){
+                    Alerter.create(getActivity())
+                            .setTitle("No Internet Connection!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                    dialog_loading_data.dismiss();
+                    return;
+                }
 
+
+                d_parent.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        connected = dataSnapshot.getValue(String.class);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
                 Calendar minAge = Calendar.getInstance();
                 minAge.add(Calendar.YEAR, -18);
@@ -629,24 +651,36 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
 
 
-                DatabaseReference d_driverProfile = d_root.child("driver_profiles").child(contact1_tx);
-              //  Toast.makeText(getContext(), ""+contact1_tx, Toast.LENGTH_SHORT).show();
-
-                d_driverProfile.child("contact").setValue(contact1_tx);
-                d_driverProfile.child("name").setValue(name_et.getText().toString());
-                d_driverProfile.child("address").setValue(address_tx);
-                d_driverProfile.child("birth").setValue(birth_tx);
-                d_driverProfile.child("driving_licence").setValue(drivingLis_tx);
-                d_driverProfile.child("driving_licence_valid").setValue(drivingLisValid_tx);
-                d_driverProfile.child("hazardous_driving_licence").setValue(hazardousDrivingLis_tx);
-                d_driverProfile.child("hazardous_driving_licence_valid").setValue(hazardousDrivingLisValid_tx);
-                d_driverProfile.child("education").setValue(education_tx);
-                d_driverProfile.child("marital").setValue(marital_tx);
-              //  d_driverProfile.child(document_tx).setValue(document_tx);
-
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        if (!TextUtils.equals(connected, "connected")){
+                            Alerter.create(getActivity())
+                                    .setTitle("Unable to Connect to Server!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.no_internet)
+                                    .show();
+                            //    Log.w("123", connected);
+                            dialog_loading_data.dismiss();
+                            return;
+                        }
+
+                        DatabaseReference d_driverProfile = d_root.child("driver_profiles").child(contact1_tx);
+                        //  Toast.makeText(getContext(), ""+contact1_tx, Toast.LENGTH_SHORT).show();
+
+                        d_driverProfile.child("contact").setValue(contact1_tx);
+                        d_driverProfile.child("name").setValue(name_et.getText().toString());
+                        d_driverProfile.child("address").setValue(address_tx);
+                        d_driverProfile.child("birth").setValue(birth_tx);
+                        d_driverProfile.child("driving_licence").setValue(drivingLis_tx);
+                        d_driverProfile.child("driving_licence_valid").setValue(drivingLisValid_tx);
+                        d_driverProfile.child("hazardous_driving_licence").setValue(hazardousDrivingLis_tx);
+                        d_driverProfile.child("hazardous_driving_licence_valid").setValue(hazardousDrivingLisValid_tx);
+                        d_driverProfile.child("education").setValue(education_tx);
+                        d_driverProfile.child("marital").setValue(marital_tx);
+                        //  d_driverProfile.child(document_tx).setValue(document_tx);
+
                         Alerter.create(getActivity())
                                 .setTitle("Profile Updated")
                                 .setContentGravity(1)

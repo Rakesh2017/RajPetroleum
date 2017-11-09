@@ -40,8 +40,15 @@
     </style>
 
     <style name="creatingDriverAccount" parent="android:Theme.DeviceDefault.Dialog">
+    <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+    <item name="DialogTitleText">Creating Driver Account</item>
+    <item name="DialogSpotColor">@color/white</item>
+    <item name="DialogSpotCount">4</item>
+    </style>
+
+    <style name="creatingSubAdminAccount" parent="android:Theme.DeviceDefault.Dialog">
         <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
-        <item name="DialogTitleText">Creating Driver Account</item>
+        <item name="DialogTitleText">Creating Sub-Admin Account</item>
         <item name="DialogSpotColor">@color/white</item>
         <item name="DialogSpotCount">4</item>
     </style>
