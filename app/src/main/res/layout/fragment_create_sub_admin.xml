@@ -336,6 +336,8 @@
                     android:background="@drawable/rounded_edit_text_black"
                     android:hint="Enter DOB (dd/mm/yyyy)"
                     android:inputType="textCapSentences"
+                    android:onClick="onClick"
+                    android:focusable="false"
                     android:maxLength="10"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -395,7 +397,7 @@
                         app:rrb_drawableWidth="36dp"
                         app:rrb_ripple="true"
                         app:rrb_rippleColor="@color/black"
-                        app:rrb_text="Yes"
+                        app:rrb_text="Grant"
                         app:rrb_textColor="@color/black"/>
 
                     <co.ceryle.radiorealbutton.RadioRealButton
@@ -408,7 +410,7 @@
                         app:rrb_drawableWidth="36dp"
                         app:rrb_ripple="true"
                         app:rrb_rippleColor="@color/black"
-                        app:rrb_text="No"
+                        app:rrb_text="Deny"
                         app:rrb_textColor="@color/black"/>
                 </co.ceryle.radiorealbutton.RadioRealButtonGroup>
 
@@ -454,7 +456,7 @@
                         app:rrb_drawableWidth="36dp"
                         app:rrb_ripple="true"
                         app:rrb_rippleColor="@color/black"
-                        app:rrb_text="Yes"
+                        app:rrb_text="Grant"
                         app:rrb_textColor="@color/black"/>
 
                     <co.ceryle.radiorealbutton.RadioRealButton
@@ -467,7 +469,7 @@
                         app:rrb_drawableWidth="36dp"
                         app:rrb_ripple="true"
                         app:rrb_rippleColor="@color/black"
-                        app:rrb_text="No"
+                        app:rrb_text="Deny"
                         app:rrb_textColor="@color/black"/>
                 </co.ceryle.radiorealbutton.RadioRealButtonGroup>
 
@@ -512,7 +514,7 @@
                         app:rrb_drawableWidth="36dp"
                         app:rrb_ripple="true"
                         app:rrb_rippleColor="@color/black"
-                        app:rrb_text="Yes"
+                        app:rrb_text="Grant"
                         app:rrb_textColor="@color/black"/>
 
                     <co.ceryle.radiorealbutton.RadioRealButton
@@ -525,7 +527,7 @@
                         app:rrb_drawableWidth="36dp"
                         app:rrb_ripple="true"
                         app:rrb_rippleColor="@color/black"
-                        app:rrb_text="No"
+                        app:rrb_text="Deny"
                         app:rrb_textColor="@color/black"/>
                 </co.ceryle.radiorealbutton.RadioRealButtonGroup>
 

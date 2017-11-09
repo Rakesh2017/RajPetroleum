@@ -2,6 +2,7 @@ package com.enhabyto.rajpetroleum;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
@@ -10,8 +11,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -38,10 +42,13 @@ import java.util.List;
 import dmax.dialog.SpotsDialog;
 import util.android.textviews.FontTextView;
 
+import static android.app.FragmentTransaction.TRANSIT_ENTER_MASK;
+
 public class DashBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private ImageView nav_profileImageView;
+    String tag123;
 
 
 
@@ -99,10 +106,20 @@ public class DashBoard extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
 
+
+            FragmentManager fragmentManager = this.getSupportFragmentManager();
+            int s =fragmentManager.getBackStackEntryCount() - 1;
+            if (s >= 0){
+                super.onBackPressed();
+
+            }
+            else {
                 super.onBackPressed();
                 moveTaskToBack(true);
                 finish();
             }
+
+        }
 
 
     }
@@ -136,21 +153,26 @@ public class DashBoard extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_dashboard) {
+            Intent intent = new Intent(DashBoard.this, DashBoard.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+          //  overridePendingTransition(R.anim.);
+
             // Handle the camera action
         } else if (id == R.id.nav_CreateDriver) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateDriver()).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateDriver()).addToBackStack("DriverFragment").commit();
 
 
         } else if (id == R.id.nav_CreateAdmin) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateSubAdmin()).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateSubAdmin()).addToBackStack("AdminFragment").commit();
 
 
         } else if (id == R.id.nav_TruckDetails) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateTruck()).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateTruck()).addToBackStack("TruckFragments").commit();
 
 
         } else if (id == R.id.nav_pumpDetails) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreatePump()).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreatePump()).addToBackStack("PumpFragments").commit();
 
 
         } else if (id == R.id.nav_FuelRate) {

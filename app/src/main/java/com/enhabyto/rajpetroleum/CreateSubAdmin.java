@@ -2,6 +2,7 @@ package com.enhabyto.rajpetroleum;
 
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -12,6 +13,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,7 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tapadoo.alerter.Alerter;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import co.ceryle.radiorealbutton.RadioRealButton;
 import co.ceryle.radiorealbutton.RadioRealButtonGroup;
@@ -51,6 +55,7 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
     DatabaseReference d_subAdminProfiles = d_root.child("sub_admin_profiles");
     DatabaseReference d_parent = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
     String connected, firebase_identity;
+    Calendar myCalendar = Calendar.getInstance();
 
 
     public CreateSubAdmin() {
@@ -71,6 +76,8 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
         address_et = view.findViewById(R.id.cs_addressEditText);
         birth_et = view.findViewById(R.id.cs_birthEditText);
 
+        birth_et.setKeyListener(null);
+
         openCreateSubAdmin_btn = view.findViewById(R.id.cs_openCreateSubButton);
         openUpdateSubAdmin_btn = view.findViewById(R.id.cs_openUpdateSubProfileButton);
         load_btn = view.findViewById(R.id.cs_checkInfoButton);
@@ -87,6 +94,7 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
         load_btn.setOnClickListener(this);
         submit_btn.setOnClickListener(this);
         createSubAdmin_btn.setOnClickListener(this);
+        birth_et.setOnClickListener(this);
 
         dialogCreatingSubAdmin = new SpotsDialog(getActivity(),R.style.creatingSubAdminAccount);
         dialog_loading_data = new SpotsDialog(getActivity(),R.style.loadingData);
@@ -97,10 +105,10 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
             @Override
             public void onClickedButton(RadioRealButton button, int position) {
                 if (position == 0){
-                    driver_permission = "denied";
+                    driver_permission = "granted";
                 }
                 else {
-                    driver_permission = "granted";
+                    driver_permission = "denied";
 
                 }
             }
@@ -111,11 +119,11 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
         pump_group.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
             @Override
             public void onClickedButton(RadioRealButton button, int position) {
-                if (position == 1){
-                    pump_permission = "denied";
+                if (position == 0){
+                    pump_permission = "granted";
                 }
                 else {
-                    pump_permission = "granted";
+                    pump_permission = "denied";
 
                 }
             }
@@ -128,10 +136,10 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
             @Override
             public void onClickedButton(RadioRealButton button, int position) {
                 if (position == 0){
-                    truck_permission = "denied";
+                    truck_permission = "granted";
                 }
                 else {
-                    truck_permission = "granted";
+                    truck_permission = "denied";
 
                 }
             }
@@ -164,14 +172,14 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                 YoYo.with(Techniques.FadeOutRight)
                         .duration(400)
                         .repeat(0)
-                        .playOn( view.findViewById(R.id.cs_loadInfoRelativeLayout));
+                        .playOn( view.findViewById(R.id.cs_subAdminDataRelativeLayout));
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         contact1_et.setText("");
                         view.findViewById(R.id.cs_loadInfoRelativeLayout).setVisibility(View.GONE);
-                        view.findViewById(R.id.cs_loadInfoRelativeLayout).setVisibility(View.GONE);
+                        view.findViewById(R.id.cs_subAdminDataRelativeLayout).setVisibility(View.GONE);
                     }
                 },400);
                 break;
@@ -411,23 +419,23 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                                 address_tx = dataSnapshot.child("address").getValue(String.class);
                                 birth_tx = dataSnapshot.child("birth").getValue(String.class);
                                 truck_permission = dataSnapshot.child("permissions").child("truck_permission").getValue(String.class);
-                                pump_permission = dataSnapshot.child("permissions").child("truck_permission").getValue(String.class);
-                                truck_permission = dataSnapshot.child("permissions").child("truck_permission").getValue(String.class);
+                                pump_permission = dataSnapshot.child("permissions").child("pump_permission").getValue(String.class);
+                                driver_permission = dataSnapshot.child("permissions").child("driver_permission").getValue(String.class);
 
                                 if (TextUtils.equals(truck_permission, "granted"))
                                     truck_group.setPosition(0);
                                 else
-                                    truck_group.setPosition(0);
+                                    truck_group.setPosition(1);
 
                                 if (TextUtils.equals(pump_permission, "granted"))
                                     pump_group.setPosition(0);
                                 else
-                                    pump_group.setPosition(0);
+                                    pump_group.setPosition(1);
 
                                 if (TextUtils.equals(driver_permission, "granted"))
                                     driver_group.setPosition(0);
                                 else
-                                    driver_group.setPosition(0);
+                                    driver_group.setPosition(1);
 
 
 
@@ -516,7 +524,7 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
 
 //                update profile
 
-            case R.id.cd_SubmitButton:
+            case R.id.cs_submitButton:
                 dialog_updating_data.show();
 
                 contact2_tx = contact2_et.getText().toString().trim();
@@ -593,7 +601,26 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
 
                 break;
 
+            case R.id.cs_birthEditText:
+                DatePickerDialog.OnDateSetListener date_birth = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        // TODO Auto-generated method stub
+                        myCalendar.set(Calendar.YEAR, year);
+                        myCalendar.set(Calendar.MONTH, monthOfYear);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        String myFormat = "dd/MM/yyyy"; // your format
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
 
+                        birth_et.setText(sdf.format(myCalendar.getTime()));
+
+
+                    }
+
+
+                };
+                new DatePickerDialog(getContext(), date_birth, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                break;
 
 
         }

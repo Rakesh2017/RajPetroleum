@@ -37,19 +37,23 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class Login extends AppCompatActivity {
 
-    private EditText email_et, password_et;
-    private String email_tx, password_tx;
+    private EditText email_et, password_et, contact_et, sub_password_et;
+    private String email_tx, password_tx, contact_tx, sub_password_tx, match_contact_tx, match_password_tx;
     private FancyButton forgotPass_btn;
 
     private SharedPreferences.Editor editor1;
 
+
     private AlertDialog dialog;
 
     private DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference d_subAdminCredentials;
+
 
     private FirebaseAuth mAuth;
     DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
     String connected;
+
 
 
     @Override
@@ -59,7 +63,10 @@ public class Login extends AppCompatActivity {
 
         email_et = findViewById(R.id.main_emailEditText);
         password_et = findViewById(R.id.main_passwordEditText);
+        contact_et = findViewById(R.id.main_sub_admin_contactEditText);
+        sub_password_et = findViewById(R.id.main_sub_admin_passwordEditText);
         FancyButton login_btn = findViewById(R.id.main_loginButton);
+        FancyButton sub_login_btn = findViewById(R.id.main_sub_admin_loginButton);
         forgotPass_btn = findViewById(R.id.main_ForgotButton);
         dialog = new SpotsDialog(Login.this, R.style.logging);
 
@@ -83,17 +90,7 @@ public class Login extends AppCompatActivity {
 
                 email_tx = email_et.getText().toString().trim();
                 password_tx = password_et.getText().toString().trim();
-           /*     connectedRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        connected = dataSnapshot.getValue(String.class);
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });*/
 
                 if (!isNetworkAvailable()){
                     Alerter.create(Login.this)
@@ -128,23 +125,33 @@ public class Login extends AppCompatActivity {
                     dialog.dismiss();
                     return;
                 }
+                connectedRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        connected = dataSnapshot.getValue(String.class);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
-                      /*  if (!TextUtils.equals(connected, "connected")){
+                        if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(Login.this)
                                     .setTitle("Unable to Connect to Server!")
                                     .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.blackFifty)
+                                    .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.no_internet)
                                     .show();
-                            Toast.makeText(Login.this, ""+connected, Toast.LENGTH_SHORT).show();
-                          //  Log.w("123", connected);
+                            //    Log.w("123", connected);
                             dialog.dismiss();
                             return;
-                        }*/
+                        }
 
                         mAuth.signInWithEmailAndPassword(email_tx, password_tx)
                                 .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
@@ -229,15 +236,118 @@ public class Login extends AppCompatActivity {
 
                     }
                 },1500);
-
-
-
-
-
-
-
             }
         });
+
+
+        sub_login_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+
+                contact_tx = contact_et.getText().toString().trim();
+                sub_password_tx = sub_password_et.getText().toString().trim();
+
+
+                if (!isNetworkAvailable()){
+                    Alerter.create(Login.this)
+                            .setTitle("No Internet Connection!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.blackFifty)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                    dialog.dismiss();
+                    return;
+                }
+
+
+                if (contact_tx.length() < 10){
+                    Alerter.create(Login.this)
+                            .setTitle("Invalid Contact Number!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.blackFifty)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    dialog.dismiss();
+                    return;
+                }
+
+                if (sub_password_tx.length() < 6){
+                    Alerter.create(Login.this)
+                            .setTitle("Length of Password should be greater than 5")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.blackFifty)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    dialog.dismiss();
+                    return;
+                }
+                connectedRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        connected = dataSnapshot.getValue(String.class);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                d_subAdminCredentials = d_root.child("sub_admin_credentials").child(contact_tx);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                d_subAdminCredentials.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        match_contact_tx = dataSnapshot.child("contact").getValue(String.class);
+                        match_password_tx = dataSnapshot.child("contact").getValue(String.class);
+
+                        if (!TextUtils.equals(connected, "connected")){
+                                     Alerter.create(Login.this)
+                                    .setTitle("Unable to Connect to Server!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.no_internet)
+                                    .show();
+                            //    Log.w("123", connected);
+                            dialog.dismiss();
+                            return;
+                        }
+
+                        if (TextUtils.equals(match_contact_tx, contact_tx) && TextUtils.equals(match_password_tx, sub_password_tx)){
+                            Intent intent = new Intent(Login.this, DashBoard.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Alerter.create(Login.this)
+                                    .setTitle("Invalid Login Credentials, Contact Admin for more information!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.no_internet)
+                                    .show();
+                            //    Log.w("123", connected);
+                            dialog.dismiss();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                    }
+                },1500);
+
+            }
+
+
+        });
+
 
     }
 

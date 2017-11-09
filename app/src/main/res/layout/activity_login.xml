@@ -9,17 +9,35 @@
     android:id="@+id/fragment_container_Login"
     tools:context="com.enhabyto.rajpetroleum.Login">
 
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        >
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginRelativeLayout1"
+        >
 
 
     <com.roger.match.library.MatchTextView
         match:text="ADMIN"
-        match:textSize="25sp"
+        match:textSize="20sp"
         match:textColor="#ffffff"
         android:id="@+id/main_admin_logo"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="24dp"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -121,8 +139,110 @@
         fancy:fb_textColor="#FFFFFF"
         fancy:fb_fontIconResource="&#xf059;"
         fancy:fb_iconPosition="right"
-        android:visibility="invisible"
+        android:visibility="gone"
         />
 
     </RelativeLayout>
+
+        <!--Sub Admin-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginRelativeLayout2"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_below="@+id/loginRelativeLayout1"
+        >
+
+        <com.roger.match.library.MatchTextView
+            match:text="SUB-ADMIN"
+            match:textSize="18sp"
+            match:textColor="#ffffff"
+            android:id="@+id/main_sub_admin_logo"
+            android:layout_marginTop="12dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_sub_admin_contact_input"
+            android:textColorHint="@color/white"
+            android:layout_below="@id/main_sub_admin_logo"
+            android:layout_marginTop="16dp"
+            >
+            <EditText
+                android:id="@+id/main_sub_admin_contactEditText"
+                android:layout_width="fill_parent"
+                android:layout_height="40sp"
+                android:hint="Contact Number"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:background="@color/whiteFifty"
+                android:translationY="10dp"
+                android:paddingStart="3dp"
+                android:paddingEnd="7sp"
+                android:paddingBottom="7sp"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_sub_admin_password_input"
+            android:layout_marginTop="3dp"
+            android:textColorHint="@color/white"
+            android:layout_below="@+id/main_sub_admin_contact_input"
+            >
+            <EditText
+                android:id="@+id/main_sub_admin_passwordEditText"
+                android:layout_width="fill_parent"
+                android:layout_height="40sp"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:background="@color/whiteFifty"
+                android:translationY="10dp"
+                android:paddingStart="3dp"
+                android:paddingEnd="7sp"
+                android:paddingBottom="7sp"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/main_sub_admin_loginButton"
+            android:layout_below="@+id/main_sub_admin_password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="7dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_focusColor="@color/whiteFifty"
+            fancy:fb_radius="3dp"
+            fancy:fb_text="@string/login"
+            fancy:fb_textColor="#FFFFFF"
+            fancy:fb_fontIconResource="&#xf023;"
+            fancy:fb_iconPosition="right"
+            android:layout_marginBottom="24dp"
+            />
+
+
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 </FrameLayout>

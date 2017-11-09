@@ -20,7 +20,7 @@
 
     <style name="logging" parent="android:Theme.DeviceDefault.Dialog">
         <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
-        <item name="DialogTitleText">Logging in\nSetting up Components</item>
+        <item name="DialogTitleText">Logging in</item>
         <item name="DialogSpotColor">@color/white</item>
         <item name="DialogSpotCount">4</item>
     </style>
