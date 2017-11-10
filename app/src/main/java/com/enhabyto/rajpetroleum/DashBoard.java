@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -27,6 +28,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -35,7 +38,17 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.tapadoo.alerter.Alerter;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -48,7 +61,11 @@ public class DashBoard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private ImageView nav_profileImageView;
-    String tag123;
+    String user_designation, sub_admin_contact;
+
+    FontTextView user_uid, user_name;
+    private DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference d_subProfile;
 
 
 
@@ -74,23 +91,94 @@ public class DashBoard extends AppCompatActivity
 
         ImageButton logout_btn = findViewById(R.id.app_bar_dash_logoutButton);
         nav_profileImageView = navigationView.getHeaderView(0).findViewById(R.id.nav1_profile_image);
+        user_uid = navigationView.getHeaderView(0).findViewById(R.id.nav1_uid);
+        user_name = navigationView.getHeaderView(0).findViewById(R.id.nav1_name);
 
 
 
-        Glide.with(getApplication().getApplicationContext())
-                .load(R.drawable.profile_image)
-                .asBitmap()
-                .fitCenter()
-                .centerCrop()
-                .into(new BitmapImageViewTarget(nav_profileImageView) {
+
+
+
+        SharedPreferences shared = getSharedPreferences("firstLog", MODE_PRIVATE);
+
+        user_designation = (shared.getString("user_designation", ""));
+        //Toast.makeText(this, channel, Toast.LENGTH_SHORT).show();
+       // Log.w("122", channel);
+
+        if (TextUtils.equals(user_designation, "admin")){
+            Glide.with(getApplication().getApplicationContext())
+                    .load(R.drawable.admin_profile_pic)
+                    .asBitmap()
+                    .fitCenter()
+                    .centerCrop()
+                    .into(new BitmapImageViewTarget(nav_profileImageView) {
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            RoundedBitmapDrawable circularBitmapDrawable =
+                                    RoundedBitmapDrawableFactory.create(getApplication().getResources(), resource);
+                            circularBitmapDrawable.setCircular(true);
+                            nav_profileImageView.setImageDrawable(circularBitmapDrawable);
+                        }
+                    });
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = mAuth.getCurrentUser();
+            if (user != null) {
+                String email = user.getEmail();
+                user_uid.setText(email);
+                d_subProfile = d_root.child("admin").child(user.getUid()).child("profile");
+                d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    protected void setResource(Bitmap resource) {
-                        RoundedBitmapDrawable circularBitmapDrawable =
-                                RoundedBitmapDrawableFactory.create(getApplication().getResources(), resource);
-                        circularBitmapDrawable.setCircular(true);
-                        nav_profileImageView.setImageDrawable(circularBitmapDrawable);
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String name = dataSnapshot.child("name").getValue(String.class);
+                        user_name.setText(name);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
                     }
                 });
+
+            }
+
+
+        }
+        else {
+            Glide.with(getApplication().getApplicationContext())
+                    .load(R.drawable.sub_admin_profile_pic)
+                    .asBitmap()
+                    .fitCenter()
+                    .centerCrop()
+                    .into(new BitmapImageViewTarget(nav_profileImageView) {
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            RoundedBitmapDrawable circularBitmapDrawable =
+                                    RoundedBitmapDrawableFactory.create(getApplication().getResources(), resource);
+                            circularBitmapDrawable.setCircular(true);
+                            nav_profileImageView.setImageDrawable(circularBitmapDrawable);
+                        }
+                    });
+            sub_admin_contact = (shared.getString("subAdmin_contact", ""));
+            user_uid.setText(sub_admin_contact);
+
+            d_subProfile = d_root.child("sub_admin_profiles").child(sub_admin_contact);
+            d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String name = dataSnapshot.child("name").getValue(String.class);
+                    user_name.setText(name);
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
 
 
         logout_btn.setOnClickListener(this);
@@ -160,20 +248,129 @@ public class DashBoard extends AppCompatActivity
 
             // Handle the camera action
         } else if (id == R.id.nav_CreateDriver) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateDriver()).addToBackStack("DriverFragment").commit();
+
+            if (TextUtils.equals(user_designation, "admin")){
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateDriver()).addToBackStack("DriverFragment").commit();
+            }
+            else {
+
+
+                d_subProfile = d_root.child("sub_admin_profiles").child(sub_admin_contact).child("permissions");
+                d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String permission = dataSnapshot.child("driver_permission").getValue(String.class);
+                        if(TextUtils.equals(permission, "granted")){
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateDriver()).addToBackStack("DriverFragment").commit();
+
+                        }
+                        else {
+                            Alerter.create(DashBoard.this)
+                                    .setTitle("You do not have permission to Create Truck, Access Denied!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.error)
+                                    .show();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
 
 
         } else if (id == R.id.nav_CreateAdmin) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateSubAdmin()).addToBackStack("AdminFragment").commit();
+
+            if (TextUtils.equals(user_designation, "admin")) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new CreateSubAdmin()).addToBackStack("AdminFragment").commit();
+
+            }
+            else {
+                Alerter.create(DashBoard.this)
+                        .setTitle("You do not have permission to Create Sub-Admin  Access Denied!")
+                        .setContentGravity(1)
+                        .setBackgroundColorRes(R.color.black)
+                        .setIcon(R.drawable.error)
+                        .show();
+            }
 
 
         } else if (id == R.id.nav_TruckDetails) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateTruck()).addToBackStack("TruckFragments").commit();
+
+            if (TextUtils.equals(user_designation, "admin")){
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateTruck()).addToBackStack("TruckFragments").commit();
+            }
+            else {
+
+
+                d_subProfile = d_root.child("sub_admin_profiles").child(sub_admin_contact).child("permissions");
+                d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String permission = dataSnapshot.child("truck_permission").getValue(String.class);
+                        if (TextUtils.equals(permission, "granted")) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateTruck()).addToBackStack("TruckFragments").commit();
+
+                        } else {
+                            Alerter.create(DashBoard.this)
+                                    .setTitle("You do not have permission to Create Truck  Access Denied!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.error)
+                                    .show();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
 
 
         } else if (id == R.id.nav_pumpDetails) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreatePump()).addToBackStack("PumpFragments").commit();
 
+            if (TextUtils.equals(user_designation, "admin")){
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreatePump()).addToBackStack("PumpFragments").commit();
+            }
+            else {
+
+                d_subProfile = d_root.child("sub_admin_profiles").child(sub_admin_contact).child("permissions");
+                d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String permission = dataSnapshot.child("pump_permission").getValue(String.class);
+                        if (TextUtils.equals(permission, "granted")) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreatePump()).addToBackStack("PumpFragments").commit();
+
+                        } else {
+                            Alerter.create(DashBoard.this)
+                                    .setTitle("You do not have permission to Create Pump  Access Denied!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.error)
+                                    .show();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
 
         } else if (id == R.id.nav_FuelRate) {
 

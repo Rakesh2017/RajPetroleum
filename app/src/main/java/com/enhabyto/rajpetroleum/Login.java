@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.nfc.Tag;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -53,6 +54,9 @@ public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
     DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
     String connected;
+
+    //SharedPreferences preferencesSession = getSharedPreferences("session", Context.MODE_PRIVATE);
+    //SharedPreferences.Editor editor2 = preferencesSession.edit();
 
 
 
@@ -184,7 +188,13 @@ public class Login extends AppCompatActivity {
                                                         SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
                                                         SharedPreferences.Editor editor = dataSave.edit();
                                                         editor.putString("LaunchApplication", "DashBoard");
+                                                        editor.putString("user_designation", "admin");
                                                         editor.commit();
+
+
+                                                        //editor2.putString("user_designation", "admin");
+                                                        //editor2.commit();
+
                                                         Intent intent = new Intent(Login.this, DashBoard.class);
                                                         startActivity(intent);
                                                     }
@@ -209,6 +219,7 @@ public class Login extends AppCompatActivity {
                                             SharedPreferences.Editor editor = dataSave.edit();
                                             editor.putString("LaunchApplication", "Login");
                                             editor.commit();
+
                                             forgotPass_btn.setVisibility(View.VISIBLE);
                                             String message = "";
                                             try {
@@ -224,18 +235,16 @@ public class Login extends AppCompatActivity {
                                                     .setBackgroundColorRes(R.color.blackFifty)
                                                     .setIcon(R.drawable.error)
                                                     .show();
-
+                                            dialog.dismiss();
                                         }
-                                        dialog.dismiss();
+
 
                                         // ...
                                     }
                                 });
 
-
-
                     }
-                },1500);
+                },2000);
             }
         });
 
@@ -247,6 +256,7 @@ public class Login extends AppCompatActivity {
 
                 contact_tx = contact_et.getText().toString().trim();
                 sub_password_tx = sub_password_et.getText().toString().trim();
+
 
 
                 if (!isNetworkAvailable()){
@@ -295,18 +305,30 @@ public class Login extends AppCompatActivity {
                 });
 
                 d_subAdminCredentials = d_root.child("sub_admin_credentials").child(contact_tx);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
 
                 d_subAdminCredentials.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        match_contact_tx = dataSnapshot.child("contact").getValue(String.class);
-                        match_password_tx = dataSnapshot.child("contact").getValue(String.class);
+                        match_contact_tx = dataSnapshot.child("identity").getValue(String.class);
+                        match_password_tx = dataSnapshot.child("password").getValue(String.class);
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Log.w("123", match_contact_tx+" "+ connected);
 
                         if (!TextUtils.equals(connected, "connected")){
-                                     Alerter.create(Login.this)
+                            Alerter.create(Login.this)
                                     .setTitle("Unable to Connect to Server!")
                                     .setContentGravity(1)
                                     .setBackgroundColorRes(R.color.black)
@@ -318,8 +340,22 @@ public class Login extends AppCompatActivity {
                         }
 
                         if (TextUtils.equals(match_contact_tx, contact_tx) && TextUtils.equals(match_password_tx, sub_password_tx)){
+                            SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = dataSave.edit();
+                            editor.putString("LaunchApplication", "DashBoard");
+                            editor.putString("user_designation", "subAdmin");
+                            editor.putString("subAdmin_contact", contact_tx);
+                            editor.commit();
+
+
+                           // editor2.putString("user_designation", "subAdmin");
+                           // editor2.commit();
+
+                            sub_password_et.setText("");
+
                             Intent intent = new Intent(Login.this, DashBoard.class);
                             startActivity(intent);
+                            dialog.dismiss();
                         }
                         else {
                             Alerter.create(Login.this)
@@ -332,16 +368,10 @@ public class Login extends AppCompatActivity {
                             dialog.dismiss();
                         }
 
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
 
                     }
-                });
+                },2000);
 
-                    }
-                },1500);
 
             }
 
@@ -375,6 +405,5 @@ public class Login extends AppCompatActivity {
         }
 
     }
-
 
 }//end
