@@ -156,6 +156,7 @@
                 android:background="@drawable/rounded_edit_text_black"
                 android:hint="Enter Password"
                 android:inputType="textPassword"
+                android:maxLength="12"
                 android:padding="5dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/blackFifty"
@@ -652,10 +653,76 @@
             android:textSize="20sp" />
 
 
+            <util.android.textviews.FontTextView
+                android:id="@+id/cd_profileUploadTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cd_MaritalStatusEditText"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:text="Upload Driver Image"
+                android:textColor="@color/blackNinety"
+                android:textSize="16sp" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="16dp"
+                android:layout_below="@id/cd_profileUploadTextView"
+                android:layout_marginEnd="16dp"
+                android:weightSum="2"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:id="@+id/cd_linearProfileImage"
+                >
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cd_selectProfileImage"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    fancy:fb_borderColor="@color/black"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/blackFifty"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf03e;"
+                    fancy:fb_iconPosition="right"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="select image"
+                    fancy:fb_textColor="@color/black" />
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/cd_uploadProfileImage"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    fancy:fb_borderColor="@color/black"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/blackFifty"
+                    fancy:fb_focusColor="@color/black"
+                    fancy:fb_fontIconResource="&#xf0ee;"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="3dp"
+                    fancy:fb_text="upload image"
+                    fancy:fb_textColor="@color/black" />
+
+
+
+            </LinearLayout>
+
+
 
             <util.android.textviews.FontTextView
                 android:id="@+id/cd_OtherDocTextView"
-                android:layout_below="@id/cd_MaritalStatusEditText"
+                android:layout_below="@id/cd_linearProfileImage"
                 android:text="Any Other Document"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

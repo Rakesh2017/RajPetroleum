@@ -244,7 +244,7 @@ public class Login extends AppCompatActivity {
                                 });
 
                     }
-                },2000);
+                },2500);
             }
         });
 
@@ -370,7 +370,7 @@ public class Login extends AppCompatActivity {
 
 
                     }
-                },2000);
+                },2500);
 
 
             }

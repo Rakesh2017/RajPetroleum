@@ -266,7 +266,7 @@ public class DashBoard extends AppCompatActivity
                         }
                         else {
                             Alerter.create(DashBoard.this)
-                                    .setTitle("You do not have permission to Create Truck, Access Denied!")
+                                    .setTitle("You do not have permission to Create Truck!")
                                     .setContentGravity(1)
                                     .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.error)
@@ -294,7 +294,7 @@ public class DashBoard extends AppCompatActivity
             }
             else {
                 Alerter.create(DashBoard.this)
-                        .setTitle("You do not have permission to Create Sub-Admin  Access Denied!")
+                        .setTitle("You do not have permission to Create Sub-Admin!")
                         .setContentGravity(1)
                         .setBackgroundColorRes(R.color.black)
                         .setIcon(R.drawable.error)
@@ -320,7 +320,7 @@ public class DashBoard extends AppCompatActivity
 
                         } else {
                             Alerter.create(DashBoard.this)
-                                    .setTitle("You do not have permission to Create Truck  Access Denied!")
+                                    .setTitle("You do not have permission to Create Truck!")
                                     .setContentGravity(1)
                                     .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.error)
@@ -355,7 +355,7 @@ public class DashBoard extends AppCompatActivity
 
                         } else {
                             Alerter.create(DashBoard.this)
-                                    .setTitle("You do not have permission to Create Pump  Access Denied!")
+                                    .setTitle("You do not have permission to Create Pump!")
                                     .setContentGravity(1)
                                     .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.error)

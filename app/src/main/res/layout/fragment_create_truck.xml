@@ -706,6 +706,7 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
+                android:maxLength="6"
                 android:text="Insurance Amount Paid"
                 android:textColor="@color/blackNinety"
                 android:textSize="16sp" />

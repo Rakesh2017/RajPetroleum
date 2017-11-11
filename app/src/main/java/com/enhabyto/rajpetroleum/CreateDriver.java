@@ -73,7 +73,9 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
     View view;
     FancyButton openUpdateProfile_btn, openCreateDriver_btn, createDriver_btn, updateProfile_btn
-            , checkInfo_btn, chooseLis_btn, uploadLis_btn, chooseHazLis_btn, uploadHazLis_btn;
+            , checkInfo_btn, chooseLis_btn, uploadLis_btn, chooseHazLis_btn, uploadHazLis_btn
+            , chooseProfileImage_btn, uploadProfileImage_btn;
+
     FontTextView fontTextView1,fontTextView2;
 
     DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
@@ -90,7 +92,8 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
     EditText contact_et, password_et;
     String myFormatBirth;
 
-    AlertDialog dialog, dialog_loading_data, dialog_updating_data, dialog_uploadingLicenceImage, dialog_uploadingHazardousLicenceImage;
+    AlertDialog dialog, dialog_loading_data, dialog_updating_data, dialog_uploadingLicenceImage
+            , dialog_uploadingHazardousLicenceImage, dialog_uploadProfileImage;
 
 
 
@@ -100,9 +103,11 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
     int PICK_IMAGE_REQUEST_L = 111;
     int PICK_IMAGE_REQUEST_H = 112;
+    int PICK_IMAGE_REQUEST_P = 113;
 
     Uri LicenceImageFilePath;
     Uri HazardousLicenceImageFilePath;
+    Uri ProfileImageFilePath;
     Calendar myCalendarLisValid = Calendar.getInstance();
     Calendar myCalendarHazLisValid = Calendar.getInstance();
 
@@ -132,6 +137,8 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
         chooseLis_btn = view.findViewById(R.id.cd_selectlis);
         uploadLis_btn = view.findViewById(R.id.cd_uploadlis);
         chooseHazLis_btn = view.findViewById(R.id.cd_Hazselectlis);
+        chooseProfileImage_btn = view.findViewById(R.id.cd_selectProfileImage);
+        uploadProfileImage_btn = view.findViewById(R.id.cd_uploadProfileImage);
         uploadHazLis_btn = view.findViewById(R.id.cd_Hazuploadlis);
 
         contact_et = view.findViewById(R.id.cd_ContactEditText);
@@ -162,7 +169,9 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
         chooseLis_btn.setOnClickListener(this);
         uploadLis_btn.setOnClickListener(this);
         chooseHazLis_btn.setOnClickListener(this);
+        chooseProfileImage_btn.setOnClickListener(this);
         uploadHazLis_btn.setOnClickListener(this);
+        uploadProfileImage_btn.setOnClickListener(this);
         birth_et.setOnClickListener(this);
         drivingLisValid_et.setOnClickListener(this);
         hazardousDrivingLisValid_et.setOnClickListener(this);
@@ -172,6 +181,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
         dialog_updating_data = new SpotsDialog(getActivity(),R.style.Updating);
         dialog_uploadingLicenceImage = new SpotsDialog(getActivity(),R.style.dialog_uploadingLicence);
         dialog_uploadingHazardousLicenceImage = new SpotsDialog(getActivity(),R.style.dialog_uploadingHazardousLicence);
+        dialog_uploadProfileImage = new SpotsDialog(getActivity(),R.style.dialog_uploadingProfile);
 
 
 
@@ -710,8 +720,9 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
             case R.id.cd_uploadlis:
                 if(LicenceImageFilePath != null) {
                    dialog_uploadingLicenceImage.show();
+                    contact1_tx = contact1_et.getText().toString().trim();
 
-                    StorageReference childRef = storageRef.child("driver_profiles").child("licence_image/").child("licence.jpg");
+                    StorageReference childRef = storageRef.child("driver_profiles").child(contact1_tx).child("licence_image/").child("licence.jpg");
 
                     //uploading the image
                     UploadTask uploadTask = childRef.putFile(LicenceImageFilePath);
@@ -767,8 +778,9 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
             case R.id.cd_Hazuploadlis:
                 if(HazardousLicenceImageFilePath != null) {
                     dialog_uploadingHazardousLicenceImage.show();
+                    contact1_tx = contact1_et.getText().toString().trim();
 
-                    StorageReference childRef = storageRef.child("driver_profiles/").child("hazardous_licence_image/").child("Hazardous_licence.jpg");
+                    StorageReference childRef = storageRef.child("driver_profiles/").child(contact1_tx).child("hazardous_licence_image/").child("hazardous_licence.jpg");
 
                     //uploading the image
                     UploadTask uploadTask = childRef.putFile(HazardousLicenceImageFilePath);
@@ -809,6 +821,66 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                 }
 
                 break;
+
+
+            // choose licence image
+
+            case R.id.cd_selectProfileImage:
+                Intent intentProfile = new Intent();
+                intentProfile.setType("image/*");
+                intentProfile.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intentProfile, "Select Image"), PICK_IMAGE_REQUEST_P);
+                break;
+
+                //upload profile image
+
+            case R.id.cd_uploadProfileImage:
+                if(ProfileImageFilePath != null) {
+                    dialog_uploadProfileImage.show();
+                    contact1_tx = contact1_et.getText().toString().trim();
+
+                    StorageReference childRef = storageRef.child("driver_profiles/").child(contact1_tx).child("profile_image/").child("image.jpg");
+
+                    //uploading the image
+                    UploadTask uploadTask = childRef.putFile(ProfileImageFilePath);
+
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            dialog_uploadProfileImage.dismiss();
+                            Alerter.create(getActivity())
+                                    .setTitle("Driver Image successfully uploaded")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.success_icon)
+                                    .show();
+                            chooseProfileImage_btn.setText("select image");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            dialog_uploadProfileImage.dismiss();
+                            Alerter.create(getActivity())
+                                    .setTitle("Upload Failed"+e.getMessage())
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.error)
+                                    .show();
+                        }
+                    });
+                }
+                else {
+                    dialog_uploadProfileImage.dismiss();
+                    Alerter.create(getActivity())
+                            .setTitle("First Select Image")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                }
+
+                break;
+
 
 
             //birth
@@ -904,6 +976,11 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
         if (requestCode == PICK_IMAGE_REQUEST_H && resultCode == RESULT_OK && data != null && data.getData() != null) {
             HazardousLicenceImageFilePath = data.getData();
             chooseHazLis_btn.setText("Selected");
+        }
+
+        if (requestCode == PICK_IMAGE_REQUEST_P && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            ProfileImageFilePath = data.getData();
+            chooseProfileImage_btn.setText("Selected");
         }
     }
 

@@ -438,7 +438,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                         pollution_tx = pollution_et.getText().toString().trim();
                         pollutionValid_tx = pollutionValid_et.getText().toString().trim();
                         pollutionRenew_tx = pollutionRenew_et.getText().toString().trim();
-                        insuranceName_tx  = insuranceRenew_et.getText().toString().trim();
+                        insuranceName_tx  = insuranceName_et.getText().toString().trim();
                         insuranceAmount_tx = insuranceAmount_et.getText().toString().trim();
                         insuranceValid_tx = insuranceValid_et.getText().toString().trim();
                         insuranceRenew_tx = insuranceRenew_et.getText().toString().trim();

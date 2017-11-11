@@ -152,6 +152,7 @@
                     android:background="@drawable/rounded_edit_text_black"
                     android:hint="Enter Password"
                     android:inputType="textPassword"
+                    android:maxLength="12"
                     android:padding="5dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/blackFifty"
