@@ -12,8 +12,8 @@
     <string name="dashboard">DashBoard</string>
     <string name="createDriver">Create Driver</string>
     <string name="createAdmin">Create Sub-Admin</string>
-    <string name="TruckDetails">Truck Details</string>
-    <string name="PumpDetails">Pump Details</string>
+    <string name="TruckDetails">Crete Truck</string>
+    <string name="PumpDetails">Create Pump</string>
     <string name="FuelRate">Fuel Rate</string>
     <string name="truckNumber">Truck Number</string>
     <string name="spinnerTitle">Select</string>

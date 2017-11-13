@@ -243,6 +243,29 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
         switch (id){
 
             case R.id.ct_openCreateTruckButton:
+
+
+                truckNumber_tx1 = truckNumber_et1.getText().toString().trim();
+                if (truckNumber_tx1.length()<13){
+                    Alerter.create(getActivity())
+                            .setTitle("Invalid truck Number!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    return;
+                }
+
+                if (!isNetworkAvailable()){
+                    Alerter.create(getActivity())
+                            .setTitle("No Internet!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+
+                    return;
+                }
                 dialog_loading.show();
                 d_parent.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -271,7 +294,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                               dialog_loading.dismiss();
                             return;
                         }
-                        truckNumber_tx1 = truckNumber_et1.getText().toString().trim();
+
 
                         DatabaseReference dataRef_truckDetails = d_root.child("truck_details").child(truckNumber_tx1);
                         dataRef_truckDetails.addValueEventListener(new ValueEventListener() {
@@ -388,6 +411,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                     dialog_updateTruck.dismiss();
                     return;
                 }
+
 
                 d_parent.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
