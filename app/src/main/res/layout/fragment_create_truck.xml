@@ -51,9 +51,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ct_text"
             android:background="@drawable/rounded_edit_text_black"
-            android:hint="Enter Unique Truck Number"
-            android:inputType="phone"
+            android:hint="PB-01-AK-2804"
+            android:inputType="text"
             android:padding="5dp"
+            android:maxLength="13"
             android:textColor="@color/black"
             android:textColorHint="@color/blackFifty"
             android:textSize="20sp" />
@@ -91,6 +92,7 @@
             android:prompt="@string/spinnerTitle"
             android:layout_toStartOf="@+id/ct_openCreateTruckButton"
             android:layout_marginEnd="16dp"
+            android:textAlignment="textEnd"
             />
 
     </RelativeLayout>

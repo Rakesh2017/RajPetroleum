@@ -1,0 +1,316 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    tools:context="com.enhabyto.rajpetroleum.AllocateTruck">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        >
+
+
+
+    <util.android.textviews.FontTextView
+        android:id="@+id/at_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="droidsansbold.ttf"
+        android:text="Truck Number"
+        android:textColor="@color/blackNinety"
+        android:textSize="18sp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/at_truckNumberEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/at_text1"
+        android:hint="Enter Truck Number"
+        android:textColor="@color/black"
+        android:inputType="text"
+        android:maxLength="13"
+        />
+
+    <Spinner
+        android:id="@+id/at_spinnerTruck"
+        android:layout_below="@id/at_truckNumberEditText"
+        android:layout_marginTop="8dp"
+        android:textAlignment="textEnd"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!--contact-->
+
+    <util.android.textviews.FontTextView
+        android:id="@+id/at_text2"
+        android:layout_below="@+id/at_spinnerTruck"
+        android:layout_marginTop="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="droidsansbold.ttf"
+        android:text="Driver Registered Contact"
+        android:textColor="@color/blackNinety"
+        android:textSize="18sp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/at_contactEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/at_text2"
+        android:hint="Enter Contact Number"
+        android:inputType="phone"
+        android:maxLength="10"
+        android:textColor="@color/black"
+        />
+
+    <Spinner
+        android:id="@+id/at_spinnerContact"
+        android:layout_below="@id/at_contactEditText"
+        android:layout_marginTop="8dp"
+        android:textAlignment="textEnd"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+    <!--truck location-->
+
+    <util.android.textviews.FontTextView
+        android:id="@+id/at_text3"
+        android:layout_below="@+id/at_spinnerContact"
+        android:layout_marginTop="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="droidsansbold.ttf"
+        android:text="Truck Location"
+        android:textColor="@color/blackNinety"
+        android:textSize="18sp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/at_truckLocationEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/at_text3"
+        android:hint="Enter Truck Location"
+        android:inputType="textMultiLine"
+        android:textColor="@color/black"
+        />
+
+        <Spinner
+            android:id="@+id/at_truckLocation"
+            android:layout_below="@id/at_truckLocationEditText"
+            android:layout_marginTop="8dp"
+            android:textAlignment="textEnd"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    <!--Start point-->
+
+    <util.android.textviews.FontTextView
+        android:id="@+id/at_text5"
+        android:layout_below="@+id/at_truckLocation"
+        android:layout_marginTop="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="droidsansbold.ttf"
+        android:text="Start point"
+        android:textColor="@color/blackNinety"
+        android:textSize="18sp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/at_startPointEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/at_text5"
+        android:hint="Enter Trip start Location"
+        android:inputType="textMultiLine"
+        android:textColor="@color/black"
+        />
+
+    <Spinner
+        android:id="@+id/at_spinnerStartPoint"
+        android:layout_below="@id/at_startPointEditText"
+        android:layout_marginTop="8dp"
+        android:textAlignment="textEnd"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:text=" "
+        android:layout_height="wrap_content"/>
+
+
+
+    <!--Start point-->
+
+    <util.android.textviews.FontTextView
+        android:id="@+id/at_text6"
+        android:layout_below="@+id/at_spinnerStartPoint"
+        android:layout_marginTop="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="droidsansbold.ttf"
+        android:text="End point"
+        android:textColor="@color/blackNinety"
+        android:textSize="18sp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/at_endPointEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/at_text6"
+        android:hint="Enter Trip Destination"
+        android:inputType="textMultiLine"
+        android:textColor="@color/black"
+        />
+
+        <Spinner
+            android:id="@+id/at_spinnerEndPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/at_endPointEditText"
+            android:textAlignment="textEnd" />
+
+
+        <!--Start Date-->
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/at_text7"
+            android:layout_below="@+id/at_spinnerEndPoint"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:text="Start Date"
+            android:textColor="@color/blackNinety"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/at_startDateEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/at_text7"
+            android:hint="dd/mm/yyyy"
+            android:inputType="date"
+            android:textColor="@color/black"
+            android:maxLength="10"
+            android:focusable="false"
+            />
+
+
+        <!--start Time-->
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/at_text8"
+            android:layout_below="@+id/at_spinnerEndPoint"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:text="Start time"
+            android:textColor="@color/blackNinety"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/at_startTimeEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/at_text8"
+            android:layout_alignParentEnd="true"
+            android:hint="hh/mm"
+            android:inputType="time"
+            android:textColor="@color/black"
+            android:maxLength="5"
+            android:focusable="false"
+            />
+
+
+        <!--Start Date-->
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/at_text9"
+            android:layout_below="@+id/at_startTimeEditText"
+            android:layout_marginTop="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:text="End Date"
+            android:textColor="@color/blackNinety"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/at_endDateEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/at_text9"
+            android:hint="dd/mm/yyyy"
+            android:inputType="date"
+            android:textColor="@color/black"
+            android:maxLength="10"
+            android:focusable="false"
+            />
+
+
+        <!--start Time-->
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/at_text10"
+            android:layout_below="@+id/at_startTimeEditText"
+            android:layout_marginTop="7dp"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:text="Start time"
+            android:textColor="@color/blackNinety"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/at_endTimeEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/at_text10"
+            android:layout_alignParentEnd="true"
+            android:hint="hh/mm"
+            android:inputType="time"
+            android:textColor="@color/black"
+            android:maxLength="5"
+            android:focusable="false"
+            />
+
+   <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/at_allocateTripButton"
+        android:layout_below="@+id/at_endDateEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        fancy:fb_borderColor="@color/black"
+        fancy:fb_borderWidth="3dp"
+        fancy:fb_defaultColor="@color/black"
+        fancy:fb_focusColor="@color/black"
+        fancy:fb_fontIconResource="&#xf0d1;"
+        fancy:fb_iconPosition="right"
+        fancy:fb_radius="3dp"
+        fancy:fb_text="Allocate Truck"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
+        fancy:fb_textColor="@color/white" />
+
+
+
+
+    </RelativeLayout>
+</ScrollView>

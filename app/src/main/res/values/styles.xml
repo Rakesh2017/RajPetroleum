@@ -103,6 +103,13 @@
         <item name="DialogSpotCount">4</item>
     </style>
 
+    <style name="dialog_schedulingTrip" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">Scheduling Trip</item>
+        <item name="DialogSpotColor">@color/white</item>
+        <item name="DialogSpotCount">4</item>
+    </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

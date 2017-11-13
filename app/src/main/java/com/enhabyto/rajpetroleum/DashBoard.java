@@ -266,7 +266,9 @@ public class DashBoard extends AppCompatActivity
                         }
                         else {
                             Alerter.create(DashBoard.this)
-                                    .setTitle("You do not have permission to Create Truck!")
+                                    .setTitle("Access Denied!")
+                                    .setText("You do not have permission to Create Driver")
+                                    .setContentGravity(1)
                                     .setContentGravity(1)
                                     .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.error)
@@ -294,7 +296,9 @@ public class DashBoard extends AppCompatActivity
             }
             else {
                 Alerter.create(DashBoard.this)
-                        .setTitle("You do not have permission to Create Sub-Admin!")
+                        .setTitle("Access Denied!")
+                        .setText("You do not have permission to Create Sub-Admin")
+                        .setContentGravity(1)
                         .setContentGravity(1)
                         .setBackgroundColorRes(R.color.black)
                         .setIcon(R.drawable.error)
@@ -320,7 +324,8 @@ public class DashBoard extends AppCompatActivity
 
                         } else {
                             Alerter.create(DashBoard.this)
-                                    .setTitle("You do not have permission to Create Truck!")
+                                    .setTitle("Access Denied!")
+                                    .setText("You do not have permission to Create Truck")
                                     .setContentGravity(1)
                                     .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.error)
@@ -355,7 +360,9 @@ public class DashBoard extends AppCompatActivity
 
                         } else {
                             Alerter.create(DashBoard.this)
-                                    .setTitle("You do not have permission to Create Pump!")
+                                    .setTitle("Access Denied!")
+                                    .setText("You do not have permission to Create Pump")
+                                    .setContentGravity(1)
                                     .setContentGravity(1)
                                     .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.error)
@@ -373,6 +380,10 @@ public class DashBoard extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_FuelRate) {
+
+        }
+        else if (id == R.id.nav_allocateTruck){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new AllocateTruck()).addToBackStack("AdminFragment").commit();
 
         }
 

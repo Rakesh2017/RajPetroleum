@@ -9,6 +9,10 @@
             android:icon="@drawable/dashboard_icon"
             android:title="@string/dashboard" />
         <item
+            android:id="@+id/nav_allocateTruck"
+            android:icon="@drawable/allocate_truck"
+            android:title="Allocate Truck" />
+        <item
             android:id="@+id/nav_CreateDriver"
             android:icon="@drawable/driver_icon"
             android:title="@string/createDriver" />

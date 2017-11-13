@@ -91,6 +91,7 @@
                 android:layout_below="@id/cp_pumpNameEditText1"
                 android:layout_marginTop="10dp"
                 android:prompt="@string/spinnerTitle"
+                android:textAlignment="textEnd"
                 android:layout_toStartOf="@+id/ct_openCreatePumpButton"
                 android:layout_marginEnd="16dp"
                 android:spinnerMode="dropdown"
