@@ -11,7 +11,7 @@
         <item
             android:id="@+id/nav_allocateTruck"
             android:icon="@drawable/allocate_truck"
-            android:title="Allocate Truck" />
+            android:title="Schedule Trip" />
         <item
             android:id="@+id/nav_CreateDriver"
             android:icon="@drawable/driver_icon"

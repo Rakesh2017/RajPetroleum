@@ -115,7 +115,7 @@ public class AllocateTruck extends Fragment {
                         public void onItemSelected(AdapterView<?>arg0, View view, int arg2, long arg3) {
 
                             selected_truck_tx = spinner_truck.getSelectedItem().toString();
-                            if (!TextUtils.equals(selected_val,"Select Truck")){
+                            if (!TextUtils.equals(selected_truck_tx,"Select Truck")){
                                 truckNumber_et.setText(selected_truck_tx);
 
                             }
@@ -148,7 +148,7 @@ public class AllocateTruck extends Fragment {
                         public void onItemSelected(AdapterView<?>arg0, View view, int arg2, long arg3) {
 
                             selected_contact_tx = spinner_driver.getSelectedItem().toString();
-                            if (!TextUtils.equals(selected_val,"Select Contact")){
+                            if (!TextUtils.equals(selected_contact_tx,"Select Contact")){
                                 contact_et.setText(selected_contact_tx);
 
                             }
