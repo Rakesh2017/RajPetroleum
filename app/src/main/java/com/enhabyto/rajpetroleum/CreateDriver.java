@@ -302,30 +302,6 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                d_driverCredentials.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        firebase_identity = dataSnapshot.child(contact_tx).child("identity").getValue(String.class);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
 
                         if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(getActivity())
@@ -339,54 +315,73 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                             return;
                         }
 
-                        if (contact_tx.equals(firebase_identity)){
 
-
-                            Alerter.create(getActivity())
-                                    .setTitle("Driver Account with "+firebase_identity+ " already exist!")
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.error)
-                                    .show();
-                            dialog.dismiss();
-                            return;
-                        }
-                        DatabaseReference d_driverProfile = d_root.child("driver_profiles").child(contact_tx);
-
-
-                        d_driverCredentials.child(contact_tx).child("identity").setValue(contact_tx);
-                        d_driverCredentials.child(contact_tx).child("password").setValue(password_tx);
-                        d_driverProfile.child("contact").setValue(contact_tx);
-
-
-
-                        Alerter.create(getActivity())
-                                .setTitle("Driver Account Created")
-                                .setContentGravity(1)
-                                .setBackgroundColorRes(R.color.black)
-                                .setIcon(R.drawable.success_icon)
-                                .show();
-                        dialog.dismiss();
-
-                        view.findViewById(R.id.cd_LoadInfoRelativeLayout).setVisibility(View.VISIBLE);
-                        YoYo.with(Techniques.FadeInRight)
-                                .duration(1000)
-                                .repeat(0)
-                                .playOn( view.findViewById(R.id.cd_LoadInfoRelativeLayout));
-                        YoYo.with(Techniques.FadeOutLeft)
-                                .duration(500)
-                                .repeat(0)
-                                .playOn( view.findViewById(R.id.cd_profileRelativeLayout));
-                        new Handler().postDelayed(new Runnable() {
+                        d_driverCredentials.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void run() {
-                                view.findViewById(R.id.cd_profileRelativeLayout).setVisibility(View.GONE);
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                firebase_identity = dataSnapshot.child(contact_tx).child("identity").getValue(String.class);
+
+
+                                if (contact_tx.equals(firebase_identity)){
+                                    Alerter.create(getActivity())
+                                            .setTitle("Driver Account with "+firebase_identity+ " already exist!")
+                                            .setContentGravity(1)
+                                            .setBackgroundColorRes(R.color.black)
+                                            .setIcon(R.drawable.error)
+                                            .show();
+                                    dialog.dismiss();
+                                    return;
+                                }
+                                DatabaseReference d_driverProfile = d_root.child("driver_profiles").child(contact_tx);
+
+
+                                d_driverCredentials.child(contact_tx).child("identity").setValue(contact_tx);
+                                d_driverCredentials.child(contact_tx).child("password").setValue(password_tx);
+                              //  d_driverProfile.child("contact").setValue(contact_tx);
+
+
+
+                                Alerter.create(getActivity())
+                                        .setTitle("Driver Account Created")
+                                        .setContentGravity(1)
+                                        .setBackgroundColorRes(R.color.black)
+                                        .setIcon(R.drawable.success_icon)
+                                        .show();
+                                dialog.dismiss();
+
+                                view.findViewById(R.id.cd_LoadInfoRelativeLayout).setVisibility(View.VISIBLE);
+                                YoYo.with(Techniques.FadeInRight)
+                                        .duration(700)
+                                        .repeat(0)
+                                        .playOn( view.findViewById(R.id.cd_LoadInfoRelativeLayout));
+                                YoYo.with(Techniques.FadeOutLeft)
+                                        .duration(500)
+                                        .repeat(0)
+                                        .playOn( view.findViewById(R.id.cd_profileRelativeLayout));
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        view.findViewById(R.id.cd_profileRelativeLayout).setVisibility(View.GONE);
+                                    }
+                                },400);
+                                contact1_et.setText(contact_tx);
                             }
-                        },400);
-                      contact1_et.setText(contact_tx);
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
-                },3000);
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
                 break;
+
 
 //                infoButton
 
@@ -431,20 +426,60 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        if (!TextUtils.equals(connected, "connected")){
+                            Alerter.create(getActivity())
+                                    .setTitle("Unable to Connect to Server!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.no_internet)
+                                    .show();
 
-                    }
-                });
-
+                            dialog_loading_data.dismiss();
+                            return;
+                        }
 
                         d_driverCredentials.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
                                 firebase_identity = dataSnapshot.child(contact1_tx).child("identity").getValue(String.class);
+
+                                try {
+
+                                    if (TextUtils.isEmpty(firebase_identity) && !contact1_tx.equals(firebase_identity)){
+                                        Alerter.create(getActivity())
+                                                .setTitle("Driver Account with "+contact1_tx+ " does not exist!")
+                                                .setContentGravity(1)
+                                                .setBackgroundColorRes(R.color.black)
+                                                .setIcon(R.drawable.error)
+                                                .show();
+                                        dialog_loading_data.dismiss();
+                                        view.findViewById(R.id.cd_driverDataRelativeLayout).setVisibility(View.GONE);
+                                        return;
+
+                                    }
+                                    else {
+                                        view.findViewById(R.id.cd_driverDataRelativeLayout).setVisibility(View.VISIBLE);
+                                        YoYo.with(Techniques.FadeIn)
+                                                .duration(1000)
+                                                .repeat(0)
+                                                .playOn( view.findViewById(R.id.cd_driverDataRelativeLayout));
+                                    }
+
+
+
+
+                                    dialog_loading_data.dismiss();
+
+
+                                }
+                                catch (NullPointerException e){
+                                    e.printStackTrace();
+                                }
+
+
+
                                 d_driverProfiles.child(contact1_tx).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -457,7 +492,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                         hazardousDrivingLisValid_tx = dataSnapshot.child("hazardous_driving_licence_valid").getValue(String.class);
                                         education_tx = dataSnapshot.child("education").getValue(String.class);
                                         marital_tx = dataSnapshot.child("marital").getValue(String.class);
-                                      //  document_tx = dataSnapshot.child("document").getValue(String.class);
+                                        //  document_tx = dataSnapshot.child("document").getValue(String.class);
 
                                         name_et.setText(name_tx);
                                         address_et.setText(address_tx);
@@ -472,7 +507,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                             int YearBirth = Integer.parseInt(TextUtils.substring(birth_tx, 6,10));
                                             int monthBirth = Integer.parseInt(TextUtils.substring(birth_tx, 3,5));
                                             int dateBirth = Integer.parseInt(TextUtils.substring(birth_tx, 0,2));
-                                         //   Toast.makeText(getContext(), ""+YearBirth+" "+monthBirth+" "+dateBirth, Toast.LENGTH_SHORT).show();
+                                            //   Toast.makeText(getContext(), ""+YearBirth+" "+monthBirth+" "+dateBirth, Toast.LENGTH_SHORT).show();
                                             myCalendarBirth.set(Calendar.YEAR, YearBirth);
                                             myCalendarBirth.set(Calendar.MONTH, monthBirth-1);
                                             myCalendarBirth.set(Calendar.DAY_OF_MONTH, dateBirth);
@@ -481,7 +516,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                             int YearLisValid = Integer.parseInt(TextUtils.substring(drivingLisValid_tx, 6,10));
                                             int monthLisValid = Integer.parseInt(TextUtils.substring(drivingLisValid_tx, 3,5));
                                             int dateLisValid = Integer.parseInt(TextUtils.substring(drivingLisValid_tx, 0,2));
-                                        ///    Toast.makeText(getContext(), ""+YearLisValid+" "+monthLisValid+" "+dateLisValid, Toast.LENGTH_SHORT).show();
+                                            ///    Toast.makeText(getContext(), ""+YearLisValid+" "+monthLisValid+" "+dateLisValid, Toast.LENGTH_SHORT).show();
                                             myCalendarLisValid.set(Calendar.YEAR, YearLisValid);
                                             myCalendarLisValid.set(Calendar.MONTH, monthLisValid-1);
                                             myCalendarLisValid.set(Calendar.DAY_OF_MONTH, dateLisValid);
@@ -489,7 +524,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                             int YearHazLisValid = Integer.parseInt(TextUtils.substring(hazardousDrivingLisValid_tx, 6,10));
                                             int monthHazLisValid = Integer.parseInt(TextUtils.substring(hazardousDrivingLisValid_tx, 3,5));
                                             int dateHazLisValid = Integer.parseInt(TextUtils.substring(hazardousDrivingLisValid_tx, 0,2));
-                                          //  Toast.makeText(getContext(), ""+YearLisValid+" "+monthLisValid+" "+dateLisValid, Toast.LENGTH_SHORT).show();
+                                            //  Toast.makeText(getContext(), ""+YearLisValid+" "+monthLisValid+" "+dateLisValid, Toast.LENGTH_SHORT).show();
                                             myCalendarHazLisValid.set(Calendar.YEAR, YearHazLisValid);
                                             myCalendarHazLisValid.set(Calendar.MONTH, monthHazLisValid-1);
                                             myCalendarHazLisValid.set(Calendar.DAY_OF_MONTH, dateHazLisValid);
@@ -514,71 +549,21 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
-                                Alerter.create(getActivity())
-                                        .setTitle(databaseError.toException().getMessage())
-                                        .setContentGravity(1)
-                                        .setBackgroundColorRes(R.color.black)
-                                        .setIcon(R.drawable.error)
-                                        .show();
-                                dialog_loading_data.dismiss();
-
 
                             }
                         });
 
 
-               new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                      //  Toast.makeText(getContext(), ""+firebase_identity, Toast.LENGTH_SHORT).show();
-                        if (!TextUtils.equals(connected, "connected")){
-                            Alerter.create(getActivity())
-                                    .setTitle("Unable to Connect to Server!")
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.no_internet)
-                                    .show();
-                            //    Log.w("123", connected);
-                            dialog_loading_data.dismiss();
-                            return;
-                        }
-
-                    try {
-
-                            if (TextUtils.isEmpty(firebase_identity) && !contact1_tx.equals(firebase_identity)){
-                                Alerter.create(getActivity())
-                                        .setTitle("Driver Account with "+contact1_tx+ " does not exist!")
-                                        .setContentGravity(1)
-                                        .setBackgroundColorRes(R.color.black)
-                                        .setIcon(R.drawable.error)
-                                        .show();
-                                dialog_loading_data.dismiss();
-
-                            }
-                            else {
-                                view.findViewById(R.id.cd_driverDataRelativeLayout).setVisibility(View.VISIBLE);
-                                YoYo.with(Techniques.SlideInDown)
-                                        .duration(1000)
-                                        .repeat(0)
-                                        .playOn( view.findViewById(R.id.cd_driverDataRelativeLayout));
-                            }
-
-
-
-
-                            dialog_loading_data.dismiss();
-
-
-                        }
-                        catch (NullPointerException e){
-                            e.printStackTrace();
-                        }
-
 
 
                     }
-                },3000);
-                break;
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+         break;
 
 
 //                SUBMIT BUTTON
@@ -604,7 +589,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                             .setBackgroundColorRes(R.color.black)
                             .setIcon(R.drawable.no_internet)
                             .show();
-                    dialog_loading_data.dismiss();
+                    dialog_updating_data.dismiss();
                     return;
                 }
 
@@ -613,57 +598,45 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                Calendar minAge = Calendar.getInstance();
-                minAge.add(Calendar.YEAR, -18);
+                        Calendar minAge = Calendar.getInstance();
+                        minAge.add(Calendar.YEAR, -18);
 
 
-                if (minAge.compareTo(myCalendarBirth) <0 ){
-                    Alerter.create(getActivity())
-                            .setTitle("Driver Should be 18 years old!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    dialog_updating_data.dismiss();
-                    return;
-                }
+                        if (minAge.compareTo(myCalendarBirth) <0 ){
+                            Alerter.create(getActivity())
+                                    .setTitle("Driver Should be 18 years old!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.error)
+                                    .show();
+                            dialog_updating_data.dismiss();
+                            return;
+                        }
 
-                Calendar minDate = Calendar.getInstance();
-                if (myCalendarLisValid.compareTo(minDate) < 0 ){
-                    Alerter.create(getActivity())
-                            .setTitle("Licence Valid Date Should be greater than current Date!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    dialog_updating_data.dismiss();
-                    return;
-                }
+                        Calendar minDate = Calendar.getInstance();
+                        if (myCalendarLisValid.compareTo(minDate) < 0 ){
+                            Alerter.create(getActivity())
+                                    .setTitle("Licence Valid Date Should be greater than current Date!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.error)
+                                    .show();
+                            dialog_updating_data.dismiss();
+                            return;
+                        }
 
-                if (myCalendarHazLisValid.compareTo(minDate) < 0 ){
-                    Alerter.create(getActivity())
-                            .setTitle("Hazardous Licence Valid Date Should be greater than current Date!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    dialog_updating_data.dismiss();
-                    return;
-                }
+                        if (myCalendarHazLisValid.compareTo(minDate) < 0 ){
+                            Alerter.create(getActivity())
+                                    .setTitle("Hazardous Licence Valid Date Should be greater than current Date!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.error)
+                                    .show();
+                            dialog_updating_data.dismiss();
+                            return;
+                        }
 
-
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
                         if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(getActivity())
                                     .setTitle("Unable to Connect to Server!")
@@ -671,8 +644,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                     .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.no_internet)
                                     .show();
-                            //    Log.w("123", connected);
-                            dialog_loading_data.dismiss();
+                            dialog_updating_data.dismiss();
                             return;
                         }
 
@@ -699,8 +671,15 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                 .show();
                         dialog_updating_data.dismiss();
 
+
                     }
-                },2000);
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
 
                 break;
 

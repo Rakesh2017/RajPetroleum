@@ -198,17 +198,6 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
 
                         if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(getActivity())
@@ -263,13 +252,13 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                             }
                         });
                         dialog_loading.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
                     }
-                },1500);
-
-
-
-
+                });
                 break;
 
 
@@ -292,19 +281,6 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-
                         if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(getActivity())
                                     .setTitle("Unable to Connect to Server!")
@@ -354,7 +330,13 @@ public class CreatePump extends Fragment implements View.OnClickListener{
 
 
                     }
-                },1500);
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
 
                 break;
 

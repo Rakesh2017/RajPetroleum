@@ -133,17 +133,6 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
 
                         if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(Login.this)
@@ -242,9 +231,15 @@ public class Login extends AppCompatActivity {
                                         // ...
                                     }
                                 });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
                     }
-                },2500);
+                });
+
+
             }
         });
 
@@ -296,37 +291,6 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                d_subAdminCredentials = d_root.child("sub_admin_credentials").child(contact_tx);
-
-                d_subAdminCredentials.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        match_contact_tx = dataSnapshot.child("identity").getValue(String.class);
-                        match_password_tx = dataSnapshot.child("password").getValue(String.class);
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        Log.w("123", match_contact_tx+" "+ connected);
-
                         if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(Login.this)
                                     .setTitle("Unable to Connect to Server!")
@@ -339,40 +303,63 @@ public class Login extends AppCompatActivity {
                             return;
                         }
 
-                        if (TextUtils.equals(match_contact_tx, contact_tx) && TextUtils.equals(match_password_tx, sub_password_tx)){
-                            SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = dataSave.edit();
-                            editor.putString("LaunchApplication", "DashBoard");
-                            editor.putString("user_designation", "subAdmin");
-                            editor.putString("subAdmin_contact", contact_tx);
-                            editor.commit();
+                        d_subAdminCredentials = d_root.child("sub_admin_credentials").child(contact_tx);
+
+                        d_subAdminCredentials.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                match_contact_tx = dataSnapshot.child("identity").getValue(String.class);
+                                match_password_tx = dataSnapshot.child("password").getValue(String.class);
+
+                                if (TextUtils.equals(match_contact_tx, contact_tx) && TextUtils.equals(match_password_tx, sub_password_tx)){
+                                    SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = dataSave.edit();
+                                    editor.putString("LaunchApplication", "DashBoard");
+                                    editor.putString("user_designation", "subAdmin");
+                                    editor.putString("subAdmin_contact", contact_tx);
+                                    editor.commit();
 
 
-                           // editor2.putString("user_designation", "subAdmin");
-                           // editor2.commit();
+                                    // editor2.putString("user_designation", "subAdmin");
+                                    // editor2.commit();
 
-                            sub_password_et.setText("");
+                                    sub_password_et.setText("");
 
-                            Intent intent = new Intent(Login.this, DashBoard.class);
-                            startActivity(intent);
-                            dialog.dismiss();
-                        }
-                        else {
-                            Alerter.create(Login.this)
-                                    .setTitle("Invalid Login Credentials, Contact Admin for more information!")
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.no_internet)
-                                    .show();
-                            //    Log.w("123", connected);
-                            dialog.dismiss();
-                        }
+                                    Intent intent = new Intent(Login.this, DashBoard.class);
+                                    startActivity(intent);
+                                    dialog.dismiss();
+                                }
+                                else {
+                                    Alerter.create(Login.this)
+                                            .setTitle("Invalid Login Credentials, Contact Admin for more information!")
+                                            .setContentGravity(1)
+                                            .setBackgroundColorRes(R.color.black)
+                                            .setIcon(R.drawable.no_internet)
+                                            .show();
+                                    //    Log.w("123", connected);
+                                    dialog.dismiss();
+                                }
+
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
 
 
                     }
-                },2500);
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
+                    }
+                });
             }
 
 

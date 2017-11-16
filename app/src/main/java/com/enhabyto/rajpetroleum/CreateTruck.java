@@ -271,18 +271,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
                         if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(getActivity())
                                     .setTitle("Unable to Connect to Server!")
@@ -290,8 +279,8 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                                     .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.no_internet)
                                     .show();
-                        //    Log.w("123", connected);
-                              dialog_loading.dismiss();
+                            //    Log.w("123", connected);
+                            dialog_loading.dismiss();
                             return;
                         }
 
@@ -308,40 +297,40 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                                         .playOn(relativeLayout);
 
 
-                               chsssis_tx = dataSnapshot.child("chassis_number").getValue(String.class);
-                               engine_tx = dataSnapshot.child("engine_number").getValue(String.class);
-                               ownerName_tx = dataSnapshot.child("owner_name").getValue(String.class);
-                               attached_tx = dataSnapshot.child("attached_with").getValue(String.class);
-                               chamber_tx = dataSnapshot.child("chambers").getValue(String.class);
-                               capacity_tx = dataSnapshot.child("capacity").getValue(String.class);
-                               rc_tx = dataSnapshot.child("rc").getValue(String.class);
-                               rcValid_tx = dataSnapshot.child("rc_valid").getValue(String.class);
-                               rcRenew_tx = dataSnapshot.child("rc_renew").getValue(String.class);
-                               calibration_tx = dataSnapshot.child("calibration_created").getValue(String.class);
-                               calibrationValid_tx = dataSnapshot.child("calibration_valid").getValue(String.class);
-                               calibrationRenew_tx = dataSnapshot.child("calibration_renew").getValue(String.class);
-                               fit_tx = dataSnapshot.child("fit").getValue(String.class);
-                               fitValid_tx = dataSnapshot.child("fit_valid").getValue(String.class);
-                               fitrenew_tx = dataSnapshot.child("fit_renew").getValue(String.class);
-                               pollution_tx = dataSnapshot.child("pollution_created").getValue(String.class);
-                               pollutionValid_tx = dataSnapshot.child("pollution_valid").getValue(String.class);
-                               pollutionRenew_tx = dataSnapshot.child("pollution_renew").getValue(String.class);
-                               insuranceName_tx = dataSnapshot.child("insurance_name").getValue(String.class);
-                               insuranceAmount_tx = dataSnapshot.child("insurance_amount").getValue(String.class);
-                               insuranceRenew_tx = dataSnapshot.child("insurance_renew").getValue(String.class);
-                               insuranceValid_tx = dataSnapshot.child("insurance_valid").getValue(String.class);
-                               hydro_tx = dataSnapshot.child("hydro_created").getValue(String.class);
-                               hydroValid_tx = dataSnapshot.child("hydro_valid").getValue(String.class);
-                               hydroRenew_tx = dataSnapshot.child("hydro_renew").getValue(String.class);
-                               road_tx = dataSnapshot.child("road_created").getValue(String.class);
-                               roadValid_tx = dataSnapshot.child("road_valid").getValue(String.class);
-                               roadRenew_tx = dataSnapshot.child("road_renew").getValue(String.class);
-                               explosive_tx = dataSnapshot.child("explosive_created").getValue(String.class);
-                               explosiveValid_tx = dataSnapshot.child("explosive_valid").getValue(String.class);
-                               explosiveRenew_tx = dataSnapshot.child("explosive_renew").getValue(String.class);
-                               nationalPermit_tx = dataSnapshot.child("national_permit").getValue(String.class);
-                               statePermit_tx = dataSnapshot.child("state_permit").getValue(String.class);
-                               labourPermit_tx = dataSnapshot.child("labour_permit").getValue(String.class);
+                                chsssis_tx = dataSnapshot.child("chassis_number").getValue(String.class);
+                                engine_tx = dataSnapshot.child("engine_number").getValue(String.class);
+                                ownerName_tx = dataSnapshot.child("owner_name").getValue(String.class);
+                                attached_tx = dataSnapshot.child("attached_with").getValue(String.class);
+                                chamber_tx = dataSnapshot.child("chambers").getValue(String.class);
+                                capacity_tx = dataSnapshot.child("capacity").getValue(String.class);
+                                rc_tx = dataSnapshot.child("rc").getValue(String.class);
+                                rcValid_tx = dataSnapshot.child("rc_valid").getValue(String.class);
+                                rcRenew_tx = dataSnapshot.child("rc_renew").getValue(String.class);
+                                calibration_tx = dataSnapshot.child("calibration_created").getValue(String.class);
+                                calibrationValid_tx = dataSnapshot.child("calibration_valid").getValue(String.class);
+                                calibrationRenew_tx = dataSnapshot.child("calibration_renew").getValue(String.class);
+                                fit_tx = dataSnapshot.child("fit").getValue(String.class);
+                                fitValid_tx = dataSnapshot.child("fit_valid").getValue(String.class);
+                                fitrenew_tx = dataSnapshot.child("fit_renew").getValue(String.class);
+                                pollution_tx = dataSnapshot.child("pollution_created").getValue(String.class);
+                                pollutionValid_tx = dataSnapshot.child("pollution_valid").getValue(String.class);
+                                pollutionRenew_tx = dataSnapshot.child("pollution_renew").getValue(String.class);
+                                insuranceName_tx = dataSnapshot.child("insurance_name").getValue(String.class);
+                                insuranceAmount_tx = dataSnapshot.child("insurance_amount").getValue(String.class);
+                                insuranceRenew_tx = dataSnapshot.child("insurance_renew").getValue(String.class);
+                                insuranceValid_tx = dataSnapshot.child("insurance_valid").getValue(String.class);
+                                hydro_tx = dataSnapshot.child("hydro_created").getValue(String.class);
+                                hydroValid_tx = dataSnapshot.child("hydro_valid").getValue(String.class);
+                                hydroRenew_tx = dataSnapshot.child("hydro_renew").getValue(String.class);
+                                road_tx = dataSnapshot.child("road_created").getValue(String.class);
+                                roadValid_tx = dataSnapshot.child("road_valid").getValue(String.class);
+                                roadRenew_tx = dataSnapshot.child("road_renew").getValue(String.class);
+                                explosive_tx = dataSnapshot.child("explosive_created").getValue(String.class);
+                                explosiveValid_tx = dataSnapshot.child("explosive_valid").getValue(String.class);
+                                explosiveRenew_tx = dataSnapshot.child("explosive_renew").getValue(String.class);
+                                nationalPermit_tx = dataSnapshot.child("national_permit").getValue(String.class);
+                                statePermit_tx = dataSnapshot.child("state_permit").getValue(String.class);
+                                labourPermit_tx = dataSnapshot.child("labour_permit").getValue(String.class);
 
 
                                 truckNumber_et2.setText(truckNumber_tx1);
@@ -389,13 +378,14 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                         });
 
                         dialog_loading.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
                     }
-                },2000);
+                });
 
-
-
-                break;
 
 
 
@@ -417,17 +407,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
                         if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(getActivity())
                                     .setTitle("Unable to Connect to Server!")
@@ -435,7 +415,6 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                                     .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.no_internet)
                                     .show();
-                            //    Log.w("123", connected);
                             dialog_updateTruck.dismiss();
                             return;
                         }
@@ -523,11 +502,14 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                                 .show();
                         dialog_updateTruck.dismiss();
 
+                    }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
                     }
-                },2000);
-                break;
+                });
+
 
             case R.id.ct_rcValidEditText:
                     date_birth = new DatePickerDialog.OnDateSetListener() {

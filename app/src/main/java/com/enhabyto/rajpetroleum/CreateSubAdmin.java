@@ -264,30 +264,6 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                d_SubAdminCredentials.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        firebase_identity = dataSnapshot.child(contact1_tx).child("identity").getValue(String.class);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
 
                         if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(getActivity())
@@ -301,57 +277,78 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                             return;
                         }
 
-                        if (contact1_tx.equals(firebase_identity)){
-
-
-                            Alerter.create(getActivity())
-                                    .setTitle("Sub-admin Account with "+firebase_identity+ " already exist!")
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.error)
-                                    .show();
-                            dialogCreatingSubAdmin.dismiss();
-                            return;
-                        }
-
-
-                        d_SubAdminCredentials.child(contact1_tx).child("identity").setValue(contact1_tx);
-                        d_SubAdminCredentials.child(contact1_tx).child("password").setValue(password_tx);
-
-                        d_subAdminProfiles.child(contact1_tx).child("permissions").child("truck_permission").setValue("denied");
-                        d_subAdminProfiles.child(contact1_tx).child("permissions").child("pump_permission").setValue("denied");
-                        d_subAdminProfiles.child(contact1_tx).child("permissions").child("driver_permission").setValue("denied");
-
-
-                        Alerter.create(getActivity())
-                                .setTitle("Sub-Admin Account Created")
-                                .setContentGravity(1)
-                                .setBackgroundColorRes(R.color.black)
-                                .setIcon(R.drawable.success_icon)
-                                .show();
-                       dialogCreatingSubAdmin.dismiss();
-
-                        view.findViewById(R.id.cs_loadInfoRelativeLayout).setVisibility(View.VISIBLE);
-                        YoYo.with(Techniques.FadeInRight)
-                                .duration(1000)
-                                .repeat(0)
-                                .playOn( view.findViewById(R.id.cs_loadInfoRelativeLayout));
-                        YoYo.with(Techniques.FadeOutLeft)
-                                .duration(500)
-                                .repeat(0)
-                                .playOn( view.findViewById(R.id.cs_CreateProfileRelativeLayout));
-                        new Handler().postDelayed(new Runnable() {
+                        d_SubAdminCredentials.addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void run() {
-                                view.findViewById(R.id.cs_CreateProfileRelativeLayout).setVisibility(View.GONE);
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                firebase_identity = dataSnapshot.child(contact1_tx).child("identity").getValue(String.class);
+
+                                if (contact1_tx.equals(firebase_identity)){
+
+
+                                    Alerter.create(getActivity())
+                                            .setTitle("Sub-admin Account with "+firebase_identity+ " already exist!")
+                                            .setContentGravity(1)
+                                            .setBackgroundColorRes(R.color.black)
+                                            .setIcon(R.drawable.error)
+                                            .show();
+                                    dialogCreatingSubAdmin.dismiss();
+                                    return;
+                                }
+
+
+                                d_SubAdminCredentials.child(contact1_tx).child("identity").setValue(contact1_tx);
+                                d_SubAdminCredentials.child(contact1_tx).child("password").setValue(password_tx);
+
+                                d_subAdminProfiles.child(contact1_tx).child("permissions").child("truck_permission").setValue("denied");
+                                d_subAdminProfiles.child(contact1_tx).child("permissions").child("pump_permission").setValue("denied");
+                                d_subAdminProfiles.child(contact1_tx).child("permissions").child("driver_permission").setValue("denied");
+
+
+                                Alerter.create(getActivity())
+                                        .setTitle("Sub-Admin Account Created")
+                                        .setContentGravity(1)
+                                        .setBackgroundColorRes(R.color.black)
+                                        .setIcon(R.drawable.success_icon)
+                                        .show();
+                                dialogCreatingSubAdmin.dismiss();
+
+                                view.findViewById(R.id.cs_loadInfoRelativeLayout).setVisibility(View.VISIBLE);
+                                YoYo.with(Techniques.FadeInRight)
+                                        .duration(1000)
+                                        .repeat(0)
+                                        .playOn( view.findViewById(R.id.cs_loadInfoRelativeLayout));
+                                YoYo.with(Techniques.FadeOutLeft)
+                                        .duration(500)
+                                        .repeat(0)
+                                        .playOn( view.findViewById(R.id.cs_CreateProfileRelativeLayout));
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        view.findViewById(R.id.cs_CreateProfileRelativeLayout).setVisibility(View.GONE);
+                                    }
+                                },400);
+                                password_et.setText("");
+                                contact1_et.setText("");
+                                contact2_et.setText(contact1_tx);
+
                             }
-                        },400);
-                        password_et.setText("");
-                        contact1_et.setText("");
-                        contact2_et.setText(contact1_tx);
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
 
                     }
-                },3000);
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
                 break;
 
 
@@ -398,80 +395,7 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-                d_SubAdminCredentials.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        firebase_identity = dataSnapshot.child(contact2_tx).child("identity").getValue(String.class);
-                        d_subAdminProfiles.child(contact2_tx).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                name_tx = dataSnapshot.child("name").getValue(String.class);
-                                address_tx = dataSnapshot.child("address").getValue(String.class);
-                                birth_tx = dataSnapshot.child("birth").getValue(String.class);
-                                truck_permission = dataSnapshot.child("permissions").child("truck_permission").getValue(String.class);
-                                pump_permission = dataSnapshot.child("permissions").child("pump_permission").getValue(String.class);
-                                driver_permission = dataSnapshot.child("permissions").child("driver_permission").getValue(String.class);
-
-                                if (TextUtils.equals(truck_permission, "granted"))
-                                    truck_group.setPosition(0);
-                                else
-                                    truck_group.setPosition(1);
-
-                                if (TextUtils.equals(pump_permission, "granted"))
-                                    pump_group.setPosition(0);
-                                else
-                                    pump_group.setPosition(1);
-
-                                if (TextUtils.equals(driver_permission, "granted"))
-                                    driver_group.setPosition(0);
-                                else
-                                    driver_group.setPosition(1);
-
-
-
-                                name_et.setText(name_tx);
-                                address_et.setText(address_tx);
-                                birth_et.setText(birth_tx);
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Alerter.create(getActivity())
-                                .setTitle(databaseError.toException().getMessage())
-                                .setContentGravity(1)
-                                .setBackgroundColorRes(R.color.black)
-                                .setIcon(R.drawable.error)
-                                .show();
-                        dialog_loading_data.dismiss();
-
-
-                    }
-                });
-
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //  Toast.makeText(getContext(), ""+firebase_identity, Toast.LENGTH_SHORT).show();
                         if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(getActivity())
                                     .setTitle("Unable to Connect to Server!")
@@ -484,36 +408,120 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                             return;
                         }
 
-                        try {
+                        d_SubAdminCredentials.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            if (TextUtils.isEmpty(firebase_identity) && !contact2_tx.equals(firebase_identity)){
+                                firebase_identity = dataSnapshot.child(contact2_tx).child("identity").getValue(String.class);
+
+                                try {
+
+                                    if (TextUtils.isEmpty(firebase_identity) && !contact2_tx.equals(firebase_identity)){
+                                        Alerter.create(getActivity())
+                                                .setTitle("Sub-Admin with "+contact2_tx+ " does not exist!")
+                                                .setContentGravity(1)
+                                                .setBackgroundColorRes(R.color.black)
+                                                .setIcon(R.drawable.error)
+                                                .show();
+                                        dialog_loading_data.dismiss();
+
+                                    }
+                                    else {
+                                        view.findViewById(R.id.cs_subAdminDataRelativeLayout).setVisibility(View.VISIBLE);
+                                        YoYo.with(Techniques.SlideInDown)
+                                                .duration(1000)
+                                                .repeat(0)
+                                                .playOn( view.findViewById(R.id.cs_subAdminDataRelativeLayout));
+                                    }
+
+
+
+
+                                    dialog_loading_data.dismiss();
+
+
+                                }
+                                catch (NullPointerException e){
+                                    e.printStackTrace();
+                                }
+
+                                d_subAdminProfiles.child(contact2_tx).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        name_tx = dataSnapshot.child("name").getValue(String.class);
+                                        address_tx = dataSnapshot.child("address").getValue(String.class);
+                                        birth_tx = dataSnapshot.child("birth").getValue(String.class);
+                                        truck_permission = dataSnapshot.child("permissions").child("truck_permission").getValue(String.class);
+                                        pump_permission = dataSnapshot.child("permissions").child("pump_permission").getValue(String.class);
+                                        driver_permission = dataSnapshot.child("permissions").child("driver_permission").getValue(String.class);
+
+                                        if (TextUtils.equals(truck_permission, "granted"))
+                                            truck_group.setPosition(0);
+                                        else
+                                            truck_group.setPosition(1);
+
+                                        if (TextUtils.equals(pump_permission, "granted"))
+                                            pump_group.setPosition(0);
+                                        else
+                                            pump_group.setPosition(1);
+
+                                        if (TextUtils.equals(driver_permission, "granted"))
+                                            driver_group.setPosition(0);
+                                        else
+                                            driver_group.setPosition(1);
+
+
+
+                                        name_et.setText(name_tx);
+                                        address_et.setText(address_tx);
+                                        birth_et.setText(birth_tx);
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
                                 Alerter.create(getActivity())
-                                        .setTitle("Sub-Admin with "+contact2_tx+ " does not exist!")
+                                        .setTitle(databaseError.toException().getMessage())
                                         .setContentGravity(1)
                                         .setBackgroundColorRes(R.color.black)
                                         .setIcon(R.drawable.error)
                                         .show();
                                 dialog_loading_data.dismiss();
 
+
                             }
-                            else {
-                                view.findViewById(R.id.cs_subAdminDataRelativeLayout).setVisibility(View.VISIBLE);
-                                YoYo.with(Techniques.SlideInDown)
-                                        .duration(1000)
-                                        .repeat(0)
-                                        .playOn( view.findViewById(R.id.cs_subAdminDataRelativeLayout));
-                            }
+                        });
 
 
 
 
-                            dialog_loading_data.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
 
-                        }
-                        catch (NullPointerException e){
-                            e.printStackTrace();
-                        }
+
+
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //  Toast.makeText(getContext(), ""+firebase_identity, Toast.LENGTH_SHORT).show();
+
+
+
 
 
 
