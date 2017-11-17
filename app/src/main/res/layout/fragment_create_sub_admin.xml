@@ -97,12 +97,16 @@
 
                 <util.android.textviews.FontTextView
                     android:id="@+id/cd_text"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:gravity="center"
                     android:text="Create Sub-Admin"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/border_full_black"
+                    android:padding="5dp"
                     android:textColor="@color/black"
                     android:textAllCaps="true"
                     android:textSize="24sp" />
@@ -198,11 +202,15 @@
 
                 <util.android.textviews.FontTextView
                     android:id="@+id/cd_text1"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="26dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:gravity="center"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/border_full_black"
+                    android:padding="5dp"
                     android:text="Update Sub-Admin Profile"
                     android:textColor="@color/black"
                     android:textAllCaps="true"

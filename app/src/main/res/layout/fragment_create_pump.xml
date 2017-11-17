@@ -95,7 +95,6 @@
                 android:layout_toStartOf="@+id/ct_openCreatePumpButton"
                 android:layout_marginEnd="16dp"
                 android:spinnerMode="dropdown"
-                android:gravity="center"
                 />
 
         </RelativeLayout>
