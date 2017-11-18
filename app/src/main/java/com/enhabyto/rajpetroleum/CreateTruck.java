@@ -386,6 +386,8 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                     }
                 });
 
+                break;
+
 
 
 
@@ -509,6 +511,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
 
                     }
                 });
+                break;
 
 
             case R.id.ct_rcValidEditText:
