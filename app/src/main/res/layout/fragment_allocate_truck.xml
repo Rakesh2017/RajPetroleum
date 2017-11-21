@@ -64,40 +64,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <!--contact-->
-
-    <util.android.textviews.FontTextView
-        android:id="@+id/at_text2"
-        android:layout_below="@+id/at_spinnerTruck"
-        android:layout_marginTop="7dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="droidsansbold.ttf"
-        android:text="Driver Registered Contact"
-        android:textColor="@color/blackNinety"
-        android:textSize="18sp" />
-
-    <AutoCompleteTextView
-        android:id="@+id/at_contactEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/at_text2"
-        android:hint="Enter Contact Number"
-        android:inputType="phone"
-        android:maxLength="10"
-        android:padding="7dp"
-        android:background="@drawable/rounded_edit_text_black"
-        android:textColor="@color/black"
-        />
-
-    <Spinner
-        android:id="@+id/at_spinnerContact"
-        android:layout_below="@id/at_contactEditText"
-        android:layout_marginTop="8dp"
-        android:textAlignment="textEnd"
-        android:layout_alignParentEnd="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
 
 
@@ -105,7 +71,7 @@
 
     <util.android.textviews.FontTextView
         android:id="@+id/at_text3"
-        android:layout_below="@+id/at_spinnerContact"
+        android:layout_below="@+id/at_spinnerTruck"
         android:layout_marginTop="7dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -136,11 +102,48 @@
             android:layout_height="wrap_content"/>
 
 
-    <!--Start point-->
+        <!--contact-->
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/at_text2"
+            android:layout_below="@+id/at_truckLocation"
+            android:layout_marginTop="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:text="Driver Registered Contact"
+            android:textColor="@color/blackNinety"
+            android:textSize="18sp" />
+
+        <AutoCompleteTextView
+            android:id="@+id/at_contactEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/at_text2"
+            android:hint="Enter Contact Number"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:padding="7dp"
+            android:background="@drawable/rounded_edit_text_black"
+            android:textColor="@color/black"
+            />
+
+        <Spinner
+            android:id="@+id/at_spinnerContact"
+            android:layout_below="@id/at_contactEditText"
+            android:layout_marginTop="8dp"
+            android:textAlignment="textEnd"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+        <!--Start point-->
 
     <util.android.textviews.FontTextView
         android:id="@+id/at_text5"
-        android:layout_below="@+id/at_truckLocation"
+        android:layout_below="@+id/at_spinnerContact"
         android:layout_marginTop="7dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -182,7 +185,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="droidsansbold.ttf"
-        android:text="End point"
+        android:text="Next Stoppage"
         android:textColor="@color/blackNinety"
         android:textSize="18sp" />
 
@@ -191,7 +194,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/at_text6"
-        android:hint="Enter Trip Destination"
+        android:hint="Enter Next Expected Stoppage"
         android:inputType="textMultiLine"
         android:textColor="@color/black"
         android:padding="7dp"
@@ -202,6 +205,7 @@
             android:id="@+id/at_spinnerEndPoint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/at_endPointEditText"
             android:textAlignment="textEnd" />
@@ -212,7 +216,7 @@
         <util.android.textviews.FontTextView
             android:id="@+id/at_text7"
             android:layout_below="@+id/at_spinnerEndPoint"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="droidsansbold.ttf"
@@ -240,7 +244,7 @@
         <util.android.textviews.FontTextView
             android:id="@+id/at_text8"
             android:layout_below="@+id/at_spinnerEndPoint"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -304,7 +308,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="droidsansbold.ttf"
-            android:text="Start time"
+            android:text="End time"
             android:textColor="@color/blackNinety"
             android:textSize="18sp" />
 

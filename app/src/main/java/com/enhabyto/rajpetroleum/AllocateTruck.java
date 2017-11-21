@@ -35,6 +35,7 @@ import com.tapadoo.alerter.Alerter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import dmax.dialog.SpotsDialog;
@@ -51,13 +52,13 @@ public class AllocateTruck extends Fragment {
     DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
     DatabaseReference d_networkStatus = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
     DatabaseReference dataRef_spinner = d_root;
-    DatabaseReference dataRef_trip_schedule = d_root.child("trip_schedules");
+    DatabaseReference dataRef_trip_schedule;
     String selected_val;
     FancyButton allocate_btn;
     String selected_contact_tx, selected_truck_tx, selected_truckLocation_tx, selected_startPoint_tx, selected_endPoint_tx;
-    String truckLocation_tx, startPoint_tx, endPoint_tx, startDate_tx, endDate_tx, startTime_tx, endTime_tx;
+    String truckLocation_tx, startPoint_tx, nextStoppagePoint_tx, startDate_tx, endDate_tx, startTime_tx, endTime_tx;
     EditText startDate_et, startTime_et, endDate_et, endTime_et;
-    AutoCompleteTextView truckNumber_et, contact_et, truckLocation_et, startPoint_et, endPoint_et;
+    AutoCompleteTextView truckNumber_et, contact_et, truckLocation_et, startPoint_et, nextStoppagePoint_et;
     String truckNumber_tx, contact_tx, connected;
 
 
@@ -90,7 +91,7 @@ public class AllocateTruck extends Fragment {
 
         truckLocation_et = view.findViewById(R.id.at_truckLocationEditText);
         startPoint_et = view.findViewById(R.id.at_startPointEditText);
-        endPoint_et = view.findViewById(R.id.at_endPointEditText);
+        nextStoppagePoint_et = view.findViewById(R.id.at_endPointEditText);
 
         startDate_et = view.findViewById(R.id.at_startDateEditText);
         endDate_et = view.findViewById(R.id.at_endDateEditText);
@@ -237,7 +238,7 @@ public class AllocateTruck extends Fragment {
 
                             selected_endPoint_tx = spinner_endPoint.getSelectedItem().toString();
                             if (!TextUtils.equals(selected_endPoint_tx,"Select Location")){
-                                endPoint_et.setText(selected_endPoint_tx);
+                                nextStoppagePoint_et.setText(selected_endPoint_tx);
 
                             }
 
@@ -357,7 +358,7 @@ public class AllocateTruck extends Fragment {
                 truckNumber_tx = truckNumber_et.getText().toString().trim();
                 truckLocation_tx = truckLocation_et.getText().toString().trim();
                 startPoint_tx = startTime_et.getText().toString().trim();
-                endPoint_tx = endPoint_et.getText().toString().trim();
+                nextStoppagePoint_tx = nextStoppagePoint_et.getText().toString().trim();
                 startDate_tx = startDate_et.getText().toString().trim();
                 startTime_tx = startTime_et.getText().toString().trim();
                 endDate_tx = endDate_et.getText().toString().trim();
@@ -393,7 +394,7 @@ public class AllocateTruck extends Fragment {
                         .content("Are You Sure to Allocate Truck Number\n"+truckNumber_tx
                                 + " to " + contact_tx+" ?"
                                 + "\n\nStart Point: "+ startPoint_tx
-                                + "\n\nEnd Point: " + endPoint_tx
+                                + "\n\nEnd Point: " + nextStoppagePoint_tx
                                 + "\n\nExpected Start Date: "+ startPoint_tx
                                 + "\n\nExpected Start Time: "+ startTime_tx
                                 + "\n\nExpected End Date: "+ endDate_tx
@@ -424,6 +425,36 @@ public class AllocateTruck extends Fragment {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         connected = dataSnapshot.getValue(String.class);
+
+                                        SimpleDateFormat sdf1 = new SimpleDateFormat("dd_mm_YYYY");
+                                        SimpleDateFormat sdf2 = new SimpleDateFormat("HH_mm");
+                                        String date = sdf1.format(new Date());
+                                        String time = sdf2.format(new Date());
+                                        dataRef_trip_schedule = d_root.child("trip_schedules").child(contact_tx).child(date+"_"+time);
+
+
+                                        dataRef_trip_schedule.child("truck_number").setValue(truckNumber_tx);
+                                        dataRef_trip_schedule.child("truck_location").setValue(truckLocation_tx);
+                                        dataRef_trip_schedule.child("driver_contact_id").setValue(contact_tx);
+                                        dataRef_trip_schedule.child("start_point").setValue(startPoint_tx);
+                                        dataRef_trip_schedule.child("next_stoppage").setValue(nextStoppagePoint_tx);
+                                        dataRef_trip_schedule.child("expected_start_date").setValue(startDate_tx);
+                                        dataRef_trip_schedule.child("expected_start_time").setValue(startTime_tx);
+                                        dataRef_trip_schedule.child("expected_end_date").setValue(endDate_tx);
+                                        dataRef_trip_schedule.child("expected_end_time").setValue(endTime_tx);
+                                        dataRef_trip_schedule.child("status").setValue("waiting");
+
+
+                                        Alerter.create(getActivity())
+                                                .setTitle("Trip Successfully Scheduled")
+                                                .setContentGravity(1)
+                                                .setBackgroundColorRes(R.color.black)
+                                                .setIcon(R.drawable.success_icon)
+                                                .show();
+                                        dialog_scheduleTrip.dismiss();
+
+
+
                                     }
 
                                     @Override
@@ -432,17 +463,6 @@ public class AllocateTruck extends Fragment {
                                     }
                                 });
 
-
-                                new Handler().postDelayed(new Runnable() {
-                                    public void run() {
-
-
-
-
-                                    dialog_scheduleTrip.dismiss();
-                                    }
-
-                                }, 2000);
 
 
                                 // TODO
@@ -572,7 +592,7 @@ public class AllocateTruck extends Fragment {
                     spinner_startPoint.setAdapter(areasAdapter);
                     startPoint_et.setAdapter(areasAdapter1);
                     spinner_endPoint.setAdapter(areasAdapter);
-                    endPoint_et.setAdapter(areasAdapter1);
+                    nextStoppagePoint_et.setAdapter(areasAdapter1);
 
                 }
                 catch (NullPointerException e){
