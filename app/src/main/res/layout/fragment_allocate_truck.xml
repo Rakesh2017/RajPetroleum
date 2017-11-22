@@ -343,7 +343,7 @@
         fancy:fb_fontIconResource="&#xf0d1;"
         fancy:fb_iconPosition="right"
         fancy:fb_radius="3dp"
-        fancy:fb_text="Allocate Truck"
+        fancy:fb_text="Schedule Trip"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="24dp"
         fancy:fb_textColor="@color/white" />
