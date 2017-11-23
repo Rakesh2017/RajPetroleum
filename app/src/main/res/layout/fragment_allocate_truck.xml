@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     tools:context="com.enhabyto.rajpetroleum.AllocateTruck">
 
@@ -22,11 +23,10 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:background="@drawable/border_full_black"
             android:padding="5dp"
             android:fontFamily="droidsansbold.ttf"
             android:textColor="@color/black"
-            android:text="Schedule Trip"
+            android:text="@string/scheduleTrip"
             android:layout_centerHorizontal="true"
             />
 

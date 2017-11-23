@@ -496,6 +496,11 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                         dataRef_truckDetails.child("national_permit").setValue(nationalPermit_tx);
                         dataRef_truckDetails.child("state_permit").setValue(statePermit_tx);
                         dataRef_truckDetails.child("labour_permit").setValue(labourPermit_tx);
+
+
+                        if (!TextUtils.equals(truckNumber_tx1, truckNumber_tx2)){
+                            d_root.child("pump_details").child(truckNumber_tx1).setValue(null);
+                        }
                         Alerter.create(getActivity())
                                 .setTitle("Truck Details Updated")
                                 .setContentGravity(1)

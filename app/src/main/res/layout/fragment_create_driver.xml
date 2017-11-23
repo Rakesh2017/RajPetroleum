@@ -96,17 +96,14 @@
                 <util.android.textviews.FontTextView
                 android:id="@+id/cd_text"
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="droidsansbold.ttf"
-                    android:textStyle="bold"
+                android:textStyle="bold"
                 android:layout_centerHorizontal="true"
-                    android:background="@drawable/border_full_black"
-                    android:padding="5dp"
+                android:padding="5dp"
                 android:text="@string/createDriver"
                 android:textColor="@color/black"
-                android:textAllCaps="true"
                 android:textSize="24sp" />
 
             <util.android.textviews.FontTextView
@@ -204,7 +201,7 @@
             android:layout_below="@+id/cd_mainLinearLayout"
             android:layout_marginTop="16dp"
             android:background="@color/white"
-            android:visibility="gone"
+
             >
 
             <util.android.textviews.FontTextView
@@ -214,13 +211,11 @@
                 android:layout_marginTop="26dp"
                 android:textStyle="bold"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/border_full_black"
                 android:padding="5dp"
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
-                android:text="Update Driver Information"
+                android:text="@string/updateDriver"
                 android:textColor="@color/black"
-                android:textAllCaps="true"
                 android:textSize="20sp" />
 
 
@@ -238,7 +233,7 @@
                 android:textStyle="bold"
                 android:textSize="16sp" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/cd_Contact1EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -278,6 +273,21 @@
                 android:layout_marginTop="7dp"
                 android:layout_marginBottom="16dp"
                 />
+
+            <!-- Spinner Element -->
+            <Spinner
+                android:id="@+id/cd_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ct_truckNumberEditText1"
+                android:layout_marginTop="10dp"
+                android:prompt="@string/spinnerTitle"
+                android:layout_alignTop="@+id/cd_checkInfoButton"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@+id/cd_checkInfoButton"
+                android:textAlignment="textEnd"
+                />
+
         </RelativeLayout>
 
 
@@ -488,13 +498,24 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/cd_LisValidToEditText"
+                android:layout_marginTop="16dp"
+                android:id="@+id/cd_drivingLicenceImage"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="gone"
+                />
+
 
 
             <util.android.textviews.FontTextView
                 android:id="@+id/cd_HazLisTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cd_LisValidToEditText"
+                android:layout_below="@+id/cd_drivingLicenceImage"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="droidsansbold.ttf"
@@ -600,10 +621,21 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/cd_HazLisValidToEditText"
+                android:layout_marginTop="16dp"
+                android:id="@+id/cd_HazardousdrivingLicenceImage"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="gone"
+                />
+
 
             <util.android.textviews.FontTextView
             android:id="@+id/cd_EducationTextView"
-            android:layout_below="@id/cd_HazLisValidToEditText"
+            android:layout_below="@+id/cd_HazardousdrivingLicenceImage"
             android:text="Education"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -726,11 +758,22 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/cd_linearProfileImage"
+                android:layout_marginTop="16dp"
+                android:id="@+id/cd_driverImage"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="gone"
+                />
+
 
 
             <util.android.textviews.FontTextView
                 android:id="@+id/cd_OtherDocTextView"
-                android:layout_below="@id/cd_linearProfileImage"
+                android:layout_below="@+id/cd_driverImage"
                 android:text="Any Other Document"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -807,6 +850,17 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/cd_linear1"
+                android:layout_marginTop="16dp"
+                android:id="@+id/cd_otherDocumentImage"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="gone"
+                />
+
 
             <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/cd_SubmitButton"
@@ -827,7 +881,7 @@
                 fancy:fb_radius="3dp"
                 fancy:fb_text="Update"
                 fancy:fb_textColor="@color/black"
-                android:layout_below="@+id/cd_linear1"
+                android:layout_below="@+id/cd_otherDocumentImage"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="16dp"

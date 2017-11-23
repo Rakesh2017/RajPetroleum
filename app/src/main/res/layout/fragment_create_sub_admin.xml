@@ -102,13 +102,11 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:gravity="center"
-                    android:text="Create Sub-Admin"
+                    android:text="@string/createAdmin"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/border_full_black"
                     android:padding="5dp"
                     android:textColor="@color/black"
-                    android:textAllCaps="true"
                     android:textSize="24sp" />
 
                 <util.android.textviews.FontTextView
@@ -209,9 +207,8 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/border_full_black"
                     android:padding="5dp"
-                    android:text="Update Sub-Admin Profile"
+                    android:text="@string/updateSubAdmin"
                     android:textColor="@color/black"
                     android:textAllCaps="true"
                     android:textSize="20sp" />
@@ -230,7 +227,7 @@
                     android:textStyle="bold"
                     android:textSize="16sp" />
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/cs_contact1EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -268,6 +265,21 @@
                     android:layout_marginTop="7dp"
                     android:layout_marginBottom="16dp"
                     />
+
+                <!-- Spinner Element -->
+                <Spinner
+                    android:id="@+id/cs_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ct_truckNumberEditText1"
+                    android:layout_marginTop="10dp"
+                    android:prompt="@string/spinnerTitle"
+                    android:layout_alignTop="@+id/cs_checkInfoButton"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@+id/cs_checkInfoButton"
+                    android:textAlignment="textEnd"
+                    />
+
             </RelativeLayout>
 
 

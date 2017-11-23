@@ -12,12 +12,15 @@
     <string name="dashboard">DashBoard</string>
     <string name="createDriver">Create Driver</string>
     <string name="createAdmin">Create Sub-Admin</string>
-    <string name="TruckDetails">Crete Truck</string>
+    <string name="TruckDetails">Create Truck</string>
     <string name="PumpDetails">Create Pump</string>
+    <string name="updateDriver"><u><u>UPDATE DRIVER INFORMATION</u></u></string>
+    <string name="updateSubAdmin"><u><u>UPDATE SUB-ADMIN PROFILE</u></u></string>
     <string name="FuelRate">Fuel Rate</string>
     <string name="truckNumber">Truck Number</string>
     <string name="spinnerTitle">Select</string>
     <string name="myPreferenceTitle">myPreferenceTitle</string>
+    <string name="scheduleTrip"><u><u>SCHEDULE TRIP</u></u></string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

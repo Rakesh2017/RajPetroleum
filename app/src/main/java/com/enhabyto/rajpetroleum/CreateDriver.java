@@ -24,13 +24,23 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -53,9 +63,11 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.EventListener;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -77,6 +89,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
             , chooseProfileImage_btn, uploadProfileImage_btn;
 
     FontTextView fontTextView1,fontTextView2;
+    ImageView drivingLicenceImage, hazardousDrivingLicenceImage, driverImage;
 
     DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
     DatabaseReference d_driverCredentials = d_root.child("driver_credentials");
@@ -87,7 +100,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
     String contact_tx, password_tx, firebase_identity;
     String contact1_tx, name_tx, address_tx, birth_tx, drivingLis_tx, drivingLisValid_tx, hazardousDrivingLis_tx, hazardousDrivingLisValid_tx, education_tx, marital_tx, document_tx;
-    EditText contact1_et, name_et, address_et, birth_et, drivingLis_et, drivingLisValid_et, hazardousDrivingLis_et, hazardousDrivingLisValid_et, education_et, marital_et, document_et;
+    EditText  name_et, address_et, birth_et, drivingLis_et, drivingLisValid_et, hazardousDrivingLis_et, hazardousDrivingLisValid_et, education_et, marital_et, document_et;
 
     EditText contact_et, password_et;
     String myFormatBirth;
@@ -96,6 +109,8 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
             , dialog_uploadingHazardousLicenceImage, dialog_uploadProfileImage;
 
 
+    AutoCompleteTextView contact1_et;
+    Spinner spinner;
 
     //creating reference to firebase storage
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -140,6 +155,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
         chooseProfileImage_btn = view.findViewById(R.id.cd_selectProfileImage);
         uploadProfileImage_btn = view.findViewById(R.id.cd_uploadProfileImage);
         uploadHazLis_btn = view.findViewById(R.id.cd_Hazuploadlis);
+        spinner = view.findViewById(R.id.cd_spinner);
 
         contact_et = view.findViewById(R.id.cd_ContactEditText);
         password_et = view.findViewById(R.id.cd_PasswordEditText);
@@ -184,6 +200,37 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
         dialog_uploadProfileImage = new SpotsDialog(getActivity(),R.style.dialog_uploadingProfile);
 
 
+        drivingLicenceImage = view.findViewById(R.id.cd_drivingLicenceImage);
+        hazardousDrivingLicenceImage = view.findViewById(R.id.cd_HazardousdrivingLicenceImage);
+        driverImage = view.findViewById(R.id.cd_driverImage);
+
+
+        spinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?>arg0, View view, int arg2, long arg3) {
+
+                            String selected = spinner.getSelectedItem().toString();
+                            if (!TextUtils.equals(selected,"Select Contact")){
+                                contact1_et.setText(selected);
+                            }
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> arg0) {
+                            // TODO Auto-generated method stub
+
+                        }
+                    });
+
+                }
+                return false;
+            }
+        });
 
 
         return view;
@@ -535,6 +582,87 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                         }
 
 
+                                        StorageReference licenceRef = storageRef.child("driver_profiles/").child(contact1_tx).child("/licence_image/").child("licence.jpg");
+                                        StorageReference hazardousLicenceRef = storageRef.child("driver_profiles/").child(contact1_tx).child("/hazardous_licence_image/").child("hazardous_licence.jpg");
+                                        StorageReference driverImageref = storageRef.child("driver_profiles/").child(contact1_tx).child("/profile_image/").child("image.jpg");
+
+                                        try {
+
+                                            licenceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    if (uri != null){
+                                                        Glide.with(getActivity())
+                                                                .load(uri)
+                                                                .fitCenter()
+                                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                                                .crossFade(1200)
+                                                                .into(drivingLicenceImage);
+                                                        drivingLicenceImage.setVisibility(View.VISIBLE);
+                                                    }
+
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception exception) {
+
+                                                }
+                                            });
+
+
+                                            hazardousLicenceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    if (uri != null){
+                                                        Glide.with(getActivity())
+                                                                .load(uri)
+                                                                .fitCenter()
+                                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                                                .crossFade(1200)
+                                                                .into(hazardousDrivingLicenceImage);
+                                                        hazardousDrivingLicenceImage.setVisibility(View.VISIBLE);
+                                                    }
+
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception exception) {
+
+                                                }
+                                            });
+
+
+                                            driverImageref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    if (uri != null){
+                                                        Glide.with(getActivity())
+                                                                .load(uri)
+                                                                .fitCenter()
+                                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                                                .crossFade(1200)
+                                                                .into(driverImage);
+                                                        driverImage.setVisibility(View.VISIBLE);
+                                                    }
+
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception exception) {
+
+                                                }
+                                            });
+
+
+
+
+                                        }
+                                        catch (IllegalArgumentException e){
+                                            e.printStackTrace();
+                                        }
+
+
+
 
 
                                     }
@@ -669,6 +797,9 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                 .setBackgroundColorRes(R.color.black)
                                 .setIcon(R.drawable.success_icon)
                                 .show();
+
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new CreateDriver()).addToBackStack("AdminFragment").commit();
+
                         dialog_updating_data.dismiss();
 
 
@@ -961,6 +1092,45 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
             ProfileImageFilePath = data.getData();
             chooseProfileImage_btn.setText("Selected");
         }
+    }
+
+    public void onStart(){
+        super.onStart();
+
+
+        DatabaseReference dataRef_spinner = FirebaseDatabase.getInstance().getReference();
+        dataRef_spinner.child("driver_credentials").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                try {
+                    final List<String> areas = new ArrayList<>();
+                    areas.add("Select Contact");
+                    for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                        String pump_name = areaSnapshot.child("identity").getValue(String.class);
+                        areas.add(pump_name);
+
+                    }
+
+                    ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, areas);
+
+                    areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(areasAdapter);
+                    contact1_et.setAdapter(areasAdapter);
+
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+
     }
 
 

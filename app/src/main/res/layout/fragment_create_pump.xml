@@ -19,13 +19,9 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="24dp"
             android:background="@color/white"
-
             >
 
-
-
-
-        <RelativeLayout
+            <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -126,8 +122,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_edit_text_black"
-                android:inputType="number"
+                android:inputType="text"
                 android:padding="5dp"
+                android:textStyle="bold"
                 android:textColor="@color/naturalBlue"
                 android:textColorHint="@color/blackFifty"
                 android:textSize="20sp" />
@@ -433,12 +430,21 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/cp_linear1"
+                android:layout_marginTop="16dp"
+                android:id="@+id/cp_pumpImage"
+                android:visibility="gone"
+                />
+
 
             <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/ct_submitPumpButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cp_linear1"
+                android:layout_below="@id/cp_pumpImage"
                 android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"

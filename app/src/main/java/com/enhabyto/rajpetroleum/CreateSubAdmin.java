@@ -11,10 +11,15 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -27,7 +32,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.tapadoo.alerter.Alerter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import co.ceryle.radiorealbutton.RadioRealButton;
@@ -43,7 +50,8 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
 
     private View view;
     FancyButton openCreateSubAdmin_btn, openUpdateSubAdmin_btn, load_btn, submit_btn, createSubAdmin_btn;
-    EditText contact1_et, contact2_et, password_et, name_et, address_et, birth_et;
+    EditText contact1_et, password_et, name_et, address_et, birth_et;
+    AutoCompleteTextView contact2_et;
     String contact1_tx, contact2_tx, password_tx, name_tx, address_tx, birth_tx;
     RadioRealButtonGroup driver_group, pump_group, truck_group;
     String driver_permission, pump_permission, truck_permission;
@@ -56,7 +64,7 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
     DatabaseReference d_parent = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
     String connected, firebase_identity;
     Calendar myCalendar = Calendar.getInstance();
-
+    Spinner spinner;
 
     public CreateSubAdmin() {
         // Required empty public constructor
@@ -75,6 +83,7 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
         name_et = view.findViewById(R.id.cs_nameEditText);
         address_et = view.findViewById(R.id.cs_addressEditText);
         birth_et = view.findViewById(R.id.cs_birthEditText);
+        spinner = view.findViewById(R.id.cd_spinner);
 
         birth_et.setKeyListener(null);
 
@@ -99,6 +108,35 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
         dialogCreatingSubAdmin = new SpotsDialog(getActivity(),R.style.creatingSubAdminAccount);
         dialog_loading_data = new SpotsDialog(getActivity(),R.style.loadingData);
         dialog_updating_data = new SpotsDialog(getActivity(),R.style.Updating);
+
+        spinner = view.findViewById(R.id.cs_spinner);
+
+        spinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?>arg0, View view, int arg2, long arg3) {
+
+                            String selected = spinner.getSelectedItem().toString();
+                            if (!TextUtils.equals(selected,"Select Contact")){
+                                contact2_et.setText(selected);
+                            }
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> arg0) {
+                            // TODO Auto-generated method stub
+
+                        }
+                    });
+
+                }
+                return false;
+            }
+        });
 
         // onClickButton listener detects any click performed on buttons by touch
         driver_group.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
@@ -642,6 +680,47 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
         assert connectivityManager != null;
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+
+
+    public void onStart(){
+        super.onStart();
+
+
+        DatabaseReference dataRef_spinner = FirebaseDatabase.getInstance().getReference();
+        dataRef_spinner.child("sub_admin_credentials").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                try {
+                    final List<String> areas = new ArrayList<>();
+                    areas.add("Select Contact");
+                    for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
+                        String pump_name = areaSnapshot.child("identity").getValue(String.class);
+                        areas.add(pump_name);
+
+                    }
+
+                    ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, areas);
+
+                    areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(areasAdapter);
+                    contact2_et.setAdapter(areasAdapter);
+
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+
     }
 
     //end

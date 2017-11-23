@@ -21,9 +21,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,6 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.tapadoo.alerter.Alerter;
@@ -78,6 +82,9 @@ public class CreatePump extends Fragment implements View.OnClickListener{
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReferenceFromUrl("gs://rajpetroleum-4d3fa.appspot.com/");
 
+    ImageView imageView;
+    String url;
+
     public CreatePump() {
         // Required empty public constructor
     }
@@ -101,8 +108,8 @@ public class CreatePump extends Fragment implements View.OnClickListener{
         tin_et = view.findViewById(R.id.cp_tinEditText);
         company_et = view.findViewById(R.id.cp_companyEditText);
         spinner = view.findViewById(R.id.cp_spinner);
+        imageView = view.findViewById(R.id.cp_pumpImage);
 
-        pumpName2_et.setKeyListener(null);
 
         selectImage_btn = view.findViewById(R.id.cp_selectPumpImage);
         uploadImage_btn = view.findViewById(R.id.cp_uploadPumpImage);
@@ -133,12 +140,6 @@ public class CreatePump extends Fragment implements View.OnClickListener{
 
                            }
 
-
-                               //YOUR CODE HERE
-
-
-                           // Toast.makeText(getApplicationContext(), selected_val ,
-                           //      Toast.LENGTH_SHORT).show();
                        }
 
                        @Override
@@ -232,6 +233,7 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                                 gst_tx = dataSnapshot.child("gst").getValue(String.class);
                                 tin_tx = dataSnapshot.child("tin").getValue(String.class);
                                 company_tx = dataSnapshot.child("company_name").getValue(String.class);
+                                url = dataSnapshot.child("pump_image").child("imageURL").getValue(String.class);
 
                                 pumpName2_et.setText(pumpName1_tx);
                                 company_et.setText(company_tx);
@@ -243,6 +245,17 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                                 tin_et.setText(tin_tx);
                                 contactNumber_et.setText(contactNumber_tx);
                                 contactName_et.setText(contactName_tx);
+
+                                if (url != null){
+
+                                    imageView.setVisibility(View.VISIBLE);
+                                    Glide.with(getActivity())
+                                            .load(url)
+                                            .crossFade(1200)
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .into(imageView);
+
+                                }
 
                             }
 
@@ -318,12 +331,20 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                         dataRef_pumpDetails.child("pump_name").setValue(pumpName2_tx);
                         dataRef_pumpDetails.child("address").setValue(address_tx);
 
+                        if (!TextUtils.equals(pumpName1_tx, pumpName2_tx)){
+                            d_root.child("pump_details").child(pumpName1_tx).setValue(null);
+                            d_root.child("pump_details").child(pumpName2_tx).child("pump_image").child("imageURL").setValue(url);
+                        }
+
                         Alerter.create(getActivity())
-                                .setTitle("Pump Details Updated")
+                                .setTitle(pumpName1_tx+" Details Updated")
                                 .setContentGravity(1)
                                 .setBackgroundColorRes(R.color.black)
                                 .setIcon(R.drawable.success_icon)
                                 .show();
+
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new CreatePump()).addToBackStack("AdminFragment").commit();
+
 
                         dialog_updatePump.dismiss();
 
@@ -351,48 +372,9 @@ public class CreatePump extends Fragment implements View.OnClickListener{
 
 
             case R.id.cp_uploadPumpImage:
-                if(ImageFilePath != null) {
-                    dialog_uploadingPump.show();
-                    String pumpName = pumpName1_et.getText().toString().trim();
-                    StorageReference childRef = storageRef.child("pump_details/").child(pumpName).child("/pump_image.jpg");
+                dialog_uploadingPump.show();
+                UploadImageFileToFirebaseStorage();
 
-                    //uploading the image
-                    UploadTask uploadTask = childRef.putFile(ImageFilePath);
-
-                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            dialog_uploadingPump.dismiss();
-                            Alerter.create(getActivity())
-                                    .setTitle("Image Successfully uploaded")
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.success_icon)
-                                    .show();
-                            selectImage_btn.setText("select image");
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                           dialog_uploadingPump.dismiss();
-                            Alerter.create(getActivity())
-                                    .setTitle("Upload Failed"+e.getMessage())
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.error)
-                                    .show();
-                        }
-                    });
-                }
-                else {
-                 dialog_uploadingPump.dismiss();
-                    Alerter.create(getActivity())
-                            .setTitle("First Select Image")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                }
 
                 break;
 
@@ -426,9 +408,7 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                 dataRef_spinner.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Is better to use a List, because you don't know the size
-                        // of the iterator returned by dataSnapshot.getChildren() to
-                        // initialize the array
+
                         try {
                             final List<String> areas = new ArrayList<String>();
                             areas.add("Select Pump");
@@ -457,6 +437,52 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                     }
                 });
 
+    }
+
+    public void UploadImageFileToFirebaseStorage() {
+
+        if (ImageFilePath != null) {
+            String pumpName = pumpName2_et.getText().toString().trim();
+            StorageReference childRef = storageRef.child("pump_details/").child(pumpName).child("/pump_image.jpg");
+            childRef.putFile(ImageFilePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            @SuppressWarnings("VisibleForTests")
+                            ImageUploadInfo imageUploadInfo = new ImageUploadInfo(taskSnapshot.getDownloadUrl().toString());
+
+                            String pumpName = pumpName2_et.getText().toString().trim();
+
+                            d_root.child("pump_details").child(pumpName).child("pump_image").setValue(imageUploadInfo);
+                            dialog_uploadingPump.dismiss();
+                        }
+                    })
+                    // If something goes wrong .
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+
+                            dialog_uploadingPump.dismiss();
+                            // Showing exception erro message.
+                            Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    })
+
+                    // On progress change upload time.
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+
+                        }
+                    });
+        }
+        else {
+            dialog_uploadingPump.dismiss();
+            Toast.makeText(getActivity(), "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
+
+        }
     }
 
     //end
