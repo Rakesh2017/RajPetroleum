@@ -1,6 +1,7 @@
 package com.enhabyto.rajpetroleum;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -50,6 +53,7 @@ import com.tapadoo.alerter.Alerter;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
@@ -66,6 +70,16 @@ public class DashBoard extends AppCompatActivity
     FontTextView user_uid, user_name;
     private DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
     DatabaseReference d_subProfile;
+
+    // Creating RecyclerView.
+    RecyclerView recyclerView;
+
+    // Creating RecyclerView.Adapter.
+    RecyclerView.Adapter adapter ;
+    List<TripRecyclerInfo> list = new ArrayList<>();
+    ProgressDialog progressDialog;
+    DatabaseReference databaseReference;
+
 
 
 
@@ -86,6 +100,7 @@ public class DashBoard extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
 
 
@@ -182,6 +197,74 @@ public class DashBoard extends AppCompatActivity
 
 
         logout_btn.setOnClickListener(this);
+
+        recyclerView = findViewById(R.id.dash_recyclerView);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.isDuplicateParentStateEnabled();
+        if(list!=null) {
+            list.clear();
+        }
+        // v v v v important (eliminate duplication of data)
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(DashBoard.this);
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+
+        // Setting RecyclerView layout as LinearLayout.
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        // Assign activity this to progress dialog.
+        progressDialog = new ProgressDialog(DashBoard.this);
+
+        // Setting up message in Progress dialog.
+        progressDialog.setMessage("Loading Data...");
+
+        // Showing progress dialog.
+        progressDialog.show();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("trip_status");
+
+
+        if (!isNetworkAvailable()) {
+            Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+        }
+        else {
+
+            // Adding Add Value Event Listener to databaseReference.
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+
+                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                        TripRecyclerInfo imageUploadInfo = postSnapshot.getValue(TripRecyclerInfo.class);
+
+                        list.add(imageUploadInfo);
+                    }
+
+                    adapter = new RecyclerViewAdapter(DashBoard.this, list);
+                    //   Collections.reverse(list);
+                    adapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapter);
+
+
+
+                    // Hiding the progress dialog.
+                    progressDialog.dismiss();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                    // Hiding the progress dialog.
+                    progressDialog.dismiss();
+
+                }
+            });
+        }
+
+
 
 
     }

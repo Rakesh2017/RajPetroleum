@@ -20,6 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Login"
+            android:screenOrientation = "portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"
             >
             <intent-filter>
@@ -33,6 +34,7 @@
             android:label="@string/title_activity_dash_board"
             android:theme="@style/DashBoardTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"
+            android:screenOrientation = "portrait"
             />
     </application>
 

@@ -430,6 +430,7 @@ public class AllocateTruck extends Fragment {
                                         SimpleDateFormat sdf2 = new SimpleDateFormat("HH_mm");
                                         String date = sdf1.format(new Date());
                                         String time = sdf2.format(new Date());
+
                                         dataRef_trip_schedule = d_root.child("trip_schedules").child(contact_tx).child(date+"_"+time);
 
 
