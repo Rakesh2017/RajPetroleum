@@ -9,17 +9,19 @@ public class TripRecyclerInfo {
     public String driverContact;
     public String driverName;
     public String tripStarted;
+    public String truckNumber;
 
 
     public TripRecyclerInfo() {
 
     }
 
-    public TripRecyclerInfo(String contact, String name, String trip) {
+    public TripRecyclerInfo(String contact, String name, String trip, String truck) {
 
         this.driverContact = contact;
         this.driverName = name;
         this.tripStarted = trip;
+        this.truckNumber = truck;
 
     }
 
@@ -31,8 +33,8 @@ public class TripRecyclerInfo {
         return driverName;
     }
 
-    public String getTripStarted() {
-        return tripStarted;
-    }
+    public String getTripStarted() { return tripStarted; }
+
+    public String getTruckNumber() { return truckNumber; }
 
 }

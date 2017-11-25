@@ -202,10 +202,7 @@ public class DashBoard extends AppCompatActivity
 
         recyclerView.setHasFixedSize(true);
         recyclerView.isDuplicateParentStateEnabled();
-        if(list!=null) {
-            list.clear();
-        }
-        // v v v v important (eliminate duplication of data)
+
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(DashBoard.this);
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
@@ -235,8 +232,13 @@ public class DashBoard extends AppCompatActivity
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
+                    if(list!=null) {
+                        list.clear();  // v v v v important (eliminate duplication of data)
+                    }
+
 
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
 
                         TripRecyclerInfo imageUploadInfo = postSnapshot.getValue(TripRecyclerInfo.class);
 
@@ -247,8 +249,6 @@ public class DashBoard extends AppCompatActivity
                     //   Collections.reverse(list);
                     adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
-
-
 
                     // Hiding the progress dialog.
                     progressDialog.dismiss();
@@ -263,10 +263,6 @@ public class DashBoard extends AppCompatActivity
                 }
             });
         }
-
-
-
-
     }
 
     @Override

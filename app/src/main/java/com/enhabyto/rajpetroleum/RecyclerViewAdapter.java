@@ -1,17 +1,24 @@
 package com.enhabyto.rajpetroleum;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -56,11 +63,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(final  ViewHolder holder, int position) {
-        TripRecyclerInfo UploadInfo = MainImageUploadInfoList.get(position);
+    public void onBindViewHolder(final  ViewHolder holder, final int position) {
+        final TripRecyclerInfo UploadInfo = MainImageUploadInfoList.get(position);
 
         holder.contact_tx.setText(UploadInfo.getContact_tx());
         holder.name_tx.setText("( "+UploadInfo.getDriverName()+" )");
+        holder.truckNumber_tx.setText(UploadInfo.getTruckNumber());
 
         storageRef.child("driver_profiles").child(UploadInfo.getContact_tx())
                 .child("/profile_image/image.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -101,6 +109,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             String hour = TextUtils.substring(date, 11, 13);
             String minute = TextUtils.substring(date, 14, 16);
             conversion();
+
+            SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = dataSave.edit();
+            editor.putString("startDate", day+" "+month+" "+year+", "+hour+":"+minute);
+            editor.apply();
+
             holder.tripStarted_tx.setText(day+" "+month+" "+year+", "+hour+":"+minute);
         }
         catch (NullPointerException e){
@@ -108,6 +122,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
 
+        holder.truckImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = dataSave.edit();
+                editor.putString("contactUID", UploadInfo.getContact_tx());
+                editor.apply();
+
+                AppCompatActivity activity = (AppCompatActivity) context;
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("AdminFragment").commit();
+
+                Toast.makeText(context, "" + UploadInfo.getContact_tx(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 
@@ -127,16 +155,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     class ViewHolder extends RecyclerView.ViewHolder {
 
          ImageView driverProfileImage;
-         FontTextView contact_tx, tripStarted_tx, name_tx;
+         FontTextView contact_tx, tripStarted_tx, name_tx, truckNumber_tx;
+         ImageButton truckImage;
 
          ViewHolder(View itemView) {
             super(itemView);
 
             driverProfileImage = itemView.findViewById(R.id.dash_profileImage);
             contact_tx =  itemView.findViewById(R.id.dash_contactTextView);
-            tripStarted_tx =  itemView.findViewById(R.id.das_tripStartTextView);
+            tripStarted_tx =  itemView.findViewById(R.id.dash_tripStartTextView);
             name_tx =  itemView.findViewById(R.id.dash_nameTextView);
+            truckNumber_tx =  itemView.findViewById(R.id.dash_truckNumberTextView);
+            truckImage =  itemView.findViewById(R.id.dash_truckImage);
         }
+
+
     }
 
 

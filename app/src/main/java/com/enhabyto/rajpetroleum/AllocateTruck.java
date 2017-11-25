@@ -53,7 +53,6 @@ public class AllocateTruck extends Fragment {
     DatabaseReference d_networkStatus = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
     DatabaseReference dataRef_spinner = d_root;
     DatabaseReference dataRef_trip_schedule;
-    String selected_val;
     FancyButton allocate_btn;
     String selected_contact_tx, selected_truck_tx, selected_truckLocation_tx, selected_startPoint_tx, selected_endPoint_tx;
     String truckLocation_tx, startPoint_tx, nextStoppagePoint_tx, startDate_tx, endDate_tx, startTime_tx, endTime_tx;

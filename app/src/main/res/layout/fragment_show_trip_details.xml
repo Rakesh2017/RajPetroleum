@@ -1,0 +1,101 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.enhabyto.rajpetroleum.ShowTripDetails">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        >
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:id="@+id/detail_profileImage"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_contactTextView"
+            android:layout_toEndOf="@+id/detail_profileImage"
+            android:layout_alignTop="@+id/detail_profileImage"
+            android:layout_marginStart="10dp"
+            android:text="contact"
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/lightRed"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_nameTextView"
+            android:layout_toEndOf="@+id/detail_contactTextView"
+            android:layout_alignTop="@+id/detail_profileImage"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="4dp"
+            android:text=" "
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:textColor="@color/lightGreen"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_truckNumberTextView"
+            android:layout_alignStart="@+id/detail_contactTextView"
+            android:layout_below="@+id/detail_nameTextView"
+            android:text=" "
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_tripStart1TextView"
+            android:layout_alignStart="@+id/detail_contactTextView"
+            android:layout_below="@+id/detail_truckNumberTextView"
+            android:text="Trip Started on"
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_tripStartTextView"
+            android:layout_toEndOf="@id/detail_tripStart1TextView"
+            android:layout_below="@+id/detail_truckNumberTextView"
+            android:text=" "
+            android:layout_marginStart="4dp"
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            />
+
+
+
+
+    </RelativeLayout>
+
+
+
+</FrameLayout>
