@@ -67,7 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final TripRecyclerInfo UploadInfo = MainImageUploadInfoList.get(position);
 
         holder.contact_tx.setText(UploadInfo.getContact_tx());
-        holder.name_tx.setText("( "+UploadInfo.getDriverName()+" )");
+        holder.name_tx.setText("("+UploadInfo.getDriverName()+")");
         holder.truckNumber_tx.setText(UploadInfo.getTruckNumber());
 
         storageRef.child("driver_profiles").child(UploadInfo.getContact_tx())
@@ -115,7 +115,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             editor.putString("startDate", day+" "+month+" "+year+", "+hour+":"+minute);
             editor.apply();
 
-            holder.tripStarted_tx.setText(day+" "+month+" "+year+", "+hour+":"+minute);
+            holder.tripStarted_tx.setText(day+"-"+month+"-"+year+", "+hour+":"+minute);
         }
         catch (NullPointerException e){
             e.printStackTrace();
@@ -133,7 +133,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 AppCompatActivity activity = (AppCompatActivity) context;
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("AdminFragment").commit();
 
-                Toast.makeText(context, "" + UploadInfo.getContact_tx(), Toast.LENGTH_SHORT).show();
             }
         });
 

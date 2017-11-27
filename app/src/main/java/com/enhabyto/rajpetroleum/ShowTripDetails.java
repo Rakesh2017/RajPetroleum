@@ -1,6 +1,7 @@
 package com.enhabyto.rajpetroleum;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +35,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.tapadoo.alerter.Alerter;
 
+import dmax.dialog.SpotsDialog;
+import mehdi.sakout.fancybuttons.FancyButton;
 import util.android.textviews.FontTextView;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -41,7 +45,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ShowTripDetails extends Fragment {
+public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
     private View view;
 
@@ -51,11 +55,22 @@ public class ShowTripDetails extends Fragment {
     private DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
     private DatabaseReference databaseReference;
 
-    private String contactUID_tx, startDate_tx;
-    FontTextView contact_tv, name_tv, truckNumber_tv, startDate_tv;
+    private String contactUID_tx, startDate_tx, pumpName_tx, stateName_tx, cityName_tx
+            , truckLocation_tx, moneyTaken_tx, petrolPrice_tx;
+    FontTextView contact_tv, name_tv, truckNumber_tv, startDate_tv, pumpName_tv, stateName_tv, cityName_tv
+            , truckLocation_tv, moneyTaken_tv, petrolPrice_tv;
     String contact_tx, name_tx, truckNumber_tx;
 
+    TextView stoppage_tv, petrolFilling_tv, otherFilling_tv, load_tv, breakDown_tv;
+    FancyButton stoppage_btn, petrolFilling_btn, otherFilling_btn, load_btn, breakDown_btn;
+
     ImageView profileImage;
+    AlertDialog dialog_loading;
+
+    String petrolkey;
+
+    int petrolSize;
+
 
 
 
@@ -69,6 +84,8 @@ public class ShowTripDetails extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_show_trip_details, container, false);
+        dialog_loading = new SpotsDialog(getActivity(),R.style.loadingData);
+        dialog_loading.show();
 
         SharedPreferences shared = getActivity().getSharedPreferences("driverContact", Context.MODE_PRIVATE);
         try{
@@ -83,39 +100,28 @@ public class ShowTripDetails extends Fragment {
         name_tv = view.findViewById(R.id.detail_nameTextView);
         truckNumber_tv = view.findViewById(R.id.detail_truckNumberTextView);
         startDate_tv = view.findViewById(R.id.detail_tripStartTextView);
+        pumpName_tv = view.findViewById(R.id.detail_pumpNameTextView);
+        stateName_tv = view.findViewById(R.id.detail_stateNameTextView);
+        cityName_tv = view.findViewById(R.id.detail_cityNameTextView);
+        truckLocation_tv = view.findViewById(R.id.detail_pickedFromTextView);
+        moneyTaken_tv = view.findViewById(R.id.detail_moneyTakenTextView);
+        petrolPrice_tv = view.findViewById(R.id.detail_petrolPriceTextView);
+
+        stoppage_tv = view.findViewById(R.id.detail_text1);
+        petrolFilling_tv = view.findViewById(R.id.detail_text2);
+        otherFilling_tv = view.findViewById(R.id.detail_text3);
+        load_tv = view.findViewById(R.id.detail_text4);
+        breakDown_tv = view.findViewById(R.id.detail_text5);
+
+        stoppage_btn = view.findViewById(R.id.detail_stoppageButton);
+        petrolFilling_btn = view.findViewById(R.id.detail_petrolFillingButton);
+        otherFilling_btn = view.findViewById(R.id.detail_otherFillingButton);
+        load_btn = view.findViewById(R.id.detail_loadButton);
+        breakDown_btn = view.findViewById(R.id.detail_breakDownButton);
+
+
 
         profileImage = view.findViewById(R.id.detail_profileImage);
-
-        storageRef.child("driver_profiles").child(contactUID_tx)
-                .child("/profile_image/image.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-
-                Glide.with(getContext())
-                        .load(uri)
-                        .asBitmap()
-                        .fitCenter()
-                        .centerCrop()
-                        .diskCacheStrategy( DiskCacheStrategy.ALL )
-                        .into(new BitmapImageViewTarget(profileImage) {
-                            @Override
-                            protected void setResource(Bitmap resource) {
-                                RoundedBitmapDrawable circularBitmapDrawable =
-                                        RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
-                                circularBitmapDrawable.setCircular(true);
-                                profileImage.setImageDrawable(circularBitmapDrawable);
-                            }
-                        });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
-
-
 
         contact_tv.setText(contactUID_tx);
         startDate_tv.setText(startDate_tx);
@@ -124,7 +130,7 @@ public class ShowTripDetails extends Fragment {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                name_tv.setText("( "+dataSnapshot.child("name").getValue(String.class)+" )");
+                name_tv.setText("("+dataSnapshot.child("name").getValue(String.class)+")");
             }
 
             @Override
@@ -138,7 +144,7 @@ public class ShowTripDetails extends Fragment {
 
         final Query query = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
 
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -153,13 +159,19 @@ public class ShowTripDetails extends Fragment {
 
                 }
 
-                query.addValueEventListener(new ValueEventListener() {
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot child : dataSnapshot.getChildren()) {
                             truckNumber_tx = child.child("start_trip").child("truck_number").getValue(String.class);
-                            Toast.makeText(getActivity(), ""+truckNumber_tx, Toast.LENGTH_SHORT).show();
+
+                            pumpName_tx = child.child("start_trip").child("start_location").getValue(String.class);
+                            stateName_tx = child.child("start_trip").child("state_name").getValue(String.class);
+                            cityName_tx = child.child("start_trip").child("city_name").getValue(String.class);
+                            truckLocation_tx = child.child("start_trip").child("truck_location").getValue(String.class);
+                            moneyTaken_tx = child.child("start_trip").child("expenses_taken").getValue(String.class);
+                            petrolPrice_tx = child.child("start_trip").child("fuel_price").getValue(String.class);
 
                         }
 
@@ -167,6 +179,15 @@ public class ShowTripDetails extends Fragment {
 //                        setting values
 
                         truckNumber_tv.setText(truckNumber_tx);
+                        pumpName_tv.setText(pumpName_tx);
+                        stateName_tv.setText(stateName_tx);
+                        cityName_tv.setText(cityName_tx);
+                        truckLocation_tv.setText(truckLocation_tx);
+                        moneyTaken_tv.setText("Rs "+moneyTaken_tx);
+                        petrolPrice_tv.setText("Rs "+petrolPrice_tx+"/Litres");
+
+
+
                     }
 
                     @Override
@@ -186,6 +207,85 @@ public class ShowTripDetails extends Fragment {
         });
 
 
+        Query queryPetrolNumber = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
+
+        queryPetrolNumber.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                   petrolkey = child.getKey();
+
+                }
+
+                DatabaseReference d_child = d_root.child("trip_details").child(contactUID_tx)
+                        .child(petrolkey).child("petrol_filled");
+
+                d_child.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                          petrolSize = (int) (dataSnapshot.getChildrenCount());
+                          petrolFilling_tv.setText(String.valueOf(petrolSize));
+                          dialog_loading.dismiss();
+                        }
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+//        profile Image
+
+        storageRef.child("driver_profiles").child(contactUID_tx)
+                .child("/profile_image/image.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+
+                Glide.with(getContext())
+                        .load(uri)
+                        .asBitmap()
+                        .fitCenter()
+                        .centerCrop()
+                        .error(R.drawable.error)
+                        .diskCacheStrategy( DiskCacheStrategy.ALL )
+                        .into(new BitmapImageViewTarget(profileImage) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                RoundedBitmapDrawable circularBitmapDrawable =
+                                        RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
+                                circularBitmapDrawable.setCircular(true);
+                                profileImage.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
+
+        petrolFilling_btn.setOnClickListener(this);
+
+
 
         return view;
     }
@@ -199,7 +299,22 @@ public class ShowTripDetails extends Fragment {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    @Override
+    public void onClick(View v) {
 
+        int id = v.getId();
+
+        switch (id){
+
+            case R.id.detail_petrolFillingButton:
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new PetrolFillingDetail()).addToBackStack("AdminFragment").commit();
+
+                break;
+
+
+
+        }
+    }
 
 
     //end

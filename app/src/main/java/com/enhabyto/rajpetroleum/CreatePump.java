@@ -443,6 +443,7 @@ public class CreatePump extends Fragment implements View.OnClickListener{
 
         if (ImageFilePath != null) {
             String pumpName = pumpName2_et.getText().toString().trim();
+
             StorageReference childRef = storageRef.child("pump_details/").child(pumpName).child("/pump_image.jpg");
             childRef.putFile(ImageFilePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

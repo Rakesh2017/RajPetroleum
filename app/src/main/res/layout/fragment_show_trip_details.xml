@@ -1,7 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     tools:context="com.enhabyto.rajpetroleum.ShowTripDetails">
 
@@ -91,6 +92,418 @@
             android:textColor="@color/black"
             />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_text_black"
+            android:layout_below="@+id/detail_tripStartTextView"
+            android:layout_marginTop="16dp"
+            android:id="@+id/detail_relativeLayout"
+            >
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_overViewTextView"
+                android:text="@string/tripOverView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="4dp"
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                />
+
+
+            <!--pump name-->
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_pumpName1TextView"
+                android:text="Start Place:"
+                android:textStyle="normal"
+                android:fontFamily="droidsansbold.ttf"
+                android:layout_marginStart="7dp"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/detail_overViewTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_pumpNameTextView"
+                android:layout_toEndOf="@id/detail_pumpName1TextView"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="16sp"
+                android:textColor="@color/naturalBlue"
+                android:layout_below="@id/detail_overViewTextView"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="7dp"
+                />
+
+            <!--state name-->
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_stateName1TextView"
+                android:text="State:"
+                android:layout_marginStart="7dp"
+                android:textStyle="normal"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/detail_pumpNameTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_stateNameTextView"
+                android:layout_toEndOf="@id/detail_stateName1TextView"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="16sp"
+                android:textColor="@color/naturalBlue"
+                android:layout_below="@id/detail_pumpNameTextView"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <!--city name-->
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_cityName1TextView"
+                android:text="City:"
+                android:layout_marginStart="7dp"
+                android:textStyle="normal"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/detail_stateName1TextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_cityNameTextView"
+                android:layout_toEndOf="@id/detail_cityName1TextView"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:layout_marginEnd="7dp"
+                android:textSize="16sp"
+                android:textColor="@color/naturalBlue"
+                android:layout_below="@id/detail_stateName1TextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+
+
+            <!--truck Location-->
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_pickedFrom1TextView"
+                android:text="Truck Location:"
+                android:layout_marginStart="7dp"
+                android:textStyle="normal"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/detail_cityNameTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_pickedFromTextView"
+                android:layout_toEndOf="@id/detail_pickedFrom1TextView"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:layout_marginEnd="7dp"
+                android:textSize="16sp"
+                android:textColor="@color/naturalBlue"
+                android:layout_below="@id/detail_cityNameTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <!--Total Money Taken-->
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_moneyTaken1TextView"
+                android:text="Total money Taken by Driver:"
+                android:layout_marginStart="7dp"
+                android:textStyle="normal"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/detail_pickedFromTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_moneyTakenTextView"
+                android:layout_toEndOf="@id/detail_moneyTaken1TextView"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:layout_marginEnd="7dp"
+                android:textSize="16sp"
+                android:textColor="@color/naturalBlue"
+                android:layout_below="@id/detail_pickedFromTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <!--Petrol Price-->
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_petrolPrice1TextView"
+                android:text="Price of the Oil When Trip Started:"
+                android:layout_marginStart="7dp"
+                android:textStyle="normal"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/detail_moneyTakenTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_petrolPriceTextView"
+                android:layout_toEndOf="@id/detail_petrolPrice1TextView"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="7dp"
+                android:text=""
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="16sp"
+                android:textColor="@color/naturalBlue"
+                android:layout_below="@id/detail_moneyTakenTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+
+        </RelativeLayout>
+
+
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/detail_stoppageButton"
+            android:layout_below="@+id/detail_relativeLayout"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginTop="24dp"
+            fancy:fb_fontIconSize="40sp"
+            fancy:fb_borderColor="@color/black"
+            fancy:fb_borderWidth="2dp"
+            fancy:fb_defaultColor="@color/naturalBlue"
+            fancy:fb_focusColor="@color/white"
+            fancy:fb_iconPosition="bottom"
+            fancy:fb_radius="64dp"
+            fancy:fb_text="stoppage"
+            fancy:fb_iconPaddingTop="5dp"
+            fancy:fb_fontIconResource="&#xf253;"
+            android:layout_marginStart="24dp"
+            fancy:fb_textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/detail_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text=""
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:background="@drawable/background_circle"
+            android:layout_alignTop="@+id/detail_stoppageButton"
+            android:layout_alignEnd="@+id/detail_stoppageButton"
+            />
+
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/detail_petrolFillingButton"
+            android:layout_below="@+id/detail_relativeLayout"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginTop="24dp"
+            fancy:fb_fontIconSize="40sp"
+            android:layout_alignParentEnd="true"
+            android:padding="10dp"
+            android:layout_marginEnd="24dp"
+            fancy:fb_borderColor="@color/black"
+            fancy:fb_borderWidth="2dp"
+            fancy:fb_defaultColor="@color/naturalBlue"
+            fancy:fb_focusColor="@color/white"
+            fancy:fb_iconPosition="bottom"
+            fancy:fb_iconPaddingTop="5dp"
+            fancy:fb_fontIconResource="&#xf043;"
+            fancy:fb_radius="64dp"
+            fancy:fb_text="Petrol\nFilling"
+            fancy:fb_textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/detail_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:textStyle="bold"
+            android:text=" "
+            android:gravity="center"
+            android:background="@drawable/background_circle"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_alignTop="@+id/detail_petrolFillingButton"
+            android:layout_alignEnd="@+id/detail_petrolFillingButton"
+            />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/detail_otherFillingButton"
+            android:layout_below="@+id/detail_stoppageButton"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginTop="24dp"
+            android:padding="10dp"
+            fancy:fb_fontIconSize="40sp"
+            fancy:fb_borderColor="@color/black"
+            fancy:fb_borderWidth="2dp"
+            fancy:fb_defaultColor="@color/naturalBlue"
+            fancy:fb_focusColor="@color/white"
+            fancy:fb_iconPosition="bottom"
+            fancy:fb_radius="64dp"
+            fancy:fb_iconPaddingTop="5dp"
+            fancy:fb_fontIconResource="&#xf1fb;"
+            fancy:fb_text="Other\nFilling"
+            android:layout_marginStart="24dp"
+            fancy:fb_textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/detail_text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text=""
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:background="@drawable/background_circle"
+            android:layout_alignTop="@+id/detail_otherFillingButton"
+            android:layout_alignEnd="@+id/detail_otherFillingButton"
+            />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/detail_loadButton"
+            android:layout_below="@+id/detail_stoppageButton"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginTop="24dp"
+            android:layout_alignParentEnd="true"
+            android:padding="10dp"
+            fancy:fb_fontIconSize="40sp"
+            android:layout_marginEnd="24dp"
+            fancy:fb_borderColor="@color/black"
+            fancy:fb_borderWidth="2dp"
+            fancy:fb_defaultColor="@color/naturalBlue"
+            fancy:fb_focusColor="@color/white"
+            fancy:fb_iconPosition="bottom"
+            fancy:fb_radius="64dp"
+            fancy:fb_iconPaddingTop="5dp"
+            fancy:fb_fontIconResource="&#xf160;"
+            fancy:fb_text="Load/\nunLoad"
+            fancy:fb_textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/detail_text4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text=""
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:background="@drawable/background_circle"
+            android:layout_alignTop="@+id/detail_loadButton"
+            android:layout_alignEnd="@+id/detail_loadButton"
+            />
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/detail_breakDownButton"
+            android:layout_below="@+id/detail_loadButton"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginTop="24dp"
+            android:padding="10dp"
+            fancy:fb_borderColor="@color/black"
+            fancy:fb_borderWidth="2dp"
+            fancy:fb_fontIconSize="40sp"
+            fancy:fb_defaultColor="@color/naturalBlue"
+            fancy:fb_focusColor="@color/white"
+            fancy:fb_iconPosition="bottom"
+            fancy:fb_radius="64dp"
+            fancy:fb_iconPaddingTop="5dp"
+            android:layout_marginBottom="24dp"
+            fancy:fb_fontIconResource="&#xf0ad;"
+            fancy:fb_text="BreakDown"
+            android:layout_marginStart="24dp"
+            fancy:fb_textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/detail_text5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text=""
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/background_circle"
+            android:layout_alignTop="@+id/detail_breakDownButton"
+            android:layout_alignEnd="@+id/detail_breakDownButton"
+            />
+
+
 
 
 
@@ -98,4 +511,4 @@
 
 
 
-</FrameLayout>
+</android.support.v4.widget.NestedScrollView>
