@@ -18,8 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PetrolFillingDetail extends Fragment {
+public class OtherFillingDetail extends Fragment {
 
     View view;
 
@@ -37,7 +35,7 @@ public class PetrolFillingDetail extends Fragment {
 
     // Creating RecyclerView.Adapter.
     RecyclerView.Adapter adapter ;
-    List<PetrolFillingRecyclerInfo> list = new ArrayList<>();
+    List<OtherRecyclerInfo> list = new ArrayList<>();
     ProgressDialog progressDialog;
     DatabaseReference databaseReference;
 
@@ -47,7 +45,7 @@ public class PetrolFillingDetail extends Fragment {
 
 
 
-    public PetrolFillingDetail() {
+    public OtherFillingDetail() {
         // Required empty public constructor
     }
 
@@ -56,7 +54,7 @@ public class PetrolFillingDetail extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_petrol_filling_detail, container, false);
+        view = inflater.inflate(R.layout.fragment_other_filling_detail, container, false);
 
         SharedPreferences shared = getActivity().getSharedPreferences("driverContact", Context.MODE_PRIVATE);
         try{
@@ -66,7 +64,7 @@ public class PetrolFillingDetail extends Fragment {
             contactUID_tx  = "";
         }
 
-        recyclerView = view.findViewById(R.id.petrolFilling_recyclerView);
+        recyclerView = view.findViewById(R.id.otherFilling_recyclerView);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.isDuplicateParentStateEnabled();
@@ -88,11 +86,9 @@ public class PetrolFillingDetail extends Fragment {
         progressDialog.show();
 
 
+        Query query = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
 
-
-        Query queryPetrolNumber = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
-
-        queryPetrolNumber.addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
@@ -101,7 +97,7 @@ public class PetrolFillingDetail extends Fragment {
                 }
 
                 databaseReference = d_root.child("trip_details").child(contactUID_tx)
-                        .child(key).child("petrol_filled");
+                        .child(key).child("other_filling");
 
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -114,12 +110,12 @@ public class PetrolFillingDetail extends Fragment {
                         for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
 
-                            PetrolFillingRecyclerInfo petrolFillingRecyclerInfo = postSnapshot.getValue(PetrolFillingRecyclerInfo.class);
+                            OtherRecyclerInfo otherFillingRecyclerInfo = postSnapshot.getValue(OtherRecyclerInfo.class);
 
-                            list.add(petrolFillingRecyclerInfo);
+                            list.add(otherFillingRecyclerInfo);
                         }
 
-                        adapter = new PetrolRecyclerViewAdapter(getActivity(), list);
+                        adapter = new OtherRecyclerViewAdapter(getActivity(), list);
                         //   Collections.reverse(list);
                         adapter.notifyDataSetChanged();
                         recyclerView.setAdapter(adapter);
@@ -146,7 +142,6 @@ public class PetrolFillingDetail extends Fragment {
 
             }
         });
-
 
         return view;
     }

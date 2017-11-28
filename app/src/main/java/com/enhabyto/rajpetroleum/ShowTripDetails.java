@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -39,8 +38,6 @@ import dmax.dialog.SpotsDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 import util.android.textviews.FontTextView;
 
-import static android.content.Context.MODE_PRIVATE;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +52,8 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
     private DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
     private DatabaseReference databaseReference;
 
-    private String contactUID_tx, startDate_tx, pumpName_tx, stateName_tx, cityName_tx
-            , truckLocation_tx, moneyTaken_tx, petrolPrice_tx;
-    FontTextView contact_tv, name_tv, truckNumber_tv, startDate_tv, pumpName_tv, stateName_tv, cityName_tv
-            , truckLocation_tv, moneyTaken_tv, petrolPrice_tv;
+    private String contactUID_tx, startDate_tx, pumpName_tx, stateName_tx, cityName_tx, truckLocation_tx, moneyTaken_tx, petrolPrice_tx;
+    FontTextView contact_tv, name_tv, truckNumber_tv, startDate_tv, pumpName_tv, stateName_tv, cityName_tv, truckLocation_tv, moneyTaken_tv, petrolPrice_tv;
     String contact_tx, name_tx, truckNumber_tx;
 
     TextView stoppage_tv, petrolFilling_tv, otherFilling_tv, load_tv, breakDown_tv;
@@ -69,9 +64,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
     String petrolkey;
 
-    int petrolSize;
-
-
+    int petrolSize, stoppageSize, loadSize, unLoadSize, otherSize;
 
 
     public ShowTripDetails() {
@@ -84,16 +77,15 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_show_trip_details, container, false);
-        dialog_loading = new SpotsDialog(getActivity(),R.style.loadingData);
+        dialog_loading = new SpotsDialog(getActivity(), R.style.loadingData);
         dialog_loading.show();
 
         SharedPreferences shared = getActivity().getSharedPreferences("driverContact", Context.MODE_PRIVATE);
-        try{
+        try {
             contactUID_tx = (shared.getString("contactUID", ""));
             startDate_tx = (shared.getString("startDate", ""));
-        }
-        catch (NullPointerException e){
-            contactUID_tx  = "";
+        } catch (NullPointerException e) {
+            contactUID_tx = "";
         }
 
         contact_tv = view.findViewById(R.id.detail_contactTextView);
@@ -120,7 +112,6 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         breakDown_btn = view.findViewById(R.id.detail_breakDownButton);
 
 
-
         profileImage = view.findViewById(R.id.detail_profileImage);
 
         contact_tv.setText(contactUID_tx);
@@ -130,7 +121,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                name_tv.setText("("+dataSnapshot.child("name").getValue(String.class)+")");
+                name_tv.setText("(" + dataSnapshot.child("name").getValue(String.class) + ")");
             }
 
             @Override
@@ -138,8 +129,6 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
             }
         });
-
-
 
 
         final Query query = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
@@ -183,9 +172,8 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                         stateName_tv.setText(stateName_tx);
                         cityName_tv.setText(cityName_tx);
                         truckLocation_tv.setText(truckLocation_tx);
-                        moneyTaken_tv.setText("Rs "+moneyTaken_tx);
-                        petrolPrice_tv.setText("Rs "+petrolPrice_tx+"/Litres");
-
+                        moneyTaken_tv.setText("Rs " + moneyTaken_tx);
+                        petrolPrice_tv.setText("Rs " + petrolPrice_tx + "/Litres");
 
 
                     }
@@ -197,7 +185,6 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 });
 
 
-
             }
 
             @Override
@@ -206,6 +193,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
             }
         });
 
+//        petrol filling module
 
         Query queryPetrolNumber = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
 
@@ -213,7 +201,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                   petrolkey = child.getKey();
+                    petrolkey = child.getKey();
 
                 }
 
@@ -224,10 +212,87 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                          petrolSize = (int) (dataSnapshot.getChildrenCount());
-                          petrolFilling_tv.setText(String.valueOf(petrolSize));
-                          dialog_loading.dismiss();
-                        }
+                        petrolSize = (int) (dataSnapshot.getChildrenCount());
+                        petrolFilling_tv.setText(String.valueOf(petrolSize));
+
+                    }
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                d_child = d_root.child("trip_details").child(contactUID_tx)
+                        .child(petrolkey).child("stoppage");
+
+                d_child.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        stoppageSize = (int) (dataSnapshot.getChildrenCount());
+                        stoppage_tv.setText(String.valueOf(stoppageSize));
+
+                    }
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                d_child = d_root.child("trip_details").child(contactUID_tx)
+                        .child(petrolkey).child("load");
+
+                d_child.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        loadSize = (int) (dataSnapshot.getChildrenCount());
+
+                        DatabaseReference d_child = d_root.child("trip_details").child(contactUID_tx)
+                                .child(petrolkey).child("unload");
+
+                        d_child.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                unLoadSize = (int) (dataSnapshot.getChildrenCount());
+
+                                load_tv.setText(String.valueOf(loadSize+unLoadSize));
+                                dialog_loading.dismiss();
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                        d_child = d_root.child("trip_details").child(contactUID_tx)
+                                .child(petrolkey).child("other_filling");
+
+                        d_child.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                otherSize = (int) (dataSnapshot.getChildrenCount());
+                                otherFilling_tv.setText(String.valueOf(otherSize));
+
+                            }
+
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
 
 
                     @Override
@@ -237,6 +302,12 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 });
 
 
+
+
+
+
+
+
             }
 
             @Override
@@ -244,6 +315,8 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
             }
         });
+
+
 
 
 
@@ -264,7 +337,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                         .fitCenter()
                         .centerCrop()
                         .error(R.drawable.error)
-                        .diskCacheStrategy( DiskCacheStrategy.ALL )
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(new BitmapImageViewTarget(profileImage) {
                             @Override
                             protected void setResource(Bitmap resource) {
@@ -284,6 +357,9 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
         petrolFilling_btn.setOnClickListener(this);
+        stoppage_btn.setOnClickListener(this);
+        load_btn.setOnClickListener(this);
+        otherFilling_btn.setOnClickListener(this);
 
 
 
@@ -307,10 +383,62 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         switch (id){
 
             case R.id.detail_petrolFillingButton:
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new PetrolFillingDetail()).addToBackStack("AdminFragment").commit();
+                if (petrolSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("there is no Petrol filling yet!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
 
+                }
+                else
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new PetrolFillingDetail()).addToBackStack("petrol").commit();
                 break;
 
+
+            case R.id.detail_stoppageButton:
+                if (stoppageSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("there is no stoppage yet!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+
+                }
+                else
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new StoppageDetail()).addToBackStack("stoppage").commit();
+                break;
+
+            case R.id.detail_loadButton:
+                if (loadSize+unLoadSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("there is no Load/UnLoad yet!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+
+                }
+                else
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new LoadDetail()).addToBackStack("load").commit();
+                break;
+
+
+            case R.id.detail_otherFillingButton:
+                if (otherSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("there is no other filling yet!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+
+                }
+                else
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new OtherFillingDetail()).addToBackStack("load").commit();
+                break;
 
 
         }

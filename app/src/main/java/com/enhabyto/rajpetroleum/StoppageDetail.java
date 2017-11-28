@@ -18,8 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PetrolFillingDetail extends Fragment {
+public class StoppageDetail extends Fragment {
 
     View view;
 
@@ -37,7 +35,7 @@ public class PetrolFillingDetail extends Fragment {
 
     // Creating RecyclerView.Adapter.
     RecyclerView.Adapter adapter ;
-    List<PetrolFillingRecyclerInfo> list = new ArrayList<>();
+    List<StoppageRecyclerInfo> list = new ArrayList<>();
     ProgressDialog progressDialog;
     DatabaseReference databaseReference;
 
@@ -47,7 +45,7 @@ public class PetrolFillingDetail extends Fragment {
 
 
 
-    public PetrolFillingDetail() {
+    public StoppageDetail() {
         // Required empty public constructor
     }
 
@@ -56,7 +54,7 @@ public class PetrolFillingDetail extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_petrol_filling_detail, container, false);
+        view = inflater.inflate(R.layout.fragment_stoppage_detail, container, false);
 
         SharedPreferences shared = getActivity().getSharedPreferences("driverContact", Context.MODE_PRIVATE);
         try{
@@ -66,7 +64,7 @@ public class PetrolFillingDetail extends Fragment {
             contactUID_tx  = "";
         }
 
-        recyclerView = view.findViewById(R.id.petrolFilling_recyclerView);
+        recyclerView = view.findViewById(R.id.stoppage_recyclerView);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.isDuplicateParentStateEnabled();
@@ -87,9 +85,6 @@ public class PetrolFillingDetail extends Fragment {
         // Showing progress dialog.
         progressDialog.show();
 
-
-
-
         Query queryPetrolNumber = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
 
         queryPetrolNumber.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -101,7 +96,7 @@ public class PetrolFillingDetail extends Fragment {
                 }
 
                 databaseReference = d_root.child("trip_details").child(contactUID_tx)
-                        .child(key).child("petrol_filled");
+                        .child(key).child("stoppage");
 
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -114,12 +109,12 @@ public class PetrolFillingDetail extends Fragment {
                         for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
 
-                            PetrolFillingRecyclerInfo petrolFillingRecyclerInfo = postSnapshot.getValue(PetrolFillingRecyclerInfo.class);
+                            StoppageRecyclerInfo stoppageRecyclerInfo = postSnapshot.getValue(StoppageRecyclerInfo.class);
 
-                            list.add(petrolFillingRecyclerInfo);
+                            list.add(stoppageRecyclerInfo);
                         }
 
-                        adapter = new PetrolRecyclerViewAdapter(getActivity(), list);
+                        adapter = new StoppageRecyclerViewAdapter(getActivity(), list);
                         //   Collections.reverse(list);
                         adapter.notifyDataSetChanged();
                         recyclerView.setAdapter(adapter);

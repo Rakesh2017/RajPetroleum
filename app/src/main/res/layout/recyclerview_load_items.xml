@@ -22,10 +22,10 @@
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/petrol_headerTextView"
+            android:id="@+id/load_headerTextView"
             android:layout_marginStart="10dp"
             android:textColor="@color/lightRed"
-            android:text="Petrol filling "
+            android:text="Load "
             android:textStyle="bold"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="20sp"
@@ -35,7 +35,7 @@
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/petrol_dateTextView"
+            android:id="@+id/load_dateTextView"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
             android:textColor="@color/lightGreen"
@@ -43,7 +43,7 @@
             android:textStyle="bold"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="16sp"
-            android:layout_alignBottom="@+id/petrol_headerTextView"
+            android:layout_alignBottom="@+id/load_headerTextView"
             />
 
         <!--pump name-->
@@ -51,12 +51,12 @@
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/petrol_pumpName1TextView"
-            android:layout_below="@+id/petrol_dateTextView"
+            android:id="@+id/load_loaded1TextView"
+            android:layout_below="@+id/load_dateTextView"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:textColor="@color/black"
-            android:text="Pump Name:"
+            android:text="Oil Loaded:"
             android:textStyle="normal"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="14sp"
@@ -66,9 +66,9 @@
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/petrol_pumpNameTextView"
-            android:layout_toEndOf="@id/petrol_pumpName1TextView"
-            android:layout_below="@+id/petrol_dateTextView"
+            android:id="@+id/load_loadedTextView"
+            android:layout_toEndOf="@id/load_loaded1TextView"
+            android:layout_below="@+id/load_dateTextView"
             android:layout_marginEnd="10dp"
             android:textColor="@color/naturalBlue"
             android:text=""
@@ -84,12 +84,12 @@
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/petrol_token1TextView"
-            android:layout_below="@+id/petrol_pumpNameTextView"
+            android:id="@+id/load_address1TextView"
+            android:layout_below="@+id/load_loadedTextView"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:textColor="@color/black"
-            android:text="Token Number:"
+            android:text="Address:"
             android:textStyle="normal"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="14sp"
@@ -99,9 +99,9 @@
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/petrol_tokenTextView"
-            android:layout_toEndOf="@id/petrol_token1TextView"
-            android:layout_below="@+id/petrol_pumpNameTextView"
+            android:id="@+id/load_addressTextView"
+            android:layout_toEndOf="@id/load_address1TextView"
+            android:layout_below="@+id/load_loadedTextView"
             android:layout_marginEnd="10dp"
             android:textColor="@color/naturalBlue"
             android:text=""
@@ -118,12 +118,12 @@
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/petrol_pumpAddress1TextView"
-            android:layout_below="@+id/petrol_tokenTextView"
+            android:id="@+id/load_state1TextView"
+            android:layout_below="@+id/load_addressTextView"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:textColor="@color/black"
-            android:text="Pump Address:"
+            android:text="State:"
             android:textStyle="normal"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="14sp"
@@ -133,9 +133,9 @@
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/petrol_pumpAddressTextView"
-            android:layout_toEndOf="@id/petrol_pumpAddress1TextView"
-            android:layout_below="@+id/petrol_tokenTextView"
+            android:id="@+id/load_stateTextView"
+            android:layout_toEndOf="@id/load_state1TextView"
+            android:layout_below="@+id/load_addressTextView"
             android:layout_marginEnd="10dp"
             android:textColor="@color/naturalBlue"
             android:text=""
@@ -152,12 +152,12 @@
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/petrol_stateName1TextView"
-            android:layout_below="@+id/petrol_pumpAddressTextView"
+            android:id="@+id/load_going1TextView"
+            android:layout_below="@+id/load_stateTextView"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:textColor="@color/black"
-            android:text="State Name:"
+            android:text="Going To:"
             android:textStyle="normal"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="14sp"
@@ -167,9 +167,9 @@
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/petrol_stateNameTextView"
-            android:layout_toEndOf="@id/petrol_stateName1TextView"
-            android:layout_below="@+id/petrol_pumpAddressTextView"
+            android:id="@+id/load_goingTextView"
+            android:layout_toEndOf="@id/load_going1TextView"
+            android:layout_below="@+id/load_stateTextView"
             android:layout_marginEnd="10dp"
             android:textColor="@color/naturalBlue"
             android:text=""
@@ -180,107 +180,12 @@
             />
 
 
-        <!--Money Paid-->
-
-
-        <util.android.textviews.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/petrol_moneyPaid1TextView"
-            android:layout_below="@+id/petrol_stateNameTextView"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:textColor="@color/black"
-            android:text="Money Paid:"
-            android:textStyle="normal"
-            android:fontFamily="droidsansbold.ttf"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"
-            />
-
-        <util.android.textviews.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/petrol_moneyPaidTextView"
-            android:layout_toEndOf="@id/petrol_moneyPaid1TextView"
-            android:layout_below="@+id/petrol_stateNameTextView"
-            android:layout_marginEnd="10dp"
-            android:textColor="@color/naturalBlue"
-            android:text=""
-            android:textStyle="bold"
-            android:fontFamily="droidsansbold.ttf"
-            android:textSize="16sp"
-            android:layout_marginTop="4dp"
-            />
-
-        <!--litres-->
-
-        <util.android.textviews.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/petrol_litresTextView"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/petrol_stateNameTextView"
-            android:layout_marginEnd="10dp"
-            android:textColor="@color/naturalBlue"
-            android:text=""
-            android:textStyle="bold"
-            android:fontFamily="droidsansbold.ttf"
-            android:textSize="16sp"
-            android:layout_marginTop="4dp"
-            />
-
-
-        <util.android.textviews.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/petrol_litres1TextView"
-            android:layout_below="@+id/petrol_stateNameTextView"
-            android:layout_toStartOf="@+id/petrol_litresTextView"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:textColor="@color/black"
-            android:text="Litres:"
-            android:textStyle="normal"
-            android:fontFamily="droidsansbold.ttf"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"
-            />
-
-
-
-        <util.android.textviews.FontTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/petrol_billPhotoTextView"
-            android:layout_below="@+id/petrol_litresTextView"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:textColor="@color/blackNinety"
-            android:text="Bill photo"
-            android:textStyle="normal"
-            android:fontFamily="droidsansbold.ttf"
-            android:textSize="14sp"
-            android:layout_marginTop="5dp"
-            android:visibility="gone"
-            />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="3dp"
-            android:layout_below="@+id/petrol_billPhotoTextView"
-            android:id="@+id/petrol_billImage"
-            android:visibility="gone"
-            />
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:background="@color/black"
-            android:layout_below="@+id/petrol_billImage"
+            android:layout_below="@+id/load_goingTextView"
             android:layout_marginTop="4dp"
             />
 

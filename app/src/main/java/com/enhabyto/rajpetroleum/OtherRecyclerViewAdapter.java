@@ -12,25 +12,23 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
 import util.android.textviews.FontTextView;
 
 /**
- * Created by this on 27-Nov-17.
+ * Created by this on 28-Nov-17.
  */
 
-public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyclerViewAdapter.ViewHolder> {
+public class OtherRecyclerViewAdapter  extends RecyclerView.Adapter<OtherRecyclerViewAdapter.ViewHolder> {
 
     Context context;
-    List<PetrolFillingRecyclerInfo> MainImageUploadInfoList;
+    List<OtherRecyclerInfo> MainImageUploadInfoList;
     String month;
 
 
-    public PetrolRecyclerViewAdapter(Context context, List<PetrolFillingRecyclerInfo> TempList) {
+    public OtherRecyclerViewAdapter(Context context, List<OtherRecyclerInfo> TempList) {
 
         this.MainImageUploadInfoList = TempList;
 
@@ -40,7 +38,7 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_petrol_filling_items, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_other_items, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(view);
 
@@ -50,16 +48,15 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final PetrolFillingRecyclerInfo UploadInfo = MainImageUploadInfoList.get(position);
+        final OtherRecyclerInfo UploadInfo = MainImageUploadInfoList.get(position);
 
         position++;
         holder.header_tv.setText(holder.header_tv.getText()+""+position);
-        holder.pumpName_tv.setText(UploadInfo.getName());
-        holder.tokenNumber_tv.setText(UploadInfo.getToken_number());
-        holder.pumpAddress_tv.setText(UploadInfo.getAddress());
-        holder.stateName_tv.setText(UploadInfo.getState());
+        holder.description_tv.setText(UploadInfo.getDescription());
+        holder.fillingName_tv.setText(UploadInfo.getFilling_name());
+        holder.quantity_tv.setText(UploadInfo.getQuantity());
         holder.moneyPaid_tv.setText("Rs "+UploadInfo.getMoney_paid());
-        holder.litres_tv.setText(UploadInfo.getPetrol_filled()+" litres");
+
 
         String date = UploadInfo.getDate_time();
 
@@ -97,20 +94,16 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
                     .into(holder.image);
         }
 
-        if (UploadInfo.getPetrol_filled().equals("")){
-            holder.litres_tv.setText("NA");
-            holder.litres_tv.setTextColor(Color.GRAY);
+        if (UploadInfo.getQuantity().equals("")){
+            holder.quantity_tv.setText("NA");
+            holder.quantity_tv.setTextColor(Color.GRAY);
         }
 
-        if (UploadInfo.getAddress().equals("")){
-            holder.pumpAddress_tv.setText("NA");
-            holder.pumpAddress_tv.setTextColor(Color.GRAY);
+        if (UploadInfo.getDescription().equals("")){
+            holder.description_tv.setText("NA");
+            holder.description_tv.setTextColor(Color.GRAY);
         }
 
-        if (UploadInfo.getState().equals("")){
-            holder.stateName_tv.setText("NA");
-            holder.stateName_tv.setTextColor(Color.GRAY);
-        }
 
 
 
@@ -123,25 +116,24 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        FontTextView pumpName_tv, tokenNumber_tv, pumpAddress_tv, stateName_tv, moneyPaid_tv, litres_tv, bill_tv, date_time_tv
-                ,header_tv;
+        FontTextView description_tv, fillingName_tv, imageURL, moneyPaid_tv, quantity_tv, date_time_tv
+                ,header_tv, bill_tv;
         ImageView image;
 
 
         ViewHolder(View itemView) {
             super(itemView);
 
-            pumpName_tv = itemView.findViewById(R.id.petrol_pumpNameTextView);
-            tokenNumber_tv = itemView.findViewById(R.id.petrol_tokenTextView);
-            pumpAddress_tv = itemView.findViewById(R.id.petrol_pumpAddressTextView);
-            stateName_tv = itemView.findViewById(R.id.petrol_stateNameTextView);
-            moneyPaid_tv = itemView.findViewById(R.id.petrol_moneyPaidTextView);
-            litres_tv = itemView.findViewById(R.id.petrol_litresTextView);
-            bill_tv = itemView.findViewById(R.id.petrol_billPhotoTextView);
-            date_time_tv = itemView.findViewById(R.id.petrol_dateTextView);
-            header_tv = itemView.findViewById(R.id.petrol_headerTextView);
+            description_tv = itemView.findViewById(R.id.other_descriptionTextView);
+            fillingName_tv = itemView.findViewById(R.id.other_fillingNameTextView);
+            moneyPaid_tv = itemView.findViewById(R.id.other_moneyPaidTextView);
+            quantity_tv = itemView.findViewById(R.id.other_quantityFilledTextView);
+            date_time_tv = itemView.findViewById(R.id.other_dateTextView);
+            header_tv = itemView.findViewById(R.id.other_headerTextView);
+            bill_tv = itemView.findViewById(R.id.other_billPhotoTextView);
 
-            image = itemView.findViewById(R.id.petrol_billImage);
+
+            image = itemView.findViewById(R.id.other_billImage);
 
 
 
@@ -202,10 +194,6 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
 
 
         }
-      }
+    }
 
 }
-
-
-    //end
-
