@@ -64,7 +64,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
     String petrolkey;
 
-    int petrolSize, stoppageSize, loadSize, unLoadSize, otherSize;
+    int petrolSize, stoppageSize, loadSize, unLoadSize, otherSize, failureSize;
 
 
     public ShowTripDetails() {
@@ -262,7 +262,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                                 unLoadSize = (int) (dataSnapshot.getChildrenCount());
 
                                 load_tv.setText(String.valueOf(loadSize+unLoadSize));
-                                dialog_loading.dismiss();
+
                             }
 
 
@@ -281,7 +281,26 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
                                 otherSize = (int) (dataSnapshot.getChildrenCount());
                                 otherFilling_tv.setText(String.valueOf(otherSize));
+                            }
 
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                        d_child = d_root.child("trip_details").child(contactUID_tx)
+                                .child(petrolkey).child("failure");
+
+                        d_child.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                failureSize = (int) (dataSnapshot.getChildrenCount());
+                                breakDown_tv.setText(String.valueOf(failureSize));
+                                dialog_loading.dismiss();
                             }
 
 
@@ -300,10 +319,6 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
                     }
                 });
-
-
-
-
 
 
 
@@ -360,6 +375,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         stoppage_btn.setOnClickListener(this);
         load_btn.setOnClickListener(this);
         otherFilling_btn.setOnClickListener(this);
+        breakDown_btn.setOnClickListener(this);
 
 
 
@@ -438,6 +454,21 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 }
                 else
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new OtherFillingDetail()).addToBackStack("load").commit();
+                break;
+
+
+            case R.id.detail_breakDownButton:
+                if (failureSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("there is no other filling yet!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+
+                }
+                else
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new BreakDownDetail()).addToBackStack("load").commit();
                 break;
 
 

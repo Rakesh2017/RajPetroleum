@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    card_view:cardElevation="2dp"
+    card_view:contentPadding="2dp"
+    card_view:cardCornerRadius="15dp"
+    card_view:cardMaxElevation="2dp"
+    card_view:cardBackgroundColor="@color/white"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dash_relativeLayout"
+        android:background="#ECEFF1"
+        >
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_headerTextView"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/lightRed"
+            android:text="BreakDown "
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_dateTextView"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/lightGreen"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_alignBottom="@+id/break_headerTextView"
+            />
+
+        <!--pump name-->
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_failure1TextView"
+            android:layout_below="@+id/break_dateTextView"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:text="Failure:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="3dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_failureTextView"
+            android:layout_toEndOf="@id/break_failure1TextView"
+            android:layout_below="@+id/break_dateTextView"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/naturalBlue"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="3dp"
+            />
+
+
+        <!--token number-->
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_address1TextView"
+            android:layout_below="@+id/break_failureTextView"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:text="Address:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_addressTextView"
+            android:layout_toEndOf="@id/break_address1TextView"
+            android:layout_below="@+id/break_failureTextView"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/naturalBlue"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            />
+
+
+        <!--pump address-->
+
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_stateName1TextView"
+            android:layout_below="@+id/break_addressTextView"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:text="State:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_stateNameTextView"
+            android:layout_toEndOf="@id/break_stateName1TextView"
+            android:layout_below="@+id/break_addressTextView"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/naturalBlue"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            />
+
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_resourceTextView"
+            android:layout_marginStart="10dp"
+            android:layout_below="@+id/break_stateNameTextView"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:text="Resources Used"
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            />
+
+
+        <!--1-->
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_resourceUsed1TextView1"
+            android:layout_below="@+id/break_resourceTextView"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:text="Resource Used 1:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_resourceUsedTextView1"
+            android:layout_toEndOf="@id/break_resourceUsed1TextView1"
+            android:layout_below="@+id/break_resourceTextView"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/naturalBlue"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_price1TextView1"
+            android:layout_below="@+id/break_resourceUsedTextView1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:text="Price:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_priceTextView1"
+            android:layout_toEndOf="@id/break_price1TextView1"
+            android:layout_below="@+id/break_resourceUsedTextView1"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/naturalBlue"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            />
+
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_quantityTextView1"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/break_resourceUsedTextView1"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/naturalBlue"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_quantity1TextView1"
+            android:layout_toStartOf="@+id/break_quantityTextView1"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/break_resourceUsedTextView1"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/blackNinety"
+            android:text="Quantity:"
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            />
+
+
+        <!--2-->
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_resourceUsed2TextView2"
+            android:layout_below="@+id/break_quantity1TextView1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:text="Resource Used 2:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_resourceUsedTextView2"
+            android:layout_toEndOf="@id/break_resourceUsed2TextView2"
+            android:layout_below="@+id/break_quantity1TextView1"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/naturalBlue"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_price2TextView2"
+            android:layout_below="@+id/break_resourceUsedTextView2"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:text="Price:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_priceTextView2"
+            android:layout_toEndOf="@id/break_price2TextView2"
+            android:layout_below="@+id/break_resourceUsedTextView2"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/naturalBlue"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            />
+
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_quantityTextView2"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/break_resourceUsedTextView2"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/naturalBlue"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/break_quantity2TextView2"
+            android:layout_toStartOf="@+id/break_quantityTextView2"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/break_resourceUsedTextView2"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/blackNinety"
+            android:text="Quantity:"
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            />
+
+
+
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
