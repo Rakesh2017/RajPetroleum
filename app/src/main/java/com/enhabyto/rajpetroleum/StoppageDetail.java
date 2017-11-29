@@ -87,7 +87,7 @@ public class StoppageDetail extends Fragment {
 
         Query queryPetrolNumber = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
 
-        queryPetrolNumber.addListenerForSingleValueEvent(new ValueEventListener() {
+        queryPetrolNumber.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
@@ -142,8 +142,11 @@ public class StoppageDetail extends Fragment {
             }
         });
 
-
         return view;
     }
+
+
+
+
 
 }

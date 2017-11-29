@@ -131,7 +131,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 editor.apply();
 
                 AppCompatActivity activity = (AppCompatActivity) context;
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("AdminFragment").commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("FragmentTripDetails").commit();
 
             }
         });

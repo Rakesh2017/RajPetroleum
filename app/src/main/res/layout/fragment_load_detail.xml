@@ -34,12 +34,11 @@
             android:id="@+id/load_recyclerView"
             android:fitsSystemWindows="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_marginBottom="16dp"
             >
         </android.support.v7.widget.RecyclerView>
 
         <util.android.textviews.FontTextView
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="4dp"
             android:id="@+id/load_text2"
             android:layout_below="@+id/load_recyclerView"
             android:layout_width="wrap_content"

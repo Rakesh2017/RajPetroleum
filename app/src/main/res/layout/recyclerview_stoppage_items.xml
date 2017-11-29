@@ -7,9 +7,11 @@
     android:layout_height="wrap_content"
     card_view:cardElevation="2dp"
     card_view:contentPadding="2dp"
-    card_view:cardCornerRadius="15dp"
+    card_view:cardCornerRadius="2dp"
     card_view:cardMaxElevation="2dp"
-    card_view:cardBackgroundColor="@color/white"
+    android:layout_marginTop="2dp"
+    android:layout_marginStart="2dp"
+    android:layout_marginEnd="2dp"
     >
 
     <RelativeLayout
@@ -29,7 +31,7 @@
             android:textStyle="bold"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="20sp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             />
 
         <util.android.textviews.FontTextView
@@ -54,7 +56,7 @@
             android:id="@+id/stop_placeName1TextView"
             android:layout_below="@+id/stop_dateTextView"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="4dp"
             android:textColor="@color/black"
             android:text="Place Name:"
             android:textStyle="normal"
@@ -87,7 +89,7 @@
             android:id="@+id/stop_description1TextView"
             android:layout_below="@+id/stop_placeNameTextView"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="4dp"
             android:textColor="@color/black"
             android:text="Description:"
             android:textStyle="normal"
@@ -121,7 +123,7 @@
             android:id="@+id/stop_moneyPaid1TextView"
             android:layout_below="@+id/stop_descriptionTextView"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="4dp"
             android:textColor="@color/black"
             android:text="Money Paid:"
             android:textStyle="normal"
@@ -155,7 +157,7 @@
             android:id="@+id/stop_paidFor1TextView"
             android:layout_below="@+id/stop_moneyPaidTextView"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="4dp"
             android:textColor="@color/black"
             android:text="Amount Paid For:"
             android:textStyle="normal"
@@ -170,7 +172,7 @@
             android:id="@+id/stop_paidForTextView"
             android:layout_toEndOf="@id/stop_paidFor1TextView"
             android:layout_below="@+id/stop_moneyPaidTextView"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="4dp"
             android:textColor="@color/naturalBlue"
             android:text=""
             android:textStyle="bold"

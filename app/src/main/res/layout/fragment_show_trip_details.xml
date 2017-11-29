@@ -1,18 +1,25 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
+    android:id="@+id/showDetailSwipe"
     tools:context="com.enhabyto.rajpetroleum.ShowTripDetails">
 
     <!-- TODO: Update blank fragment layout -->
+
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         >
 
         <ImageView
@@ -508,7 +515,8 @@
 
 
     </RelativeLayout>
-
-
-
 </android.support.v4.widget.NestedScrollView>
+
+
+
+</android.support.v4.widget.SwipeRefreshLayout>
