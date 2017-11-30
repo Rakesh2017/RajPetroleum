@@ -9,9 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -50,8 +56,13 @@ public class OtherRecyclerViewAdapter  extends RecyclerView.Adapter<OtherRecycle
     public void onBindViewHolder(ViewHolder holder, int position) {
         final OtherRecyclerInfo UploadInfo = MainImageUploadInfoList.get(position);
 
+
+
+
+
         position++;
-        holder.header_tv.setText(holder.header_tv.getText()+""+position);
+        holder.header_tv.setText("");
+        holder.header_tv.setText("Other Filling"+position);
         holder.description_tv.setText(UploadInfo.getDescription());
         holder.fillingName_tv.setText(UploadInfo.getFilling_name());
         holder.quantity_tv.setText(UploadInfo.getQuantity());
@@ -108,6 +119,19 @@ public class OtherRecyclerViewAdapter  extends RecyclerView.Adapter<OtherRecycle
 
 
     }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
 
     @Override
     public int getItemCount() {

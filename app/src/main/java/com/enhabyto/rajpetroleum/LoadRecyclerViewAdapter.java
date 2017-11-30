@@ -48,7 +48,9 @@ public class LoadRecyclerViewAdapter extends RecyclerView.Adapter<LoadRecyclerVi
 
 
         position++;
-        holder.header_tv.setText(holder.header_tv.getText()+""+position);
+        holder.header_tv.setText("");
+        holder.header_tv.setText("Load"+position);
+
         holder.oilLoaded_tv.setText(UploadInfo.getOil_loaded()+" litres");
         holder.address_tv.setText(UploadInfo.getLocation());
         holder.state_tv.setText(UploadInfo.getState_name());
@@ -89,6 +91,16 @@ public class LoadRecyclerViewAdapter extends RecyclerView.Adapter<LoadRecyclerVi
         }
 
 
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

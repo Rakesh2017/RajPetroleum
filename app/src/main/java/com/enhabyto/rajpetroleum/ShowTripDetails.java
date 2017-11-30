@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.tapadoo.alerter.Alerter;
-
 import dmax.dialog.SpotsDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 import util.android.textviews.FontTextView;
@@ -61,12 +61,15 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
     TextView stoppage_tv, petrolFilling_tv, otherFilling_tv, load_tv, breakDown_tv;
     FancyButton stoppage_btn, petrolFilling_btn, otherFilling_btn, load_btn, breakDown_btn;
 
+
+
     ImageView profileImage;
     AlertDialog dialog_loading;
 
 
 
     String petrolkey;
+    String connected = "no";
 
     int petrolSize, stoppageSize, loadSize, unLoadSize, otherSize, failureSize;
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -90,6 +93,9 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         } catch (NullPointerException e) {
             contactUID_tx = "";
         }
+
+       InternetChecker();
+
 
         contact_tv = view.findViewById(R.id.detail_contactTextView);
         name_tv = view.findViewById(R.id.detail_nameTextView);
@@ -140,6 +146,183 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
             }
         });
+
+
+
+
+
+        petrolFilling_btn.setOnClickListener(this);
+        stoppage_btn.setOnClickListener(this);
+        load_btn.setOnClickListener(this);
+        otherFilling_btn.setOnClickListener(this);
+        breakDown_btn.setOnClickListener(this);
+
+
+
+        return view;
+    }
+
+
+    //    internet check
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connectivityManager != null;
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        int id = v.getId();
+
+        switch (id){
+
+            case R.id.detail_petrolFillingButton:
+                if (!isNetworkAvailable()){
+                    Alerter.create(getActivity())
+                            .setTitle("No Internet Connection!")
+                            .setTitle("Device is not connected to internet.")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                }
+
+                if (petrolSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("There is no Petrol filling yet!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    return;
+                }
+
+
+
+                else
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new PetrolFillingDetail()).addToBackStack("petrol").commit();
+                break;
+
+
+            case R.id.detail_stoppageButton:
+
+                if (!isNetworkAvailable()){
+                    Alerter.create(getActivity())
+                            .setTitle("No Internet Connection!")
+                            .setTitle("Device is not connected to internet.")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                }
+                if (stoppageSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("There is no stoppage yet!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    return;
+                }
+
+
+                else
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new StoppageDetail()).addToBackStack("stoppage").commit();
+                break;
+
+            case R.id.detail_loadButton:
+
+                if (!isNetworkAvailable()){
+                    Alerter.create(getActivity())
+                            .setTitle("No Internet Connection!")
+                            .setTitle("Device is not connected to internet.")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                }
+                if (loadSize+unLoadSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("There is no Load/UnLoad yet!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    return;
+                }
+
+
+                else
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new LoadDetail()).addToBackStack("load").commit();
+                break;
+
+
+            case R.id.detail_otherFillingButton:
+
+                if (!isNetworkAvailable()){
+                    Alerter.create(getActivity())
+                            .setTitle("No Internet Connection!")
+                            .setTitle("Device is not connected to internet.")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                }
+                if (otherSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("There is no other filling yet!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    return;
+                }
+
+                else
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new OtherFillingDetail()).addToBackStack("load").commit();
+                break;
+
+
+            case R.id.detail_breakDownButton:
+                if (!isNetworkAvailable()){
+                    Alerter.create(getActivity())
+                            .setTitle("No Internet Connection!")
+                            .setTitle("Device is not connected to internet.")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                }
+
+                if (failureSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("There is no other breakage yet!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    return;
+
+                }
+
+
+                else
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new BreakDownDetail()).addToBackStack("load").commit();
+                break;
+
+
+        }
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
 
 
         dialog_loading.show();
@@ -232,6 +415,8 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 .child("/profile_image/image.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
+
+
                 // Got the download URL for 'users/me/profile.png'
 
                 Glide.with(getContext())
@@ -257,168 +442,6 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 // Handle any errors
             }
         });
-
-
-        petrolFilling_btn.setOnClickListener(this);
-        stoppage_btn.setOnClickListener(this);
-        load_btn.setOnClickListener(this);
-        otherFilling_btn.setOnClickListener(this);
-        breakDown_btn.setOnClickListener(this);
-
-
-
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        dialog_loading.dismiss();
-    }
-
-    //    internet check
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        assert connectivityManager != null;
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        int id = v.getId();
-
-        switch (id){
-
-            case R.id.detail_petrolFillingButton:
-                if (petrolSize == 0){
-                    Alerter.create(getActivity())
-                            .setTitle("There is no Petrol filling yet!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    return;
-                }
-
-                if (!isNetworkAvailable()){
-                    Alerter.create(getActivity())
-                            .setTitle("No Internet Connection!")
-                            .setTitle("Device is not connected to internet.")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.blackFifty)
-                            .setIcon(R.drawable.no_internet)
-                            .show();
-                }
-
-                else
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new PetrolFillingDetail()).addToBackStack("petrol").commit();
-                break;
-
-
-            case R.id.detail_stoppageButton:
-                if (stoppageSize == 0){
-                    Alerter.create(getActivity())
-                            .setTitle("There is no stoppage yet!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    return;
-                }
-
-                if (!isNetworkAvailable()){
-                    Alerter.create(getActivity())
-                            .setTitle("No Internet Connection!")
-                            .setTitle("Device is not connected to internet.")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.blackFifty)
-                            .setIcon(R.drawable.no_internet)
-                            .show();
-                }
-                else
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new StoppageDetail()).addToBackStack("stoppage").commit();
-                break;
-
-            case R.id.detail_loadButton:
-                if (loadSize+unLoadSize == 0){
-                    Alerter.create(getActivity())
-                            .setTitle("There is no Load/UnLoad yet!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    return;
-                }
-
-                if (!isNetworkAvailable()){
-                    Alerter.create(getActivity())
-                            .setTitle("No Internet Connection!")
-                            .setTitle("Device is not connected to internet.")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.blackFifty)
-                            .setIcon(R.drawable.no_internet)
-                            .show();
-                }
-                else
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new LoadDetail()).addToBackStack("load").commit();
-                break;
-
-
-            case R.id.detail_otherFillingButton:
-                if (otherSize == 0){
-                    Alerter.create(getActivity())
-                            .setTitle("There is no other filling yet!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    return;
-                }
-
-                if (!isNetworkAvailable()){
-                    Alerter.create(getActivity())
-                            .setTitle("No Internet Connection!")
-                            .setTitle("Device is not connected to internet.")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.blackFifty)
-                            .setIcon(R.drawable.no_internet)
-                            .show();
-                }
-                else
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new OtherFillingDetail()).addToBackStack("load").commit();
-                break;
-
-
-            case R.id.detail_breakDownButton:
-                if (failureSize == 0){
-                    Alerter.create(getActivity())
-                            .setTitle("There is no other breakage yet!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    return;
-
-                }
-
-                if (!isNetworkAvailable()){
-                    Alerter.create(getActivity())
-                            .setTitle("No Internet Connection!")
-                            .setTitle("Device is not connected to internet.")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.blackFifty)
-                            .setIcon(R.drawable.no_internet)
-                            .show();
-                }
-                else
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new BreakDownDetail()).addToBackStack("load").commit();
-                break;
-
-
-        }
     }
 
 
@@ -566,6 +589,43 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
     }
 
 
+    //internet checker
+    public void InternetChecker(){
+        DatabaseReference d_networkStatus = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
+
+        d_networkStatus.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                connected = dataSnapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!connected.equals("connected")){
+
+
+                    Alerter.create(getActivity())
+                            .setTitle("Internet Connectivity Problem!")
+                            .setText("App needs internet connection. Some values may not be loaded due to no internet connection")
+                            .setContentGravity(1)
+                            .setDuration(6000)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                    dialog_loading.dismiss();
+
+
+                }
+            }
+        },8000);
+    }
 
 
     //end

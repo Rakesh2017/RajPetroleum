@@ -52,7 +52,8 @@ public class BrokenRecyclerViewAdapter  extends RecyclerView.Adapter<BrokenRecyc
 
 
         position++;
-        holder.header_tv.setText(holder.header_tv.getText()+""+position);
+        holder.header_tv.setText("");
+        holder.header_tv.setText("Breakage"+position);
         holder.failureName_tv.setText(UploadInfo.getFailure_name());
         holder.address_tv.setText(UploadInfo.getAddress());
         holder.state_tv.setText(UploadInfo.getState_name());
@@ -360,6 +361,16 @@ public class BrokenRecyclerViewAdapter  extends RecyclerView.Adapter<BrokenRecyc
         }
 
 
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

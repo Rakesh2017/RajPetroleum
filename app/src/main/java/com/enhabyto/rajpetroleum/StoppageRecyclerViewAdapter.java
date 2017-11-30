@@ -51,8 +51,11 @@ public class StoppageRecyclerViewAdapter  extends RecyclerView.Adapter<StoppageR
         final StoppageRecyclerInfo UploadInfo = MainImageUploadInfoList.get(position);
 
 
+
         position++;
-        holder.header_tv.setText(holder.header_tv.getText()+""+position);
+
+        holder.header_tv.setText("");
+        holder.header_tv.setText("Stoppage "+position);
         holder.moneyPaidFor_tv.setText(UploadInfo.getMoney_paid_for());
         holder.moneyPaid_tv.setText("Rs "+UploadInfo.getMoney_paid());
         holder.description_tv.setText(UploadInfo.getDescription());
@@ -97,6 +100,16 @@ public class StoppageRecyclerViewAdapter  extends RecyclerView.Adapter<StoppageR
 
 
 
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

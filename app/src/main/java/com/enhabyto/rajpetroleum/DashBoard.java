@@ -40,6 +40,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.registerable.connection.Connectable;
 import com.tapadoo.alerter.Alerter;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +68,7 @@ public class DashBoard extends AppCompatActivity
     ProgressDialog progressDialog;
     DatabaseReference databaseReference;
 
+    String connected = "no";
 
 
 
@@ -87,6 +90,9 @@ public class DashBoard extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        InternetChecker();
+
+
 
 
 
@@ -107,7 +113,7 @@ public class DashBoard extends AppCompatActivity
        // Log.w("122", channel);
 
         if (TextUtils.equals(user_designation, "admin")){
-            Glide.with(getApplication().getApplicationContext())
+            Glide.with(this)
                     .load(R.drawable.admin_profile_pic)
                     .asBitmap()
                     .fitCenter()
@@ -146,7 +152,7 @@ public class DashBoard extends AppCompatActivity
 
         }
         else {
-            Glide.with(getApplication().getApplicationContext())
+            Glide.with(this)
                     .load(R.drawable.sub_admin_profile_pic)
                     .asBitmap()
                     .fitCenter()
@@ -208,13 +214,7 @@ public class DashBoard extends AppCompatActivity
         databaseReference = FirebaseDatabase.getInstance().getReference("trip_status");
 
 
-        if (!isNetworkAvailable()) {
-            Toast.makeText(DashBoard.this, "No Internet Connection!", Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
-        }
-        else {
-
-            // Adding Add Value Event Listener to databaseReference.
+        // Adding Add Value Event Listener to databaseReference.
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
@@ -249,7 +249,7 @@ public class DashBoard extends AppCompatActivity
                 }
             });
         }
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -452,6 +452,11 @@ public class DashBoard extends AppCompatActivity
 
         }
 
+        else if (id == R.id.nav_AllTrips){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new AllTrips()).addToBackStack("AdminFragment").commit();
+
+        }
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -552,6 +557,44 @@ public class DashBoard extends AppCompatActivity
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
+    //internet checker
+    public void InternetChecker(){
+        DatabaseReference d_networkStatus = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
+
+        d_networkStatus.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                connected = dataSnapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!connected.equals("connected")){
+
+
+                    Alerter.create(DashBoard.this)
+                            .setTitle("Internet Connectivity Problem!")
+                            .setText("App will load automatically when connected to internet")
+                            .setContentGravity(1)
+                            .setDuration(6000)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                   progressDialog.dismiss();
+
+                }
+            }
+        },8000);
+    }
+
 
     //end
 }

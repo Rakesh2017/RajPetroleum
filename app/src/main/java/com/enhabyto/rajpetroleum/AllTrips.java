@@ -2,8 +2,6 @@ package com.enhabyto.rajpetroleum;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +25,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OtherFillingDetail extends Fragment {
+public class AllTrips extends Fragment {
 
     View view;
 
@@ -35,7 +34,7 @@ public class OtherFillingDetail extends Fragment {
 
     // Creating RecyclerView.Adapter.
     RecyclerView.Adapter adapter ;
-    List<OtherRecyclerInfo> list = new ArrayList<>();
+    List<AllTripsInfo> list = new ArrayList<>();
     ProgressDialog progressDialog;
     DatabaseReference databaseReference;
 
@@ -43,9 +42,7 @@ public class OtherFillingDetail extends Fragment {
     private DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
     String key;
 
-
-
-    public OtherFillingDetail() {
+    public AllTrips() {
         // Required empty public constructor
     }
 
@@ -54,17 +51,11 @@ public class OtherFillingDetail extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_other_filling_detail, container, false);
+        view = inflater.inflate(R.layout.fragment_all_trips, container, false);
 
-        SharedPreferences shared = getActivity().getSharedPreferences("driverContact", Context.MODE_PRIVATE);
-        try{
-            contactUID_tx = (shared.getString("contactUID", ""));
-        }
-        catch (NullPointerException e){
-            contactUID_tx  = "";
-        }
 
-        recyclerView = view.findViewById(R.id.otherFilling_recyclerView);
+
+        recyclerView = view.findViewById(R.id.all_recyclerView);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.isDuplicateParentStateEnabled();
@@ -86,18 +77,8 @@ public class OtherFillingDetail extends Fragment {
         progressDialog.show();
 
 
-        Query query = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    key = child.getKey();
-
-                }
-
-                databaseReference = d_root.child("trip_details").child(contactUID_tx)
-                        .child(key).child("other_filling");
+                databaseReference = d_root.child("trip_details");
 
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -112,13 +93,13 @@ public class OtherFillingDetail extends Fragment {
 
 
 
-                            OtherRecyclerInfo otherFillingRecyclerInfo = postSnapshot.getValue(OtherRecyclerInfo.class);
-
-                            list.add(otherFillingRecyclerInfo);
+                        //    AllTripsInfo otherFillingRecyclerInfo = postSnapshot.getValue(AllTripsInfo.class);
+                            list.add(new AllTripsInfo(postSnapshot.getRef().getKey()));
+                       //     list.add(otherFillingRecyclerInfo);
 
                         }
 
-                        adapter = new OtherRecyclerViewAdapter(getActivity(), list);
+                        adapter = new AllTripsRecyclerViewAdapter(getActivity(), list);
 
 
                         //   Collections.reverse(list);
@@ -140,13 +121,7 @@ public class OtherFillingDetail extends Fragment {
 
 
 
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         return view;
     }

@@ -53,7 +53,8 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
         final PetrolFillingRecyclerInfo UploadInfo = MainImageUploadInfoList.get(position);
 
         position++;
-        holder.header_tv.setText(holder.header_tv.getText()+""+position);
+        holder.header_tv.setText("");
+        holder.header_tv.setText("Petrol Filling"+position);
         holder.pumpName_tv.setText(UploadInfo.getName());
         holder.tokenNumber_tv.setText(UploadInfo.getToken_number());
         holder.pumpAddress_tv.setText(UploadInfo.getAddress());
@@ -114,6 +115,16 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
 
 
 
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override

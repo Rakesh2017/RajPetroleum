@@ -18,7 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/dash_relativeLayout"
-        android:background="#ECEFF1"
+        android:background="@drawable/rounded_edit_text_black"
+        android:paddingBottom="4dp"
         >
 
         <util.android.textviews.FontTextView
@@ -180,17 +181,6 @@
             android:textSize="16sp"
             android:layout_marginTop="4dp"
             />
-
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:background="@color/black"
-            android:layout_below="@+id/load_goingTextView"
-            android:layout_marginTop="4dp"
-            />
-
-
 
     </RelativeLayout>
 

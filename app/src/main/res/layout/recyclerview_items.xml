@@ -102,8 +102,8 @@
             />
 
         <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="30dp"
+            android:layout_width="55dp"
+            android:layout_height="25dp"
             android:background="@drawable/tank_truck_icon"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/dash_tripStartTextView"
