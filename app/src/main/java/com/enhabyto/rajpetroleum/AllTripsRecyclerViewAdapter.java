@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -137,6 +138,19 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
         });
 
 
+        holder.truckImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = dataSave.edit();
+                editor.putString("contactUID_AllTrip", UploadInfo.getKey());
+                editor.apply();
+
+                AppCompatActivity activity = (AppCompatActivity) context;
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new TripList()).addToBackStack("FragmentTripDetails").commit();
+
+            }
+        });
 
 
 
@@ -161,7 +175,7 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
 
 
         TextView name_tv, contact_tv, totalTrips_tv;
-        ImageView imageView;
+        ImageView imageView, truckImage;
 
 
         ViewHolder(View itemView) {
@@ -171,6 +185,7 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
             contact_tv = itemView.findViewById(R.id.all_contactTextView);
             totalTrips_tv = itemView.findViewById(R.id.all_totalTripsTextView);
             imageView = itemView.findViewById(R.id.all_profileImage);
+            truckImage = itemView.findViewById(R.id.all_truckImage);
 
         }
     }

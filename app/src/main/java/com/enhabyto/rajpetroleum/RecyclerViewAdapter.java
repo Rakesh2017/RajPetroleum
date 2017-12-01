@@ -29,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -45,10 +46,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     Context context;
     List<TripRecyclerInfo> MainImageUploadInfoList;
-    String month;
+    String month, key;
 
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReferenceFromUrl("gs://rajpetroleum-4d3fa.appspot.com");
+    DatabaseReference root = FirebaseDatabase.getInstance().getReference();
 
     public RecyclerViewAdapter(Context context, List<TripRecyclerInfo> TempList) {
 
@@ -146,16 +148,39 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.truckImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = dataSave.edit();
-                editor.putString("contactUID", UploadInfo.getContact_tx());
-                editor.apply();
+
+
+
+                Query queryPetrolNumber = root.child("trip_details").child(UploadInfo.getContact_tx()).orderByKey().limitToLast(1);
+
+                queryPetrolNumber.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            key = child.getKey();
+                            SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = dataSave.edit();
+                            editor.putString("contactUID", UploadInfo.getContact_tx());
+                            editor.putString("TripSuperKey", key);
+                            editor.apply();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
 
                 AppCompatActivity activity = (AppCompatActivity) context;
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("FragmentTripDetails").commit();
 
             }
         });
+
 
 
 

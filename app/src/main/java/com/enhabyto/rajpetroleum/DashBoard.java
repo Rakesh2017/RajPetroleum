@@ -106,9 +106,6 @@ public class DashBoard extends AppCompatActivity
 
 
 
-
-
-
         SharedPreferences shared = getSharedPreferences("firstLog", MODE_PRIVATE);
 
         user_designation = (shared.getString("user_designation", ""));
@@ -240,8 +237,11 @@ public class DashBoard extends AppCompatActivity
                     recyclerView.setAdapter(adapter);
                     if (adapter.getItemCount() == 0){
                         findViewById(R.id.dash_text).setVisibility(View.VISIBLE);
+                        findViewById(R.id.shana_pandu).setVisibility(View.GONE);
                     }
                     else  findViewById(R.id.dash_text).setVisibility(View.GONE);
+                    findViewById(R.id.shana_pandu).setVisibility(View.VISIBLE);
+
 
                     // Hiding the progress dialog.
                     progressDialog.dismiss();

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -21,7 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -31,7 +31,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -68,7 +67,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
 
-    String petrolkey;
+    String petrolkey, month;
     String connected = "no";
 
     int petrolSize, stoppageSize, loadSize, unLoadSize, otherSize, failureSize;
@@ -89,7 +88,8 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         SharedPreferences shared = getActivity().getSharedPreferences("driverContact", Context.MODE_PRIVATE);
         try {
             contactUID_tx = (shared.getString("contactUID", ""));
-            startDate_tx = (shared.getString("startDate", ""));
+            petrolkey = (shared.getString("TripSuperKey", ""));
+
         } catch (NullPointerException e) {
             contactUID_tx = "";
         }
@@ -124,7 +124,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         profileImage = view.findViewById(R.id.detail_profileImage);
 
         contact_tv.setText(contactUID_tx);
-        startDate_tv.setText(startDate_tx);
+
 
         mSwipeRefreshLayout = view.findViewById(R.id.showDetailSwipe);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -323,8 +323,6 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         super.onStart();
 
 
-
-
         dialog_loading.show();
         databaseReference = FirebaseDatabase.getInstance().getReference("driver_profiles").child(contactUID_tx);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -341,58 +339,64 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         });
 
 
-        final Query query = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(petrolkey)
+                .child("start_trip").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if (!isNetworkAvailable()) {
-                    Alerter.create(getActivity())
-                            .setTitle("No Internet Connection!")
-                            .setText("Need a decent internet connection, please try again")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.no_internet)
-                            .show();
+                truckNumber_tx = dataSnapshot.child("truck_number").getValue(String.class);
 
-                }
+                pumpName_tx = dataSnapshot.child("start_location").getValue(String.class);
+                stateName_tx = dataSnapshot.child("state_name").getValue(String.class);
+                cityName_tx = dataSnapshot.child("city_name").getValue(String.class);
+                truckLocation_tx = dataSnapshot.child("truck_location").getValue(String.class);
+                moneyTaken_tx = dataSnapshot.child("expenses_taken").getValue(String.class);
+                petrolPrice_tx = dataSnapshot.child("fuel_price").getValue(String.class);
+                startDate_tx = dataSnapshot.child("start_date").getValue(String.class);
 
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        for (DataSnapshot child : dataSnapshot.getChildren()) {
-                            truckNumber_tx = child.child("start_trip").child("truck_number").getValue(String.class);
-
-                            pumpName_tx = child.child("start_trip").child("start_location").getValue(String.class);
-                            stateName_tx = child.child("start_trip").child("state_name").getValue(String.class);
-                            cityName_tx = child.child("start_trip").child("city_name").getValue(String.class);
-                            truckLocation_tx = child.child("start_trip").child("truck_location").getValue(String.class);
-                            moneyTaken_tx = child.child("start_trip").child("expenses_taken").getValue(String.class);
-                            petrolPrice_tx = child.child("start_trip").child("fuel_price").getValue(String.class);
-
-                        }
 
 
 //                        setting values
 
-                        truckNumber_tv.setText(truckNumber_tx);
-                        pumpName_tv.setText(pumpName_tx);
-                        stateName_tv.setText(stateName_tx);
-                        cityName_tv.setText(cityName_tx);
-                        truckLocation_tv.setText(truckLocation_tx);
-                        moneyTaken_tv.setText("Rs " + moneyTaken_tx);
-                        petrolPrice_tv.setText("Rs " + petrolPrice_tx + "/lit");
+                truckNumber_tv.setText(truckNumber_tx);
+                pumpName_tv.setText(pumpName_tx);
+                stateName_tv.setText(stateName_tx);
+                cityName_tv.setText(cityName_tx);
+                truckLocation_tv.setText(truckLocation_tx);
+                moneyTaken_tv.setText("Rs " + moneyTaken_tx);
+                petrolPrice_tv.setText("Rs " + petrolPrice_tx + "/lit");
+
+                String date = startDate_tx;
+
+                try {
+                    String day = TextUtils.substring(date, 0, 2);
+                    month = TextUtils.substring(date, 3, 5);
+                    String year = TextUtils.substring(date, 6, 10);
+                    String hour = TextUtils.substring(date, 11, 13);
+                    String minute = TextUtils.substring(date, 14, 16);
+                    conversion();
+
+                    startDate_tv.setText(day+"-"+month+"-"+year+", "+hour+":"+minute);
+
+                }
+                catch (NullPointerException e){
+                    e.printStackTrace();
+                }
 
 
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                if (stateName_tx.equals("")){
+                    stateName_tv.setText("NA");
+                    stateName_tv.setTextColor(Color.GRAY);
+                }
 
-                    }
-                });
+                if (cityName_tx.equals("")){
+                    cityName_tv.setText("NA");
+                    cityName_tv.setTextColor(Color.GRAY);
+                }
+
+
 
 
             }
@@ -403,9 +407,8 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
             }
         });
 
+
         Refresher();
-
-
 
 
 
@@ -419,7 +422,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
                 // Got the download URL for 'users/me/profile.png'
 
-                Glide.with(getContext())
+                Glide.with(getActivity())
                         .load(uri)
                         .asBitmap()
                         .fitCenter()
@@ -449,15 +452,6 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
         //        petrol filling module
 
-        Query queryPetrolNumber = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
-
-        queryPetrolNumber.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    petrolkey = child.getKey();
-
-                }
 
                 DatabaseReference d_child = d_root.child("trip_details").child(contactUID_tx)
                         .child(petrolkey).child("petrol_filled");
@@ -579,14 +573,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
             }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
-
-    }
 
 
     //internet checker
@@ -626,6 +613,64 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
             }
         },8000);
     }
+
+
+    private void conversion() {
+
+        switch (month) {
+
+            case "1":
+                month = "Jan";
+                break;
+
+            case "2":
+                month = "Feb";
+                break;
+
+            case "3":
+                month = "Mar";
+                break;
+
+            case "4":
+                month = "Apr";
+                break;
+
+            case "5":
+                month = "May";
+                break;
+
+            case "6":
+                month = "Jun";
+                break;
+
+            case "7":
+                month = "Jul";
+                break;
+
+            case "8":
+                month = "Aug";
+                break;
+
+            case "9":
+                month = "Sep";
+                break;
+
+            case "10":
+                month = "Oct";
+                break;
+
+            case "11":
+                month = "Nov";
+                break;
+
+            case "12":
+                month = "Dec";
+                break;
+
+
+        }
+    }
+
 
 
     //end

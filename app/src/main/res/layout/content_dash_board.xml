@@ -10,59 +10,31 @@
     tools:showIn="@layout/app_bar_dash_board">
 
 
-
-    <!-- TODO: Update blank fragment layout -->
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/main.appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="#ECEFF1"
-        android:fitsSystemWindows="true"
-        >
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/main.collapsing"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:fitsSystemWindows="true"
-            app:contentScrim="@color/white"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="64dp"
-            android:background="#ECEFF1"
-            >
-
-
-            <util.android.textviews.FontTextView
-                android:id="@+id/all_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginTop="2dp"
-                android:fontFamily="droidsansbold.ttf"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:text="A C T I V E  T R I P S"
-                android:background="@drawable/rounded_edit_text_black"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/black"
-                android:textSize="24sp"/>
-
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-
-
       <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-          android:layout_marginTop="2dp"
+        android:layout_marginTop="2dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
+          <util.android.textviews.FontTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="A C T I V E   T R I P S"
+              android:gravity="center"
+              android:textSize="22sp"
+              android:id="@+id/shana_pandu"
+              android:padding="2dp"
+              android:background="@drawable/rounded_edit_text_black"
+              android:layout_marginStart="2dp"
+              android:layout_marginEnd="2dp"
+              android:textColor="@color/black"
+              android:fontFamily="droidsansbold.ttf"
+              />
+
         <android.support.v7.widget.RecyclerView
+            android:layout_below="@+id/shana_pandu"
+            android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/dash_recyclerView"

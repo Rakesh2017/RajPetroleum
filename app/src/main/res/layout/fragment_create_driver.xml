@@ -201,7 +201,7 @@
             android:layout_below="@+id/cd_mainLinearLayout"
             android:layout_marginTop="16dp"
             android:background="@color/white"
-
+            android:visibility="gone"
             >
 
             <util.android.textviews.FontTextView
