@@ -10,7 +10,7 @@
             android:title="@string/dashboard" />
         <item
             android:id="@+id/nav_AllTrips"
-            android:icon="@drawable/fuel_icon"
+            android:icon="@drawable/all_trips_icon"
             android:title="All Trips" />
         <item
             android:id="@+id/nav_allocateTruck"

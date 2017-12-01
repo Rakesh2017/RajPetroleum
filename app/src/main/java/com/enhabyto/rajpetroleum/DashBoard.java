@@ -1,5 +1,6 @@
 package com.enhabyto.rajpetroleum;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -33,6 +34,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -235,6 +238,10 @@ public class DashBoard extends AppCompatActivity
                     //   Collections.reverse(list);
                     adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
+                    if (adapter.getItemCount() == 0){
+                        findViewById(R.id.dash_text).setVisibility(View.VISIBLE);
+                    }
+                    else  findViewById(R.id.dash_text).setVisibility(View.GONE);
 
                     // Hiding the progress dialog.
                     progressDialog.dismiss();
@@ -248,6 +255,15 @@ public class DashBoard extends AppCompatActivity
 
                 }
             });
+        findViewById(R.id.dash_text).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                YoYo.with(Techniques.Tada)
+                        .duration(1000)
+                        .playOn(findViewById(R.id.dash_text));
+            }
+        });
+
         }
 
 
@@ -578,21 +594,19 @@ public class DashBoard extends AppCompatActivity
             @Override
             public void run() {
                 if (!connected.equals("connected")){
-
-
+                    progressDialog.dismiss();
                     Alerter.create(DashBoard.this)
-                            .setTitle("Internet Connectivity Problem!")
-                            .setText("App will load automatically when connected to internet")
+                            .setTitle("No Internet Connection")
                             .setContentGravity(1)
-                            .setDuration(6000)
                             .setBackgroundColorRes(R.color.black)
                             .setIcon(R.drawable.no_internet)
                             .show();
-                   progressDialog.dismiss();
+
+
 
                 }
             }
-        },8000);
+        },12000);
     }
 
 

@@ -25,6 +25,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -66,9 +71,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(final  ViewHolder holder, final int position) {
         final TripRecyclerInfo UploadInfo = MainImageUploadInfoList.get(position);
 
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("driver_profiles").child(UploadInfo.getContact_tx())
+                .child("name");
+
+
         holder.contact_tx.setText(UploadInfo.getContact_tx());
-        holder.name_tx.setText("("+UploadInfo.getDriverName()+")");
+
         holder.truckNumber_tx.setText(UploadInfo.getTruckNumber());
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                holder.name_tx.setText("("+dataSnapshot.getValue(String.class)+")");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         storageRef.child("driver_profiles").child(UploadInfo.getContact_tx())
                 .child("/profile_image/image.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -164,7 +185,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     class ViewHolder extends RecyclerView.ViewHolder {
 
          ImageView driverProfileImage;
-         FontTextView contact_tx, tripStarted_tx, name_tx, truckNumber_tx;
+         FontTextView contact_tx, tripStarted_tx, name_tx, truckNumber_tx, text;
          ImageButton truckImage;
 
          ViewHolder(View itemView) {
@@ -176,6 +197,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             name_tx =  itemView.findViewById(R.id.dash_nameTextView);
             truckNumber_tx =  itemView.findViewById(R.id.dash_truckNumberTextView);
             truckImage =  itemView.findViewById(R.id.dash_truckImage);
+
+
         }
 
 

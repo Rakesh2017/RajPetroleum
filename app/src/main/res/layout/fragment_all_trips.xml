@@ -1,7 +1,10 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ECEFF1"
+    android:focusable="true"
+    android:clickable="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.enhabyto.rajpetroleum.AllTrips">
 
@@ -29,7 +32,7 @@
 
 
             <util.android.textviews.FontTextView
-                android:id="@+id/load_text1"
+                android:id="@+id/all_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -38,7 +41,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="O T H E R   F I L L I N G"
+                android:text="A L L  T R I P S"
                 android:background="@drawable/rounded_edit_text_black"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/black"
@@ -48,10 +51,18 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="#ECEFF1"
+        >
+
     <android.support.v7.widget.RecyclerView
         android:layout_marginTop="2dp"
         android:id="@+id/all_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    </RelativeLayout>
 
-</android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

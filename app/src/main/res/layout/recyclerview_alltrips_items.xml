@@ -2,29 +2,106 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardview1"
+    android:id="@+id/cardview2"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     card_view:cardElevation="2dp"
     card_view:contentPadding="2dp"
     card_view:cardCornerRadius="2dp"
     card_view:cardMaxElevation="2dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
     >
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/dash_relativeLayout"
+        android:id="@+id/all_relativeLayout"
         android:background="#ECEFF1">
 
-        <TextView
+        <ImageView
+            android:id="@+id/all_profileImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@mipmap/ic_launcher"
+            />
+
+        <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/all_mobileNumber"
-            android:text="mobile number"
-            android:textColor="@color/black"
+            android:id="@+id/all_contactTextView"
+            android:layout_toEndOf="@id/all_profileImage"
+            android:layout_marginStart="10dp"
+            android:text="..."
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
             android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/lightRed"
             />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/all_nameTextView"
+            android:layout_alignTop="@+id/all_contactTextView"
+            android:text="..."
+            android:layout_marginEnd="7dp"
+            android:textStyle="bold"
+            android:layout_marginStart="4dp"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:textColor="@color/lightGreen"
+            android:layout_toEndOf="@id/all_contactTextView"
+            />
+
+
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/all_profileImage"
+            android:layout_alignStart="@id/all_contactTextView"
+            android:fontFamily="droidsansbold.ttf"
+            android:layout_below="@+id/all_nameTextView"
+            android:layout_marginTop="4dp"
+            android:textSize="14dp"
+            android:textColor="#000"
+            android:text="Total Number of Trips:"
+            android:gravity="center"
+            android:id="@+id/all_tripStart1TextView"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="droidsansbold.ttf"
+            android:layout_marginTop="4dp"
+            android:textSize="16dp"
+            android:textColor="@color/naturalBlue"
+            android:text="..."
+            android:layout_below="@+id/all_nameTextView"
+            android:gravity="center"
+            android:layout_toEndOf="@id/all_tripStart1TextView"
+            android:id="@+id/all_totalTripsTextView"
+            />
+
+        <ImageButton
+            android:layout_width="45dp"
+            android:layout_height="25dp"
+            android:background="@drawable/tank_truck_icon"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/all_nameTextView"
+            android:onClick="onClick"
+            android:id="@+id/all_truckImage"
+            android:layout_marginEnd="5dp"
+            />
+
+
 
     </RelativeLayout>
 

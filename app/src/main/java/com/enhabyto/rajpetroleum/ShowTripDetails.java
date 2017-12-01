@@ -299,7 +299,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
                 if (failureSize == 0){
                     Alerter.create(getActivity())
-                            .setTitle("There is no other breakage yet!")
+                            .setTitle("There is no breakage yet!")
                             .setContentGravity(1)
                             .setBackgroundColorRes(R.color.black)
                             .setIcon(R.drawable.error)
