@@ -3,15 +3,20 @@ package com.enhabyto.rajpetroleum;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Notification;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +28,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -30,6 +36,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.tapadoo.alerter.Alerter;
 import java.text.SimpleDateFormat;
@@ -50,7 +57,6 @@ public class AllocateTruck extends Fragment {
     private View view;
     Spinner spinner_truck, spinner_driver, spinner_truckLocation, spinner_startPoint, spinner_endPoint;
     DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference d_networkStatus = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
     DatabaseReference dataRef_spinner = d_root;
     DatabaseReference dataRef_trip_schedule;
     FancyButton allocate_btn;
@@ -66,6 +72,7 @@ public class AllocateTruck extends Fragment {
     String timeFormat = "HH:mm";
     DatePickerDialog.OnDateSetListener date;
     TimePickerDialog.OnTimeSetListener time;
+    String key, decider;
 
     AlertDialog dialog_scheduleTrip;
 
@@ -120,10 +127,6 @@ public class AllocateTruck extends Fragment {
 
                             }
 
-
-
-                            // Toast.makeText(getApplicationContext(), selected_val ,
-                            //      Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -347,16 +350,14 @@ public class AllocateTruck extends Fragment {
         });
 
 
-
-
-        allocate_btn.setOnClickListener(new View.OnClickListener() {
+     allocate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 contact_tx = contact_et.getText().toString().trim();
                 truckNumber_tx = truckNumber_et.getText().toString().trim();
                 truckLocation_tx = truckLocation_et.getText().toString().trim();
-                startPoint_tx = startTime_et.getText().toString().trim();
+                startPoint_tx = startPoint_et.getText().toString().trim();
                 nextStoppagePoint_tx = nextStoppagePoint_et.getText().toString().trim();
                 startDate_tx = startDate_et.getText().toString().trim();
                 startTime_tx = startTime_et.getText().toString().trim();
@@ -388,12 +389,18 @@ public class AllocateTruck extends Fragment {
                 }
 
 
+
+
+
+
+
+
                 new MaterialDialog.Builder(getActivity())
                         .title("Schedule Trip")
                         .content("Are You Sure to Allocate Truck Number\n"+truckNumber_tx
                                 + " to " + contact_tx+" ?"
                                 + "\n\nStart Point: "+ startPoint_tx
-                                + "\n\nEnd Point: " + nextStoppagePoint_tx
+                                + "\n\nNext Stoppage: " + nextStoppagePoint_tx
                                 + "\n\nExpected Start Date: "+ startPoint_tx
                                 + "\n\nExpected Start Time: "+ startTime_tx
                                 + "\n\nExpected End Date: "+ endDate_tx
@@ -420,46 +427,101 @@ public class AllocateTruck extends Fragment {
                                         return;
                                     }
 
-                                d_networkStatus.addListenerForSingleValueEvent(new ValueEventListener() {
+                                key = d_root.child("trip_schedules").child(contact_tx).push().getKey();
+
+
+
+                                Query query1 = d_root.child("trip_schedules").child(contact_tx).orderByKey().limitToLast(1);
+
+                                query1.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        connected = dataSnapshot.getValue(String.class);
+                                        for (DataSnapshot child : dataSnapshot.getChildren()) {
 
-                                        SimpleDateFormat sdf1 = new SimpleDateFormat("dd_mm_YYYY");
-                                        SimpleDateFormat sdf2 = new SimpleDateFormat("HH_mm");
-                                        String date = sdf1.format(new Date());
-                                        String time = sdf2.format(new Date());
+                                            key = child.getKey();
 
-                                        dataRef_trip_schedule = d_root.child("trip_schedules").child(contact_tx).child(date+"_"+time);
+                                            DatabaseReference d_notification = d_root.child("trip_schedules").child(contact_tx)
+                                                    .child(key);
 
+                                            d_notification.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                        dataRef_trip_schedule.child("truck_number").setValue(truckNumber_tx);
-                                        dataRef_trip_schedule.child("truck_location").setValue(truckLocation_tx);
-                                        dataRef_trip_schedule.child("driver_contact_id").setValue(contact_tx);
-                                        dataRef_trip_schedule.child("start_point").setValue(startPoint_tx);
-                                        dataRef_trip_schedule.child("next_stoppage").setValue(nextStoppagePoint_tx);
-                                        dataRef_trip_schedule.child("expected_start_date").setValue(startDate_tx);
-                                        dataRef_trip_schedule.child("expected_start_time").setValue(startTime_tx);
-                                        dataRef_trip_schedule.child("expected_end_date").setValue(endDate_tx);
-                                        dataRef_trip_schedule.child("expected_end_time").setValue(endTime_tx);
-                                        dataRef_trip_schedule.child("status").setValue("waiting");
+                                                    decider = dataSnapshot.child("status").getValue(String.class);
 
 
-                                        Alerter.create(getActivity())
-                                                .setTitle("Trip Successfully Scheduled")
-                                                .setContentGravity(1)
-                                                .setBackgroundColorRes(R.color.black)
-                                                .setIcon(R.drawable.success_icon)
-                                                .show();
-                                        dialog_scheduleTrip.dismiss();
+                                                    if (TextUtils.equals(decider, "waiting")){
+                                                        Alerter.create(getActivity())
+                                                                .setTitle("Driver Still have not accepted your last Trip!")
+                                                                .setContentGravity(1)
+                                                                .setBackgroundColorRes(R.color.black)
+                                                                .setIcon(R.drawable.error)
+                                                                .show();
+                                                        dialog_scheduleTrip.dismiss();
+                                                        return;
+
+                                                    }
 
 
+
+                                                    dataRef_trip_schedule = d_root.child("trip_schedules").child(contact_tx).child(key);
+                                                    dataRef_trip_schedule.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                            SimpleDateFormat sdf1 = new SimpleDateFormat("dd_mm_yyyy");
+                                                            SimpleDateFormat sdf2 = new SimpleDateFormat("HH_mm");
+                                                            String date = sdf1.format(new Date());
+                                                            String time = sdf2.format(new Date());
+
+                                                            dataRef_trip_schedule.child("truck_number").setValue(truckNumber_tx);
+                                                            dataRef_trip_schedule.child("truck_location").setValue(truckLocation_tx);
+                                                            dataRef_trip_schedule.child("driver_contact_id").setValue(contact_tx);
+                                                            dataRef_trip_schedule.child("start_point").setValue(startPoint_tx);
+                                                            dataRef_trip_schedule.child("next_stoppage").setValue(nextStoppagePoint_tx);
+                                                            dataRef_trip_schedule.child("expected_start_date").setValue(startDate_tx);
+                                                            dataRef_trip_schedule.child("expected_start_time").setValue(startTime_tx);
+                                                            dataRef_trip_schedule.child("expected_end_date").setValue(endDate_tx);
+                                                            dataRef_trip_schedule.child("expected_end_time").setValue(endTime_tx);
+                                                            dataRef_trip_schedule.child("status").setValue("waiting");
+                                                            dataRef_trip_schedule.child("date").setValue(date+"_"+time);
+
+
+
+                                                            Alerter.create(getActivity())
+                                                                    .setTitle("Trip Successfully Scheduled")
+                                                                    .setContentGravity(1)
+                                                                    .setBackgroundColorRes(R.color.black)
+                                                                    .setIcon(R.drawable.success_icon)
+                                                                    .show();
+                                                            dialog_scheduleTrip.dismiss();
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(DatabaseError databaseError) {
+                                                            dialog_scheduleTrip.dismiss();
+                                                        }
+                                                    });
+
+
+
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+                                                    dialog_scheduleTrip.dismiss();
+                                                }
+                                            });
+
+                                        }
 
                                     }
 
                                     @Override
                                     public void onCancelled(DatabaseError databaseError) {
-
+                                        dialog_scheduleTrip.dismiss();
                                     }
                                 });
 

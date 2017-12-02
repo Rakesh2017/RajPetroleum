@@ -192,7 +192,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
                 if (petrolSize == 0){
                     Alerter.create(getActivity())
-                            .setTitle("There is no Petrol filling yet!")
+                            .setTitle("There is no Petrol filling!")
                             .setContentGravity(1)
                             .setBackgroundColorRes(R.color.black)
                             .setIcon(R.drawable.error)
@@ -220,7 +220,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 }
                 if (stoppageSize == 0){
                     Alerter.create(getActivity())
-                            .setTitle("There is no stoppage yet!")
+                            .setTitle("There is no stoppage!")
                             .setContentGravity(1)
                             .setBackgroundColorRes(R.color.black)
                             .setIcon(R.drawable.error)
@@ -246,7 +246,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 }
                 if (loadSize+unLoadSize == 0){
                     Alerter.create(getActivity())
-                            .setTitle("There is no Load/UnLoad yet!")
+                            .setTitle("There is no Load/UnLoad!")
                             .setContentGravity(1)
                             .setBackgroundColorRes(R.color.black)
                             .setIcon(R.drawable.error)
@@ -273,7 +273,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 }
                 if (otherSize == 0){
                     Alerter.create(getActivity())
-                            .setTitle("There is no other filling yet!")
+                            .setTitle("There is no other filling!")
                             .setContentGravity(1)
                             .setBackgroundColorRes(R.color.black)
                             .setIcon(R.drawable.error)
@@ -299,7 +299,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
                 if (failureSize == 0){
                     Alerter.create(getActivity())
-                            .setTitle("There is no breakage yet!")
+                            .setTitle("There is no breakage!")
                             .setContentGravity(1)
                             .setBackgroundColorRes(R.color.black)
                             .setIcon(R.drawable.error)
@@ -414,6 +414,10 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 //        profile Image
 
+        try{
+
+
+
         storageRef.child("driver_profiles").child(contactUID_tx)
                 .child("/profile_image/image.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -421,7 +425,6 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
                 // Got the download URL for 'users/me/profile.png'
-
                 Glide.with(getActivity())
                         .load(uri)
                         .asBitmap()
@@ -443,8 +446,22 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
+                Glide.with(getActivity())
+                        .load(R.drawable.driver_default_image_icon)
+                        .fitCenter()
+                        .centerCrop()
+                        .crossFade(1200)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(profileImage);
             }
         });
+
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
+
     }
 
 

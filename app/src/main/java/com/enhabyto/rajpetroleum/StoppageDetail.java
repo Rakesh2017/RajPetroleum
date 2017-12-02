@@ -59,6 +59,7 @@ public class StoppageDetail extends Fragment {
         SharedPreferences shared = getActivity().getSharedPreferences("driverContact", Context.MODE_PRIVATE);
         try{
             contactUID_tx = (shared.getString("contactUID", ""));
+            key = (shared.getString("TripSuperKey", ""));
         }
         catch (NullPointerException e){
             contactUID_tx  = "";
@@ -85,15 +86,6 @@ public class StoppageDetail extends Fragment {
         // Showing progress dialog.
         progressDialog.show();
 
-        Query queryPetrolNumber = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
-
-        queryPetrolNumber.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    key = child.getKey();
-
-                }
 
                 databaseReference = d_root.child("trip_details").child(contactUID_tx)
                         .child(key).child("stoppage");
@@ -134,13 +126,6 @@ public class StoppageDetail extends Fragment {
 
 
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         return view;
     }

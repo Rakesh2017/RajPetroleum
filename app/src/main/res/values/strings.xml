@@ -11,7 +11,10 @@
     <string name="birth">Age</string>
     <string name="dashboard">DashBoard</string>
     <string name="createDriver">Create Driver</string>
+    <string name="createDriverHead"><u><u>CREATE DRIVER</u></u></string>
+    <string name="privileges"><u><u>PRIVILIGES</u></u></string>
     <string name="createAdmin">Create Sub-Admin</string>
+    <string name="createAdminHead"><u><u>CREATE SUB-ADMIN</u></u></string>
     <string name="TruckDetails">Create Truck</string>
     <string name="PumpDetails">Create Pump</string>
     <string name="updateDriver"><u><u>UPDATE DRIVER INFORMATION</u></u></string>

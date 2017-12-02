@@ -20,6 +20,19 @@
         android:id="@+id/list_relativeLayout"
         android:background="#ECEFF1">
 
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_index"
+            android:layout_alignParentEnd="true"
+            android:padding="3dp"
+            android:text="1"
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="15sp"
+            android:textColor="@color/naturalBlue"
+            />
+
 
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
@@ -45,7 +58,7 @@
             android:layout_marginStart="4dp"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="16sp"
-            android:textColor="@color/naturalBlue"
+            android:textColor="@color/lightGreen"
             android:layout_toEndOf="@id/list_startPoint1TextView"
             />
 
@@ -73,7 +86,7 @@
             android:layout_marginTop="3dp"
             android:layout_marginEnd="4dp"
             android:textSize="16dp"
-            android:textColor="@color/naturalBlue"
+            android:textColor="@color/lightRed"
             android:text=""
             android:layout_below="@+id/list_startPointTextView"
             android:gravity="center"
@@ -104,7 +117,7 @@
             android:layout_marginEnd="4dp"
             android:layout_marginTop="3dp"
             android:textSize="16dp"
-            android:textColor="@color/naturalBlue"
+            android:textColor="@color/lightGreen"
             android:text=""
             android:layout_below="@+id/list_dateTextView"
             android:gravity="center"
@@ -135,7 +148,7 @@
             android:layout_marginEnd="4dp"
             android:layout_marginTop="3dp"
             android:textSize="16dp"
-            android:textColor="@color/naturalBlue"
+            android:textColor="@color/lightRed"
             android:text=""
             android:layout_below="@+id/list_endPointTextView"
             android:gravity="center"

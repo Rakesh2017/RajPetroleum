@@ -64,6 +64,7 @@ public class LoadDetail extends Fragment {
         SharedPreferences shared = getActivity().getSharedPreferences("driverContact", Context.MODE_PRIVATE);
         try{
             contactUID_tx = (shared.getString("contactUID", ""));
+            key = (shared.getString("TripSuperKey", ""));
         }
         catch (NullPointerException e){
             contactUID_tx  = "";
@@ -98,15 +99,7 @@ public class LoadDetail extends Fragment {
         progressDialog.show();
 
 
-        Query queryPetrolNumber = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
 
-        queryPetrolNumber.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    key = child.getKey();
-
-                }
 
                 databaseReference = d_root.child("trip_details").child(contactUID_tx)
                         .child(key).child("load");
@@ -186,14 +179,6 @@ public class LoadDetail extends Fragment {
 
 
 
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
 

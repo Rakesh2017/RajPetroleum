@@ -71,9 +71,6 @@ public class TripList extends Fragment {
         recyclerView.isDuplicateParentStateEnabled();
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
-
         // Setting RecyclerView layout as LinearLayout.
         recyclerView.setLayoutManager(mLayoutManager);
 

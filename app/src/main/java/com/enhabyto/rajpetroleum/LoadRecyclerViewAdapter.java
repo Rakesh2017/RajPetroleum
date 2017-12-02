@@ -49,7 +49,7 @@ public class LoadRecyclerViewAdapter extends RecyclerView.Adapter<LoadRecyclerVi
 
         position++;
         holder.header_tv.setText("");
-        holder.header_tv.setText("Load"+position);
+        holder.header_tv.setText("Load "+position);
 
         holder.oilLoaded_tv.setText(UploadInfo.getOil_loaded()+" litres");
         holder.address_tv.setText(UploadInfo.getLocation());

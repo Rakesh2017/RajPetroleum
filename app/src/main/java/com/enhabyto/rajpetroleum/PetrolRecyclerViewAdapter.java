@@ -54,7 +54,7 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
 
         position++;
         holder.header_tv.setText("");
-        holder.header_tv.setText("Petrol Filling"+position);
+        holder.header_tv.setText("Petrol Filling "+position);
         holder.pumpName_tv.setText(UploadInfo.getName());
         holder.tokenNumber_tv.setText(UploadInfo.getToken_number());
         holder.pumpAddress_tv.setText(UploadInfo.getAddress());

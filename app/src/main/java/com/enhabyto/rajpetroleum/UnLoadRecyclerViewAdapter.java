@@ -48,7 +48,7 @@ public class UnLoadRecyclerViewAdapter extends RecyclerView.Adapter<UnLoadRecycl
 
 
         position++;
-        holder.header_tv.setText(holder.header_tv.getText()+""+position);
+        holder.header_tv.setText(holder.header_tv.getText()+" "+position);
         holder.oilunLoaded_tv.setText(UploadInfo.getOil_unloaded()+" litres");
         holder.oilLeft_tv.setText(UploadInfo.getOil_left()+" litres");
         holder.pumpName_tv.setText(UploadInfo.getPump_name());

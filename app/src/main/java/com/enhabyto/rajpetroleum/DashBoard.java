@@ -29,7 +29,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -43,8 +42,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.novoda.merlin.Merlin;
-import com.novoda.merlin.registerable.connection.Connectable;
 import com.tapadoo.alerter.Alerter;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,11 +106,10 @@ public class DashBoard extends AppCompatActivity
         SharedPreferences shared = getSharedPreferences("firstLog", MODE_PRIVATE);
 
         user_designation = (shared.getString("user_designation", ""));
-        //Toast.makeText(this, channel, Toast.LENGTH_SHORT).show();
-       // Log.w("122", channel);
+
 
         if (TextUtils.equals(user_designation, "admin")){
-            Glide.with(this)
+            Glide.with(DashBoard.this)
                     .load(R.drawable.admin_profile_pic)
                     .asBitmap()
                     .fitCenter()

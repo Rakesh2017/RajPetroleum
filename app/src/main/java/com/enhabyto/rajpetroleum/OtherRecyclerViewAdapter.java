@@ -62,7 +62,7 @@ public class OtherRecyclerViewAdapter  extends RecyclerView.Adapter<OtherRecycle
 
         position++;
         holder.header_tv.setText("");
-        holder.header_tv.setText("Other Filling"+position);
+        holder.header_tv.setText("Other Filling "+position);
         holder.description_tv.setText(UploadInfo.getDescription());
         holder.fillingName_tv.setText(UploadInfo.getFilling_name());
         holder.quantity_tv.setText(UploadInfo.getQuantity());

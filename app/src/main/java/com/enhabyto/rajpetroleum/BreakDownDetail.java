@@ -60,6 +60,7 @@ public class BreakDownDetail extends Fragment {
         SharedPreferences shared = getActivity().getSharedPreferences("driverContact", Context.MODE_PRIVATE);
         try{
             contactUID_tx = (shared.getString("contactUID", ""));
+            key = (shared.getString("TripSuperKey", ""));
         }
         catch (NullPointerException e){
             contactUID_tx  = "";
@@ -87,15 +88,7 @@ public class BreakDownDetail extends Fragment {
         // Showing progress dialog.
         progressDialog.show();
 
-        Query query = d_root.child("trip_details").child(contactUID_tx).orderByKey().limitToLast(1);
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    key = child.getKey();
-
-                }
 
                 databaseReference = d_root.child("trip_details").child(contactUID_tx)
                         .child(key).child("failure");
@@ -135,14 +128,6 @@ public class BreakDownDetail extends Fragment {
                 });
 
 
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
         return view;

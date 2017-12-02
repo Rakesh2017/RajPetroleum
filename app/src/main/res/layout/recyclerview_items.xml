@@ -11,13 +11,14 @@
     card_view:cardMaxElevation="2dp"
     android:layout_marginStart="2dp"
     android:layout_marginEnd="2dp"
+    android:background="#ECEFF1"
     >
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/dash_relativeLayout"
-        android:background="#ECEFF1">
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/dash_profileImage"
@@ -47,7 +48,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/dash_nameTextView"
             android:layout_alignTop="@+id/dash_contactTextView"
-            android:text="..."
+            android:text=""
             android:layout_marginEnd="7dp"
             android:textStyle="bold"
             android:layout_marginStart="4dp"
@@ -82,7 +83,7 @@
             android:layout_marginTop="4dp"
             android:textSize="16dp"
             android:textColor="#000"
-            android:text="..."
+            android:text=""
             android:layout_below="@+id/dash_nameTextView"
             android:gravity="center"
             android:layout_toEndOf="@id/dash_tripStart1TextView"
@@ -96,7 +97,7 @@
             android:fontFamily="droidsansbold.ttf"
             android:textSize="16dp"
             android:textColor="#000"
-            android:text="..."
+            android:text=""
             android:layout_below="@+id/dash_tripStartTextView"
             android:gravity="center"
             android:layout_alignStart="@id/dash_tripStart1TextView"

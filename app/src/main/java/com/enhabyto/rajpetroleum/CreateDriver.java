@@ -721,49 +721,49 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                     return;
                 }
 
+                Calendar minAge = Calendar.getInstance();
+                minAge.add(Calendar.YEAR, -18);
+
+
+                if (minAge.compareTo(myCalendarBirth) <0 ){
+                    Alerter.create(getActivity())
+                            .setTitle("Driver Should be 18 years old!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    dialog_updating_data.dismiss();
+                    return;
+                }
+
+                Calendar minDate = Calendar.getInstance();
+                if (myCalendarLisValid.compareTo(minDate) < 0 ){
+                    Alerter.create(getActivity())
+                            .setTitle("Licence Valid Date Should be greater than current Date!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    dialog_updating_data.dismiss();
+                    return;
+                }
+
+                if (myCalendarHazLisValid.compareTo(minDate) < 0 ){
+                    Alerter.create(getActivity())
+                            .setTitle("Hazardous Licence Valid Date Should be greater than current Date!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    dialog_updating_data.dismiss();
+                    return;
+                }
+
 
                 d_parent.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
-
-                        Calendar minAge = Calendar.getInstance();
-                        minAge.add(Calendar.YEAR, -18);
-
-
-                        if (minAge.compareTo(myCalendarBirth) <0 ){
-                            Alerter.create(getActivity())
-                                    .setTitle("Driver Should be 18 years old!")
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.error)
-                                    .show();
-                            dialog_updating_data.dismiss();
-                            return;
-                        }
-
-                        Calendar minDate = Calendar.getInstance();
-                        if (myCalendarLisValid.compareTo(minDate) < 0 ){
-                            Alerter.create(getActivity())
-                                    .setTitle("Licence Valid Date Should be greater than current Date!")
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.error)
-                                    .show();
-                            dialog_updating_data.dismiss();
-                            return;
-                        }
-
-                        if (myCalendarHazLisValid.compareTo(minDate) < 0 ){
-                            Alerter.create(getActivity())
-                                    .setTitle("Hazardous Licence Valid Date Should be greater than current Date!")
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.error)
-                                    .show();
-                            dialog_updating_data.dismiss();
-                            return;
-                        }
 
                         if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(getActivity())
@@ -807,7 +807,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        dialog_updating_data.dismiss();
                     }
                 });
 

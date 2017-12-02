@@ -134,6 +134,12 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
+                Glide.with(context)
+                        .load(R.drawable.driver_default_image_icon)
+                        .fitCenter()
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(holder.imageView);
             }
         });
 

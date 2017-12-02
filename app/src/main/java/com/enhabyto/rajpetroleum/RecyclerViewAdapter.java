@@ -119,6 +119,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
+                Glide.with(context)
+                        .load(R.drawable.driver_default_image_icon)
+                        .fitCenter()
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(holder.driverProfileImage);
             }
         });
 
@@ -148,9 +154,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.truckImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
                 Query queryPetrolNumber = root.child("trip_details").child(UploadInfo.getContact_tx()).orderByKey().limitToLast(1);
 
                 queryPetrolNumber.addValueEventListener(new ValueEventListener() {

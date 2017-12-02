@@ -65,6 +65,8 @@ public class TripListRecyclerViewAdapter  extends RecyclerView.Adapter<TripListR
             contactUID_tx  = "";
         }
 
+        position++;
+        holder.index_tv.setText(String.valueOf(position));
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(key);
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -102,7 +104,7 @@ public class TripListRecyclerViewAdapter  extends RecyclerView.Adapter<TripListR
 
 
         }
-        catch (NullPointerException e){
+        catch (NullPointerException | ArrayIndexOutOfBoundsException e){
             e.printStackTrace();
         }
 
@@ -158,7 +160,7 @@ public class TripListRecyclerViewAdapter  extends RecyclerView.Adapter<TripListR
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        FontTextView startLocation_tv, endLocation_tv, date_tv, endDate_tv;
+        FontTextView startLocation_tv, endLocation_tv, date_tv, endDate_tv, index_tv;
         ImageView truckImage;
 
 
@@ -171,6 +173,7 @@ public class TripListRecyclerViewAdapter  extends RecyclerView.Adapter<TripListR
             date_tv = itemView.findViewById(R.id.list_dateTextView);
             endDate_tv = itemView.findViewById(R.id.list_endDateTextView);
             truckImage = itemView.findViewById(R.id.list_truckImage);
+            index_tv = itemView.findViewById(R.id.list_index);
 
 
 
