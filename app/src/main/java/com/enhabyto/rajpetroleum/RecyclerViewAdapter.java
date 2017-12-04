@@ -85,6 +85,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 holder.name_tx.setText("("+dataSnapshot.getValue(String.class)+")");
+                if (TextUtils.equals(dataSnapshot.getValue(String.class),null) || TextUtils.equals(dataSnapshot.getValue(String.class),"")){
+                    holder.name_tx.setText(" (not known)");
+                }
             }
 
             @Override
@@ -156,16 +159,38 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 Query queryPetrolNumber = root.child("trip_details").child(UploadInfo.getContact_tx()).orderByKey().limitToLast(1);
 
-                queryPetrolNumber.addValueEventListener(new ValueEventListener() {
+                queryPetrolNumber.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot child : dataSnapshot.getChildren()) {
                             key = child.getKey();
-                            SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = dataSave.edit();
-                            editor.putString("contactUID", UploadInfo.getContact_tx());
-                            editor.putString("TripSuperKey", key);
-                            editor.apply();
+
+                            FirebaseDatabase.getInstance().getReference().child("driver_profiles")
+                                    .child(UploadInfo.getContact_tx()).child("name")
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                            String name1 = dataSnapshot.getValue(String.class);
+                                            SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = dataSave.edit();
+                                            editor.putString("contactUID", UploadInfo.getContact_tx());
+                                            editor.putString("TripSuperKey", key);
+                                            editor.putString("driverName", name1);
+                                            editor.apply();
+                                            AppCompatActivity activity = (AppCompatActivity) context;
+                                            activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("FragmentTripDetail").commit();
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+
+
                         }
 
                     }
@@ -178,8 +203,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
 
-                AppCompatActivity activity = (AppCompatActivity) context;
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("FragmentTripDetails").commit();
 
             }
         });

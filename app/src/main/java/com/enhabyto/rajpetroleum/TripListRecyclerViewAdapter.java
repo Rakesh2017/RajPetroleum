@@ -122,14 +122,37 @@ public class TripListRecyclerViewAdapter  extends RecyclerView.Adapter<TripListR
         holder.truckImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = dataSave.edit();
-                editor.putString("contactUID", contactUID_tx);
-                editor.putString("TripSuperKey", UploadInfo.getKey());
-                editor.apply();
 
-                AppCompatActivity activity = (AppCompatActivity) context;
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("FragmentTripDetails").commit();
+                FirebaseDatabase.getInstance().getReference().child("driver_profiles")
+                        .child(contactUID_tx).child("name")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                String name1 = dataSnapshot.getValue(String.class);
+
+                                SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = dataSave.edit();
+                                editor.putString("contactUID", contactUID_tx);
+                                editor.putString("TripSuperKey", UploadInfo.getKey());
+                                editor.putString("driverName", name1);
+                                editor.apply();
+
+                                AppCompatActivity activity = (AppCompatActivity) context;
+                                activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("FragmentTripDetails").commit();
+
+
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
 
             }
         });

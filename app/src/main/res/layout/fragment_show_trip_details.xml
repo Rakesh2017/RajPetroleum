@@ -366,6 +366,25 @@
             android:layout_alignEnd="@+id/detail_stoppageButton"
             />
 
+        <TextView
+            android:id="@+id/detail_text11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="             "
+            android:layout_below="@+id/detail_stoppageButton"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/rounded_edit_text_black"
+            android:layout_marginTop="7dp"
+            android:layout_alignStart="@+id/detail_stoppageButton"
+            />
+
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/detail_petrolFillingButton"
@@ -403,9 +422,28 @@
             android:layout_alignEnd="@+id/detail_petrolFillingButton"
             />
 
+        <TextView
+            android:id="@+id/detail_text12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="          "
+            android:layout_below="@+id/detail_petrolFillingButton"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/rounded_edit_text_black"
+            android:layout_marginTop="7dp"
+            android:layout_alignStart="@+id/detail_petrolFillingButton"
+            />
+
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/detail_otherFillingButton"
-            android:layout_below="@+id/detail_stoppageButton"
+            android:layout_below="@+id/detail_text11"
             android:layout_width="115dp"
             android:layout_height="115dp"
             android:layout_marginTop="24dp"
@@ -438,9 +476,28 @@
             android:layout_alignEnd="@+id/detail_otherFillingButton"
             />
 
+        <TextView
+            android:id="@+id/detail_text13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="          "
+            android:layout_below="@+id/detail_otherFillingButton"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/rounded_edit_text_black"
+            android:layout_marginTop="7dp"
+            android:layout_alignStart="@+id/detail_otherFillingButton"
+            />
+
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/detail_loadButton"
-            android:layout_below="@+id/detail_stoppageButton"
+            android:layout_below="@+id/detail_text12"
             android:layout_width="115dp"
             android:layout_height="115dp"
             android:layout_marginTop="24dp"
@@ -474,9 +531,11 @@
             android:layout_alignEnd="@+id/detail_loadButton"
             />
 
+
+
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/detail_breakDownButton"
-            android:layout_below="@+id/detail_loadButton"
+            android:layout_below="@+id/detail_text13"
             android:layout_width="115dp"
             android:layout_height="115dp"
             android:layout_marginTop="24dp"
@@ -489,7 +548,6 @@
             fancy:fb_iconPosition="bottom"
             fancy:fb_radius="64dp"
             fancy:fb_iconPaddingTop="5dp"
-            android:layout_marginBottom="24dp"
             fancy:fb_fontIconResource="&#xf0ad;"
             fancy:fb_text="BreakDown"
             android:layout_marginStart="24dp"
@@ -509,6 +567,75 @@
             android:layout_alignTop="@+id/detail_breakDownButton"
             android:layout_alignEnd="@+id/detail_breakDownButton"
             />
+
+        <TextView
+            android:id="@+id/detail_text15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="          "
+            android:layout_below="@+id/detail_breakDownButton"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/rounded_edit_text_black"
+            android:layout_marginTop="7dp"
+            android:layout_alignStart="@+id/detail_breakDownButton"
+            android:layout_marginBottom="24dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detail_loadButton"
+            android:layout_alignTop="@+id/detail_breakDownButton"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_edit_text_black"
+            android:padding="7dp"
+            >
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_header"
+                android:text="TOTAL SPENT"
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/detail_text16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="             "
+                android:layout_below="@+id/detail_header"
+                android:textSize="16sp"
+                android:textColor="@color/lightRed"
+                android:background="@drawable/rounded_edit_text_black"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:paddingStart="7dp"
+                android:paddingEnd="7dp"
+                android:layout_centerHorizontal="true"
+                />
+
+
+
+
+        </RelativeLayout>
+
+
 
 
 

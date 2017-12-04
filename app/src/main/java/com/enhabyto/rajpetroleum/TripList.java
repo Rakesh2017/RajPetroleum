@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class TripList extends Fragment {
 
     private String contactUID_tx;
     private DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
-    String key;
+    String key, name;
 
     public TripList() {
         // Required empty public constructor
@@ -87,9 +88,14 @@ public class TripList extends Fragment {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.child("name").getValue(String.class);
+                name = dataSnapshot.child("name").getValue(String.class);
+
                 String contact = dataSnapshot.child("contact").getValue(String.class);
                 ((FontTextView)view.findViewById(R.id.all_text)).setText(contact+" ("+name+")");
+
+                if (TextUtils.equals(name,null) || TextUtils.equals(name,"")){
+                    ((FontTextView)view.findViewById(R.id.all_text)).setText(contact+" (not known)");
+                }
             }
 
             @Override
@@ -111,8 +117,6 @@ public class TripList extends Fragment {
 
 
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-
-
 
 
                     //    AllTripsInfo otherFillingRecyclerInfo = postSnapshot.getValue(AllTripsInfo.class);

@@ -94,8 +94,6 @@ public class DashBoard extends AppCompatActivity
 
 
 
-
-
         ImageButton logout_btn = findViewById(R.id.app_bar_dash_logoutButton);
         nav_profileImageView = navigationView.getHeaderView(0).findViewById(R.id.nav1_profile_image);
         user_uid = navigationView.getHeaderView(0).findViewById(R.id.nav1_uid);
@@ -465,7 +463,7 @@ public class DashBoard extends AppCompatActivity
         }
 
         else if (id == R.id.nav_AllTrips){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new AllTrips()).addToBackStack("AdminFragment").commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new AllTrips()).addToBackStack("AdminFragment").commit();
 
         }
 

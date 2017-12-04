@@ -84,7 +84,9 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 holder.name_tv.setText("("+dataSnapshot.getValue(String.class)+")");
-
+                if (TextUtils.equals(dataSnapshot.getValue(String.class),null) || TextUtils.equals(dataSnapshot.getValue(String.class),"")){
+                    holder.name_tv.setText(" (not known)");
+                }
             }
 
             @Override
@@ -153,7 +155,7 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
                 editor.apply();
 
                 AppCompatActivity activity = (AppCompatActivity) context;
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new TripList()).addToBackStack("FragmentTripDetails").commit();
+                activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new TripList()).addToBackStack("FragmentTripDetails").commit();
 
             }
         });

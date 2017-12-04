@@ -17,6 +17,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.tapadoo.alerter.Alerter;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import dmax.dialog.SpotsDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 import util.android.textviews.FontTextView;
@@ -59,6 +64,16 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
     TextView stoppage_tv, petrolFilling_tv, otherFilling_tv, load_tv, breakDown_tv;
     FancyButton stoppage_btn, petrolFilling_btn, otherFilling_btn, load_btn, breakDown_btn;
+
+    TextView stoppageMoney_tv, petrolMoney_tv, otherMoney_tv, breakDownMoney_tv, total_tv;
+    String stoppageMoney_tx, petrolMoney_tx, otherMoney_tx, breakDownMoney1_tx, breakDownMoney2_tx, breakDownMoney3_tx, breakDownMoney4_tx, breakDownMoney5_tx, breakDownMoney6_tx, breakDownMoney7_tx, breakDownMoney8_tx;
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    int l = 0;
+    int total = 0;
+
+
 
 
 
@@ -89,6 +104,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         try {
             contactUID_tx = (shared.getString("contactUID", ""));
             petrolkey = (shared.getString("TripSuperKey", ""));
+            name_tx = (shared.getString("driverName", ""));
 
         } catch (NullPointerException e) {
             contactUID_tx = "";
@@ -120,12 +136,23 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         load_btn = view.findViewById(R.id.detail_loadButton);
         breakDown_btn = view.findViewById(R.id.detail_breakDownButton);
 
+        stoppageMoney_tv = view.findViewById(R.id.detail_text11);
+        petrolMoney_tv = view.findViewById(R.id.detail_text12);
+        otherMoney_tv = view.findViewById(R.id.detail_text13);
+        breakDownMoney_tv = view.findViewById(R.id.detail_text15);
+        total_tv = view.findViewById(R.id.detail_text16);
+
+
 
         profileImage = view.findViewById(R.id.detail_profileImage);
 
         contact_tv.setText(contactUID_tx);
 
+        name_tv.setText("(" + name_tx + ")");
 
+        if (TextUtils.equals(name_tx, "")){
+            name_tv.setText("(not known)");
+        }
         mSwipeRefreshLayout = view.findViewById(R.id.showDetailSwipe);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -147,10 +174,6 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
             }
         });
 
-
-
-
-
         petrolFilling_btn.setOnClickListener(this);
         stoppage_btn.setOnClickListener(this);
         load_btn.setOnClickListener(this);
@@ -158,186 +181,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         breakDown_btn.setOnClickListener(this);
 
 
-
-        return view;
-    }
-
-
-    //    internet check
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        assert connectivityManager != null;
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        int id = v.getId();
-
-        switch (id){
-
-            case R.id.detail_petrolFillingButton:
-                if (!isNetworkAvailable()){
-                    Alerter.create(getActivity())
-                            .setTitle("No Internet Connection!")
-                            .setTitle("Device is not connected to internet.")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.no_internet)
-                            .show();
-                }
-
-                if (petrolSize == 0){
-                    Alerter.create(getActivity())
-                            .setTitle("There is no Petrol filling!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    return;
-                }
-
-
-
-                else
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new PetrolFillingDetail()).addToBackStack("petrol").commit();
-                break;
-
-
-            case R.id.detail_stoppageButton:
-
-                if (!isNetworkAvailable()){
-                    Alerter.create(getActivity())
-                            .setTitle("No Internet Connection!")
-                            .setTitle("Device is not connected to internet.")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.no_internet)
-                            .show();
-                }
-                if (stoppageSize == 0){
-                    Alerter.create(getActivity())
-                            .setTitle("There is no stoppage!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    return;
-                }
-
-
-                else
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new StoppageDetail()).addToBackStack("stoppage").commit();
-                break;
-
-            case R.id.detail_loadButton:
-
-                if (!isNetworkAvailable()){
-                    Alerter.create(getActivity())
-                            .setTitle("No Internet Connection!")
-                            .setTitle("Device is not connected to internet.")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.no_internet)
-                            .show();
-                }
-                if (loadSize+unLoadSize == 0){
-                    Alerter.create(getActivity())
-                            .setTitle("There is no Load/UnLoad!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    return;
-                }
-
-
-                else
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new LoadDetail()).addToBackStack("load").commit();
-                break;
-
-
-            case R.id.detail_otherFillingButton:
-
-                if (!isNetworkAvailable()){
-                    Alerter.create(getActivity())
-                            .setTitle("No Internet Connection!")
-                            .setTitle("Device is not connected to internet.")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.no_internet)
-                            .show();
-                }
-                if (otherSize == 0){
-                    Alerter.create(getActivity())
-                            .setTitle("There is no other filling!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    return;
-                }
-
-                else
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new OtherFillingDetail()).addToBackStack("load").commit();
-                break;
-
-
-            case R.id.detail_breakDownButton:
-                if (!isNetworkAvailable()){
-                    Alerter.create(getActivity())
-                            .setTitle("No Internet Connection!")
-                            .setTitle("Device is not connected to internet.")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.no_internet)
-                            .show();
-                }
-
-                if (failureSize == 0){
-                    Alerter.create(getActivity())
-                            .setTitle("There is no breakage!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    return;
-
-                }
-
-
-                else
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new BreakDownDetail()).addToBackStack("load").commit();
-                break;
-
-
-        }
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-
         dialog_loading.show();
-        databaseReference = FirebaseDatabase.getInstance().getReference("driver_profiles").child(contactUID_tx);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                name_tv.setText("(" + dataSnapshot.child("name").getValue(String.class) + ")");
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
 
         FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(petrolkey)
                 .child("start_trip").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -416,45 +260,45 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
         try{
 
+            storageRef.child("driver_profiles").child(contactUID_tx)
+                    .child("/profile_image/image.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
 
+                    if (uri!=null){
+                        Glide.with(getActivity())
+                                .load(uri)
+                                .asBitmap()
+                                .fitCenter()
+                                .centerCrop()
+                                .error(R.drawable.error)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(new BitmapImageViewTarget(profileImage) {
+                                    @Override
+                                    protected void setResource(Bitmap resource) {
+                                        RoundedBitmapDrawable circularBitmapDrawable =
+                                                RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
+                                        circularBitmapDrawable.setCircular(true);
+                                        profileImage.setImageDrawable(circularBitmapDrawable);
+                                    }
+                                });
+                    }
 
-        storageRef.child("driver_profiles").child(contactUID_tx)
-                .child("/profile_image/image.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-
-
-                // Got the download URL for 'users/me/profile.png'
-                Glide.with(getActivity())
-                        .load(uri)
-                        .asBitmap()
-                        .fitCenter()
-                        .centerCrop()
-                        .error(R.drawable.error)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(new BitmapImageViewTarget(profileImage) {
-                            @Override
-                            protected void setResource(Bitmap resource) {
-                                RoundedBitmapDrawable circularBitmapDrawable =
-                                        RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
-                                circularBitmapDrawable.setCircular(true);
-                                profileImage.setImageDrawable(circularBitmapDrawable);
-                            }
-                        });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-                Glide.with(getActivity())
-                        .load(R.drawable.driver_default_image_icon)
-                        .fitCenter()
-                        .centerCrop()
-                        .crossFade(1200)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(profileImage);
-            }
-        });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                    Glide.with(getActivity())
+                            .load(R.drawable.driver_default_image_icon)
+                            .fitCenter()
+                            .centerCrop()
+                            .crossFade(1200)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(profileImage);
+                }
+            });
 
         }
         catch (NullPointerException e){
@@ -462,7 +306,165 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         }
 
 
+
+        return view;
     }
+
+
+    //    internet check
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connectivityManager != null;
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        int id = v.getId();
+
+        switch (id){
+
+            case R.id.detail_petrolFillingButton:
+                if (!isNetworkAvailable()){
+                    Alerter.create(getActivity())
+                            .setTitle("No Internet Connection!")
+                            .setTitle("Device is not connected to internet.")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                }
+
+                if (petrolSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("There is no Petrol filling!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    return;
+                }
+
+
+
+                else
+                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new PetrolFillingDetail()).addToBackStack("petrol").commit();
+                break;
+
+
+            case R.id.detail_stoppageButton:
+
+                if (!isNetworkAvailable()){
+                    Alerter.create(getActivity())
+                            .setTitle("No Internet Connection!")
+                            .setTitle("Device is not connected to internet.")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                }
+                if (stoppageSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("There is no stoppage!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    return;
+                }
+
+
+                else
+                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new StoppageDetail()).addToBackStack("stoppage").commit();
+                break;
+
+            case R.id.detail_loadButton:
+
+                if (!isNetworkAvailable()){
+                    Alerter.create(getActivity())
+                            .setTitle("No Internet Connection!")
+                            .setTitle("Device is not connected to internet.")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                }
+                if (loadSize+unLoadSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("There is no Load/UnLoad!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    return;
+                }
+
+
+                else
+                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new LoadDetail()).addToBackStack("load").commit();
+                break;
+
+
+            case R.id.detail_otherFillingButton:
+
+                if (!isNetworkAvailable()){
+                    Alerter.create(getActivity())
+                            .setTitle("No Internet Connection!")
+                            .setTitle("Device is not connected to internet.")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                }
+                if (otherSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("There is no other filling!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    return;
+                }
+
+                else
+                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new OtherFillingDetail()).addToBackStack("load").commit();
+                break;
+
+
+            case R.id.detail_breakDownButton:
+                if (!isNetworkAvailable()){
+                    Alerter.create(getActivity())
+                            .setTitle("No Internet Connection!")
+                            .setTitle("Device is not connected to internet.")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.no_internet)
+                            .show();
+                }
+
+                if (failureSize == 0){
+                    Alerter.create(getActivity())
+                            .setTitle("There is no breakage!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    return;
+
+                }
+
+
+                else
+                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new BreakDownDetail()).addToBackStack("load").commit();
+                break;
+
+
+        }
+    }
+
 
 
     public void Refresher(){
@@ -588,7 +590,149 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
 
-            }
+                // Money Calculations
+
+        total = 0;
+        FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(petrolkey).child("stoppage")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        i = 0;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            stoppageMoney_tx = snapshot.child("money_paid").getValue(String.class);
+                            if (TextUtils.equals(stoppageMoney_tx,"")){
+                                stoppageMoney_tx = "0";
+                            }
+                            i = i + Integer.parseInt(stoppageMoney_tx);
+                        }
+                        stoppageMoney_tv.setText("0");
+                        stoppageMoney_tv.setText("Rs "+String.valueOf(i));
+                        total = total + i;
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+
+        FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(petrolkey).child("petrol_filled")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        j = 0;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            petrolMoney_tx = snapshot.child("money_paid").getValue(String.class);
+
+                            if (TextUtils.equals(petrolMoney_tx,"")){
+                                petrolMoney_tx = "0";
+                            }
+                            j = j + Integer.parseInt(petrolMoney_tx);
+                        }
+                        petrolMoney_tv.setText("Rs "+String.valueOf(j));
+                        total = total + j;
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+
+        FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(petrolkey).child("other_filling")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        k = 0;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            otherMoney_tx = snapshot.child("money_paid").getValue(String.class);
+                            if (TextUtils.equals(otherMoney_tx,"")){
+                                otherMoney_tx = "0";
+                            }
+                            k = k + Integer.parseInt(otherMoney_tx);
+                        }
+                        otherMoney_tv.setText("Rs "+String.valueOf(k));
+                        total = total + k;
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+
+
+        FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(petrolkey).child("failure")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        l = 0;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                breakDownMoney1_tx = snapshot.child("bill_paid1").getValue(String.class);
+                                breakDownMoney2_tx = snapshot.child("bill_paid2").getValue(String.class);
+                                breakDownMoney3_tx = snapshot.child("bill_paid3").getValue(String.class);
+                                breakDownMoney4_tx = snapshot.child("resource_price1").getValue(String.class);
+                                breakDownMoney5_tx = snapshot.child("resource_price2").getValue(String.class);
+                                breakDownMoney6_tx = snapshot.child("resource_price3").getValue(String.class);
+                                breakDownMoney7_tx = snapshot.child("resource_price4").getValue(String.class);
+                                breakDownMoney8_tx = snapshot.child("resource_price5").getValue(String.class);
+
+                                if (TextUtils.equals(breakDownMoney1_tx,"")){
+                                    breakDownMoney1_tx = "0";
+                                }
+
+                            if (TextUtils.equals(breakDownMoney2_tx,"")){
+                                breakDownMoney2_tx = "0";
+                            }
+
+                            if (TextUtils.equals(breakDownMoney3_tx,"")){
+                                breakDownMoney3_tx = "0";
+                            }
+
+                            if (TextUtils.equals(breakDownMoney4_tx,"")){
+                                breakDownMoney4_tx = "0";
+                            }
+
+                            if (TextUtils.equals(breakDownMoney5_tx,"")){
+                                breakDownMoney5_tx = "0";
+                            }
+
+                            if (TextUtils.equals(breakDownMoney6_tx,"")){
+                                breakDownMoney6_tx = "0";
+                            }
+
+                            if (TextUtils.equals(breakDownMoney7_tx,"")){
+                                breakDownMoney7_tx = "0";
+                            }
+
+                            if (TextUtils.equals(breakDownMoney8_tx,"")){
+                                breakDownMoney8_tx = "0";
+                            }
+                            try{
+                                l = l + Integer.parseInt(breakDownMoney1_tx) + Integer.parseInt(breakDownMoney2_tx)+  Integer.parseInt(breakDownMoney3_tx)+
+                                        Integer.parseInt(breakDownMoney4_tx)+  Integer.parseInt(breakDownMoney5_tx)+  Integer.parseInt(breakDownMoney6_tx)+
+                                        Integer.parseInt(breakDownMoney7_tx)+  Integer.parseInt(breakDownMoney8_tx);
+                            }
+                            catch (NumberFormatException e){
+                                e.printStackTrace();
+                            }
+
+
+                        }
+
+                        breakDownMoney_tv.setText("Rs "+String.valueOf(l));
+                        total = total + l;
+                        total_tv.setText(String.valueOf("Rs "+total));
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+
+
+    }
 
 
 
