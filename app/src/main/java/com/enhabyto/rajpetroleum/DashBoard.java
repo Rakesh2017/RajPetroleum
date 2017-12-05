@@ -29,6 +29,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -69,6 +71,7 @@ public class DashBoard extends AppCompatActivity
     DatabaseReference databaseReference;
 
     String connected = "no";
+    TextView noInternet;
 
 
 
@@ -98,12 +101,14 @@ public class DashBoard extends AppCompatActivity
         nav_profileImageView = navigationView.getHeaderView(0).findViewById(R.id.nav1_profile_image);
         user_uid = navigationView.getHeaderView(0).findViewById(R.id.nav1_uid);
         user_name = navigationView.getHeaderView(0).findViewById(R.id.nav1_name);
-
+        noInternet = findViewById(R.id.no_internet);
 
 
         SharedPreferences shared = getSharedPreferences("firstLog", MODE_PRIVATE);
 
         user_designation = (shared.getString("user_designation", ""));
+        String profileName = (shared.getString("profileName", ""));
+        user_name.setText(profileName);
 
 
         if (TextUtils.equals(user_designation, "admin")){
@@ -131,6 +136,10 @@ public class DashBoard extends AppCompatActivity
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String name = dataSnapshot.child("name").getValue(String.class);
+                        SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = dataSave.edit();
+                        editor.putString("profileName", name);
+                        editor.apply();
                         user_name.setText(name);
 
                     }
@@ -146,6 +155,7 @@ public class DashBoard extends AppCompatActivity
 
         }
         else {
+            if (!DashBoard.this.isDestroyed()){
             Glide.with(this)
                     .load(R.drawable.sub_admin_profile_pic)
                     .asBitmap()
@@ -159,7 +169,7 @@ public class DashBoard extends AppCompatActivity
                             circularBitmapDrawable.setCircular(true);
                             nav_profileImageView.setImageDrawable(circularBitmapDrawable);
                         }
-                    });
+                    });}
             sub_admin_contact = (shared.getString("subAdmin_contact", ""));
             user_uid.setText(sub_admin_contact);
 
@@ -168,6 +178,10 @@ public class DashBoard extends AppCompatActivity
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String name = dataSnapshot.child("name").getValue(String.class);
+                    SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = dataSave.edit();
+                    editor.putString("profileName", name);
+                    editor.apply();
                     user_name.setText(name);
 
                 }
@@ -181,7 +195,7 @@ public class DashBoard extends AppCompatActivity
         }
 
 
-
+        noInternet.setOnClickListener(this);
         logout_btn.setOnClickListener(this);
 
         recyclerView = findViewById(R.id.dash_recyclerView);
@@ -558,6 +572,23 @@ public class DashBoard extends AppCompatActivity
 
                 break;
 
+
+            case R.id.no_internet:
+                if (!isNetworkAvailable()) {
+
+                    YoYo.with(Techniques.Shake)
+                            .duration(500)
+                            .repeat(0)
+                            .playOn(noInternet);
+
+                }
+                else {
+                    noInternet.setVisibility(View.GONE);
+                    DashBoard.this.recreate();
+                }
+
+                break;
+
         }
     }
 
@@ -576,6 +607,7 @@ public class DashBoard extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 connected = dataSnapshot.getValue(String.class);
+                noInternet.setVisibility(View.GONE);
             }
 
             @Override
@@ -589,18 +621,15 @@ public class DashBoard extends AppCompatActivity
             public void run() {
                 if (!connected.equals("connected")){
                     progressDialog.dismiss();
-                    Alerter.create(DashBoard.this)
-                            .setTitle("No Internet Connection")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.no_internet)
-                            .show();
-
-
+                    noInternet.setVisibility(View.VISIBLE);
+                    YoYo.with(Techniques.FadeIn)
+                            .duration(3000)
+                            .repeat(0)
+                            .playOn(noInternet);
 
                 }
             }
-        },12000);
+        },10000);
     }
 
 

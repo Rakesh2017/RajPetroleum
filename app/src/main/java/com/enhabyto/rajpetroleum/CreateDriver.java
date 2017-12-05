@@ -86,7 +86,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
     View view;
     FancyButton openUpdateProfile_btn, openCreateDriver_btn, createDriver_btn, updateProfile_btn
             , checkInfo_btn, chooseLis_btn, uploadLis_btn, chooseHazLis_btn, uploadHazLis_btn
-            , chooseProfileImage_btn, uploadProfileImage_btn;
+            , chooseProfileImage_btn, uploadProfileImage_btn, uploadDocumentImage_btn, chooseDocumentImage_btn;
 
     FontTextView fontTextView1,fontTextView2;
     ImageView drivingLicenceImage, hazardousDrivingLicenceImage, driverImage;
@@ -99,14 +99,17 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
 
     String contact_tx, password_tx, firebase_identity;
-    String contact1_tx, name_tx, address_tx, birth_tx, drivingLis_tx, drivingLisValid_tx, hazardousDrivingLis_tx, hazardousDrivingLisValid_tx, education_tx, marital_tx, document_tx;
-    EditText  name_et, address_et, birth_et, drivingLis_et, drivingLisValid_et, hazardousDrivingLis_et, hazardousDrivingLisValid_et, education_et, marital_et, document_et;
+    String contact1_tx, name_tx, address_tx, birth_tx, drivingLis_tx, drivingLisValid_tx
+            , hazardousDrivingLis_tx, hazardousDrivingLisValid_tx, education_tx, marital_tx, document_tx;
+
+    EditText  name_et, address_et, birth_et, drivingLis_et, drivingLisValid_et, hazardousDrivingLis_et
+            , hazardousDrivingLisValid_et, education_et, marital_et, document_et;
 
     EditText contact_et, password_et;
     String myFormatBirth;
 
     AlertDialog dialog, dialog_loading_data, dialog_updating_data, dialog_uploadingLicenceImage
-            , dialog_uploadingHazardousLicenceImage, dialog_uploadProfileImage;
+            , dialog_uploadingHazardousLicenceImage, dialog_uploadProfileImage, dialog_uploadDocumentImage;
 
 
     AutoCompleteTextView contact1_et;
@@ -119,10 +122,9 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
     int PICK_IMAGE_REQUEST_L = 111;
     int PICK_IMAGE_REQUEST_H = 112;
     int PICK_IMAGE_REQUEST_P = 113;
+    int PICK_IMAGE_REQUEST_O = 114;
 
-    Uri LicenceImageFilePath;
-    Uri HazardousLicenceImageFilePath;
-    Uri ProfileImageFilePath;
+    Uri LicenceImageFilePath, HazardousLicenceImageFilePath, ProfileImageFilePath, documentImageFilePath;
     Calendar myCalendarLisValid = Calendar.getInstance();
     Calendar myCalendarHazLisValid = Calendar.getInstance();
 
@@ -156,6 +158,8 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
         uploadProfileImage_btn = view.findViewById(R.id.cd_uploadProfileImage);
         uploadHazLis_btn = view.findViewById(R.id.cd_Hazuploadlis);
         spinner = view.findViewById(R.id.cd_spinner);
+        uploadDocumentImage_btn = view.findViewById(R.id.cd_UploadOther);
+        chooseDocumentImage_btn = view.findViewById(R.id.cd_SelectOther);
 
         contact_et = view.findViewById(R.id.cd_ContactEditText);
         password_et = view.findViewById(R.id.cd_PasswordEditText);
@@ -171,6 +175,8 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
         education_et = view.findViewById(R.id.cd_EducationEditText);
         marital_et = view.findViewById(R.id.cd_MaritalStatusEditText);
         document_et = view.findViewById(R.id.cd_OtherDocEditText);
+
+
 
         birth_et.setKeyListener(null);
         drivingLisValid_et.setKeyListener(null);
@@ -191,6 +197,8 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
         birth_et.setOnClickListener(this);
         drivingLisValid_et.setOnClickListener(this);
         hazardousDrivingLisValid_et.setOnClickListener(this);
+        uploadDocumentImage_btn.setOnClickListener(this);
+        chooseDocumentImage_btn.setOnClickListener(this);
 
         dialog = new SpotsDialog(getActivity(),R.style.creatingDriverAccount);
         dialog_loading_data = new SpotsDialog(getActivity(),R.style.loadingData);
@@ -198,6 +206,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
         dialog_uploadingLicenceImage = new SpotsDialog(getActivity(),R.style.dialog_uploadingLicence);
         dialog_uploadingHazardousLicenceImage = new SpotsDialog(getActivity(),R.style.dialog_uploadingHazardousLicence);
         dialog_uploadProfileImage = new SpotsDialog(getActivity(),R.style.dialog_uploadingProfile);
+        dialog_uploadDocumentImage = new SpotsDialog(getActivity(),R.style.dialog_uploadingProfile);
 
 
         drivingLicenceImage = view.findViewById(R.id.cd_drivingLicenceImage);
@@ -539,7 +548,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                         hazardousDrivingLisValid_tx = dataSnapshot.child("hazardous_driving_licence_valid").getValue(String.class);
                                         education_tx = dataSnapshot.child("education").getValue(String.class);
                                         marital_tx = dataSnapshot.child("marital").getValue(String.class);
-                                        //  document_tx = dataSnapshot.child("document").getValue(String.class);
+                                        document_tx = dataSnapshot.child("document_name").getValue(String.class);
 
                                         name_et.setText(name_tx);
                                         address_et.setText(address_tx);
@@ -550,6 +559,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                         hazardousDrivingLisValid_et.setText(hazardousDrivingLisValid_tx);
                                         education_et.setText(education_tx);
                                         marital_et.setText(marital_tx);
+                                        document_et.setText(document_tx);
                                         try {
                                             int YearBirth = Integer.parseInt(TextUtils.substring(birth_tx, 6,10));
                                             int monthBirth = Integer.parseInt(TextUtils.substring(birth_tx, 3,5));
@@ -584,7 +594,8 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
                                         StorageReference licenceRef = storageRef.child("driver_profiles/").child(contact1_tx).child("/licence_image/").child("licence.jpg");
                                         StorageReference hazardousLicenceRef = storageRef.child("driver_profiles/").child(contact1_tx).child("/hazardous_licence_image/").child("hazardous_licence.jpg");
-                                        StorageReference driverImageref = storageRef.child("driver_profiles/").child(contact1_tx).child("/profile_image/").child("image.jpg");
+                                        StorageReference driverImageRef = storageRef.child("driver_profiles/").child(contact1_tx).child("/profile_image/").child("image.jpg");
+                                        StorageReference documentImageRef = storageRef.child("driver_profiles/").child(contact1_tx).child("/document_image/").child("image.jpg");
 
                                         try {
 
@@ -632,7 +643,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                             });
 
 
-                                            driverImageref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            driverImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                 @Override
                                                 public void onSuccess(Uri uri) {
                                                     if (uri != null){
@@ -653,6 +664,26 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                                 }
                                             });
 
+                                            documentImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    if (uri != null){
+                                                        Glide.with(getActivity())
+                                                                .load(uri)
+                                                                .fitCenter()
+                                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                                                .crossFade(1200)
+                                                                .into((ImageView) view.findViewById(R.id.cd_otherDocumentImage));
+                                                        view.findViewById(R.id.cd_otherDocumentImage).setVisibility(View.VISIBLE);
+                                                    }
+
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception exception) {
+
+                                                }
+                                            });
 
 
 
@@ -789,7 +820,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                         d_driverProfile.child("hazardous_driving_licence_valid").setValue(hazardousDrivingLisValid_tx);
                         d_driverProfile.child("education").setValue(education_tx);
                         d_driverProfile.child("marital").setValue(marital_tx);
-                        //  d_driverProfile.child(document_tx).setValue(document_tx);
+                        d_driverProfile.child("document_name").setValue(document_tx);
 
                         Alerter.create(getActivity())
                                 .setTitle("Profile Updated")
@@ -993,6 +1024,66 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
 
 
+            // choose document image
+
+            case R.id.cd_SelectOther:
+                Intent intentDocument = new Intent();
+                intentDocument.setType("image/*");
+                intentDocument.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intentDocument, "Select Image"), PICK_IMAGE_REQUEST_O);
+                break;
+
+
+//           upload document image
+
+            case R.id.cd_UploadOther:
+                if(documentImageFilePath != null) {
+                    dialog_uploadDocumentImage.show();
+                    contact1_tx = contact1_et.getText().toString().trim();
+
+                    StorageReference childRef = storageRef.child("driver_profiles/").child(contact1_tx).child("document_image/").child("image.jpg");
+
+                    //uploading the image
+                    UploadTask uploadTask = childRef.putFile(documentImageFilePath);
+
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            dialog_uploadDocumentImage.dismiss();
+                            Alerter.create(getActivity())
+                                    .setTitle("Document Image successfully uploaded")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.success_icon)
+                                    .show();
+                            chooseDocumentImage_btn.setText("select image");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            dialog_uploadDocumentImage.dismiss();
+                            Alerter.create(getActivity())
+                                    .setTitle("Upload Failed"+e.getMessage())
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.error)
+                                    .show();
+                        }
+                    });
+                }
+                else {
+                    dialog_uploadDocumentImage.dismiss();
+                    Alerter.create(getActivity())
+                            .setTitle("First Select Image")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                }
+
+                break;
+
+
             //birth
 
             case R.id.cd_BirthEditText:
@@ -1091,6 +1182,10 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
         if (requestCode == PICK_IMAGE_REQUEST_P && resultCode == RESULT_OK && data != null && data.getData() != null) {
             ProfileImageFilePath = data.getData();
             chooseProfileImage_btn.setText("Selected");
+        }
+        if (requestCode == PICK_IMAGE_REQUEST_O && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            documentImageFilePath = data.getData();
+            chooseDocumentImage_btn.setText("Selected");
         }
     }
 

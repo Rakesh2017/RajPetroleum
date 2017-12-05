@@ -178,7 +178,7 @@ public class Login extends AppCompatActivity {
                                                         SharedPreferences.Editor editor = dataSave.edit();
                                                         editor.putString("LaunchApplication", "DashBoard");
                                                         editor.putString("user_designation", "admin");
-                                                        editor.commit();
+                                                        editor.apply();
 
 
                                                         //editor2.putString("user_designation", "admin");

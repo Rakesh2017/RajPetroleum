@@ -1,5 +1,6 @@
 package com.enhabyto.rajpetroleum;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -47,6 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context;
     List<TripRecyclerInfo> MainImageUploadInfoList;
     String month, key;
+    ProgressDialog progressDialog;
 
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReferenceFromUrl("gs://rajpetroleum-4d3fa.appspot.com");
@@ -75,6 +77,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("driver_profiles").child(UploadInfo.getContact_tx())
                 .child("name");
+        progressDialog = new ProgressDialog(context);
+
+        // Setting up message in Progress dialog.
+        progressDialog.setMessage("Loading Data...");
+
+        // Showing progress dialog.
 
 
         holder.contact_tx.setText(UploadInfo.getContact_tx());
@@ -157,6 +165,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.truckImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.show();
                 Query queryPetrolNumber = root.child("trip_details").child(UploadInfo.getContact_tx()).orderByKey().limitToLast(1);
 
                 queryPetrolNumber.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -180,7 +189,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                             editor.apply();
                                             AppCompatActivity activity = (AppCompatActivity) context;
                                             activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("FragmentTripDetail").commit();
-
+                                            progressDialog.dismiss();
                                         }
 
                                         @Override

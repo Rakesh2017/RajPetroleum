@@ -819,7 +819,7 @@
                     fancy:fb_borderWidth="1dp"
                     fancy:fb_defaultColor="@color/blackFifty"
                     fancy:fb_focusColor="@color/black"
-                    fancy:fb_fontIconResource="&#xf0c1;"
+                    fancy:fb_fontIconResource="&#xf03e;"
                     fancy:fb_iconPosition="right"
                     fancy:fb_radius="3dp"
                     fancy:fb_text="select image"

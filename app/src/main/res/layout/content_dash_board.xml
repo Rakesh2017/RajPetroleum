@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-          android:background="#ECEFF1"
+        android:background="#ECEFF1"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
@@ -60,6 +60,23 @@
               android:textColor="@color/blackNinety"
               android:visibility="gone"
               android:textSize="35sp"/>
+
+          <util.android.textviews.FontTextView
+              android:id="@+id/no_internet"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:fontFamily="droidsansbold.ttf"
+              android:gravity="center"
+              android:text="No Internet Connection!"
+              android:drawableTop="@drawable/no_connection"
+              android:layout_centerHorizontal="true"
+              android:layout_centerInParent="true"
+              android:textStyle="bold"
+              android:padding="7dp"
+              android:textColor="@color/black"
+              android:textSize="20sp"
+              android:visibility="gone"
+              />
 
 
     </RelativeLayout>
