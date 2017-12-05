@@ -72,7 +72,7 @@ public class AllocateTruck extends Fragment {
     String timeFormat = "HH:mm";
     DatePickerDialog.OnDateSetListener date;
     TimePickerDialog.OnTimeSetListener time;
-    String key, decider;
+    String key, decider, secondKey;
 
     AlertDialog dialog_scheduleTrip;
 
@@ -427,7 +427,7 @@ public class AllocateTruck extends Fragment {
                                         return;
                                     }
 
-                                key = d_root.child("trip_schedules").child(contact_tx).push().getKey();
+                               secondKey = d_root.child("trip_schedules").child(contact_tx).push().getKey();
 
 
 
@@ -464,10 +464,8 @@ public class AllocateTruck extends Fragment {
 
 
 
-                                                    dataRef_trip_schedule = d_root.child("trip_schedules").child(contact_tx).child(key);
-                                                    dataRef_trip_schedule.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    dataRef_trip_schedule = d_root.child("trip_schedules").child(contact_tx).child(secondKey);
+
 
                                                             SimpleDateFormat sdf1 = new SimpleDateFormat("dd_mm_yyyy");
                                                             SimpleDateFormat sdf2 = new SimpleDateFormat("HH_mm");
@@ -498,16 +496,7 @@ public class AllocateTruck extends Fragment {
 
                                                         }
 
-                                                        @Override
-                                                        public void onCancelled(DatabaseError databaseError) {
-                                                            dialog_scheduleTrip.dismiss();
-                                                        }
-                                                    });
 
-
-
-
-                                                }
 
                                                 @Override
                                                 public void onCancelled(DatabaseError databaseError) {
