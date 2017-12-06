@@ -1,5 +1,6 @@
 package com.enhabyto.rajpetroleum;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -37,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
+import dmax.dialog.SpotsDialog;
 import util.android.textviews.FontTextView;
 
 /**
@@ -46,9 +48,9 @@ import util.android.textviews.FontTextView;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     Context context;
-    List<TripRecyclerInfo> MainImageUploadInfoList;
+    private List<TripRecyclerInfo> MainImageUploadInfoList;
     String month, key;
-    ProgressDialog progressDialog;
+    private  AlertDialog progressDialog;
 
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReferenceFromUrl("gs://rajpetroleum-4d3fa.appspot.com");
@@ -71,20 +73,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return viewHolder;
     }
 
+
     @Override
     public void onBindViewHolder(final  ViewHolder holder, final int position) {
         final TripRecyclerInfo UploadInfo = MainImageUploadInfoList.get(position);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("driver_profiles").child(UploadInfo.getContact_tx())
                 .child("name");
-        progressDialog = new ProgressDialog(context);
 
-        // Setting up message in Progress dialog.
-        progressDialog.setMessage("Loading Data...");
-
-        // Showing progress dialog.
-
-
+        progressDialog = new SpotsDialog(context, R.style.loadingData);
         holder.contact_tx.setText(UploadInfo.getContact_tx());
 
         holder.truckNumber_tx.setText(UploadInfo.getTruckNumber());

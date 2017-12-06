@@ -269,67 +269,11 @@
             />
 
 
-        <!--Start Date-->
 
-        <util.android.textviews.FontTextView
-            android:id="@+id/at_text9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/at_text10"
-            android:layout_alignBottom="@+id/at_text10"
-            android:layout_alignParentStart="true"
-            android:fontFamily="droidsansbold.ttf"
-            android:text="End Date"
-            android:textColor="@color/blackNinety"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/at_endDateEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/at_text9"
-            android:hint="dd/mm/yyyy"
-            android:inputType="date"
-            android:textColor="@color/black"
-            android:maxLength="10"
-            android:focusable="false"
-            android:padding="7dp"
-            android:background="@drawable/rounded_edit_text_black"
-            />
-
-
-        <!--start Time-->
-
-        <util.android.textviews.FontTextView
-            android:id="@+id/at_text10"
-            android:layout_below="@+id/at_startTimeEditText"
-            android:layout_marginTop="7dp"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="droidsansbold.ttf"
-            android:text="End time"
-            android:textColor="@color/blackNinety"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/at_endTimeEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/at_text10"
-            android:layout_alignParentEnd="true"
-            android:hint="hh/mm"
-            android:inputType="time"
-            android:textColor="@color/black"
-            android:maxLength="5"
-            android:focusable="false"
-            android:padding="7dp"
-            android:background="@drawable/rounded_edit_text_black"
-            />
 
    <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/at_allocateTripButton"
-        android:layout_below="@+id/at_endDateEditText"
+        android:layout_below="@+id/at_startTimeEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
