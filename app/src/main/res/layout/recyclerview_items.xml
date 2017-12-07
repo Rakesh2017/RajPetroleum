@@ -115,6 +115,17 @@
             android:layout_marginEnd="5dp"
             />
 
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_call_black"
+            android:layout_toStartOf="@+id/dash_truckImage"
+            android:layout_below="@+id/dash_tripStartTextView"
+            android:onClick="onClick"
+            android:id="@+id/dash_callImage"
+            android:layout_marginEnd="15dp"
+            />
+
 
 
     </RelativeLayout>

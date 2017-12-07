@@ -3,11 +3,16 @@ package com.enhabyto.rajpetroleum;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -15,6 +20,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +41,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.List;
 
@@ -50,7 +57,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context;
     private List<TripRecyclerInfo> MainImageUploadInfoList;
     String month, key;
-    private  AlertDialog progressDialog;
+    private AlertDialog progressDialog;
 
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReferenceFromUrl("gs://rajpetroleum-4d3fa.appspot.com");
@@ -75,7 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     @Override
-    public void onBindViewHolder(final  ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final TripRecyclerInfo UploadInfo = MainImageUploadInfoList.get(position);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("driver_profiles").child(UploadInfo.getContact_tx())
@@ -89,8 +96,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                holder.name_tx.setText("("+dataSnapshot.getValue(String.class)+")");
-                if (TextUtils.equals(dataSnapshot.getValue(String.class),null) || TextUtils.equals(dataSnapshot.getValue(String.class),"")){
+                holder.name_tx.setText("(" + dataSnapshot.getValue(String.class) + ")");
+                if (TextUtils.equals(dataSnapshot.getValue(String.class), null) || TextUtils.equals(dataSnapshot.getValue(String.class), "")) {
                     holder.name_tx.setText(" (not known)");
                 }
             }
@@ -112,7 +119,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         .asBitmap()
                         .fitCenter()
                         .centerCrop()
-                        .diskCacheStrategy( DiskCacheStrategy.ALL )
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(new BitmapImageViewTarget(holder.driverProfileImage) {
                             @Override
                             protected void setResource(Bitmap resource) {
@@ -149,12 +156,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = dataSave.edit();
-            editor.putString("startDate", day+" "+month+" "+year+", "+hour+":"+minute);
+            editor.putString("startDate", day + " " + month + " " + year + ", " + hour + ":" + minute);
             editor.apply();
 
-            holder.tripStarted_tx.setText(day+"-"+month+"-"+year+", "+hour+":"+minute);
-        }
-        catch (NullPointerException e){
+            holder.tripStarted_tx.setText(day + "-" + month + "-" + year + ", " + hour + ":" + minute);
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
@@ -196,7 +202,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                     });
 
 
-
                         }
 
                     }
@@ -208,19 +213,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 });
 
 
+            }
+        });
 
+        holder.callImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phone = UploadInfo.getContact_tx();
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phone, null));
+                //Intent intent = new Intent(Intent.ACTION_CALL);
+              //  intent.setData(Uri.parse(UploadInfo.getContact_tx()));
+                if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
 
+                    Toast.makeText(context, "Give Call Permission from Settings", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                context.startActivity(intent);
             }
         });
 
 
-
-
-
-
-
         //Loading image from Glide library.
-       // Glide.with(context).load(UploadInfo.getImageURL()).into(holder.imageView);
+        // Glide.with(context).load(UploadInfo.getImageURL()).into(holder.imageView);
     }
 
     @Override
@@ -241,19 +262,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-         ImageView driverProfileImage;
-         FontTextView contact_tx, tripStarted_tx, name_tx, truckNumber_tx, text;
-         ImageButton truckImage;
+        ImageView driverProfileImage, callImage;
+        FontTextView contact_tx, tripStarted_tx, name_tx, truckNumber_tx, text;
+        ImageButton truckImage;
 
-         ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             driverProfileImage = itemView.findViewById(R.id.dash_profileImage);
-            contact_tx =  itemView.findViewById(R.id.dash_contactTextView);
-            tripStarted_tx =  itemView.findViewById(R.id.dash_tripStartTextView);
-            name_tx =  itemView.findViewById(R.id.dash_nameTextView);
-            truckNumber_tx =  itemView.findViewById(R.id.dash_truckNumberTextView);
-            truckImage =  itemView.findViewById(R.id.dash_truckImage);
+            contact_tx = itemView.findViewById(R.id.dash_contactTextView);
+            tripStarted_tx = itemView.findViewById(R.id.dash_tripStartTextView);
+            name_tx = itemView.findViewById(R.id.dash_nameTextView);
+            truckNumber_tx = itemView.findViewById(R.id.dash_truckNumberTextView);
+            truckImage = itemView.findViewById(R.id.dash_truckImage);
+            callImage = itemView.findViewById(R.id.dash_callImage);
 
 
         }
@@ -262,9 +284,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-    private void conversion(){
+    private void conversion() {
 
-        switch (month){
+        switch (month) {
 
             case "1":
                 month = "Jan";
@@ -315,10 +337,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 break;
 
 
-
         }
 
 
-
     }
+
+
 }
