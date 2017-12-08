@@ -27,6 +27,7 @@
     <string name="tripOverView"><u><u>TRIP START OVERVIEW</u></u></string>
     <string name="load"><u><u>LOAD</u></u></string>
     <string name="unLoad"><u><u>UNLOAD</u></u></string>
+    <string name="emergencyContact"><u><u>Emergency Contact</u></u></string>
     <string name="litres">litres</string>
 
     <!-- TODO: Remove or change this placeholder text -->

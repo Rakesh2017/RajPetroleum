@@ -246,15 +246,6 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
 
 
                 truckNumber_tx1 = truckNumber_et1.getText().toString().trim();
-                if (truckNumber_tx1.length() < 13){
-                    Alerter.create(getActivity())
-                            .setTitle("Invalid truck Number!")
-                            .setContentGravity(1)
-                            .setBackgroundColorRes(R.color.black)
-                            .setIcon(R.drawable.error)
-                            .show();
-                    return;
-                }
 
                 if (!isNetworkAvailable()){
                     Alerter.create(getActivity())
@@ -271,6 +262,8 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         connected = dataSnapshot.getValue(String.class);
+
+
 
                         if (!TextUtils.equals(connected, "connected")){
                             Alerter.create(getActivity())

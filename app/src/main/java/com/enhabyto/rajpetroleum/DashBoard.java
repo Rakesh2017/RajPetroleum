@@ -480,6 +480,11 @@ public class DashBoard extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new AllTrips()).addToBackStack("AdminFragment").commit();
 
         }
+        else if (id == R.id.nav_emergencyContact){
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new EmergencyContact()).addToBackStack("AdminFragment").commit();
+
+        }
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

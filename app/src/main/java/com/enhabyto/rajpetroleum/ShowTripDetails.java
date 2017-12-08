@@ -59,14 +59,17 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
     private DatabaseReference databaseReference;
 
     private String contactUID_tx, startDate_tx, pumpName_tx, stateName_tx, cityName_tx, truckLocation_tx, moneyTaken_tx, petrolPrice_tx;
-    FontTextView contact_tv, name_tv, truckNumber_tv, startDate_tv, pumpName_tv, stateName_tv, cityName_tv, truckLocation_tv, moneyTaken_tv, petrolPrice_tv;
+    FontTextView contact_tv, name_tv, truckNumber_tv, startDate_tv, pumpName_tv, stateName_tv
+            , cityName_tv, truckLocation_tv, moneyTaken_tv, petrolPrice_tv, fuelTaken_tv;
     String contact_tx, name_tx, truckNumber_tx;
 
     TextView stoppage_tv, petrolFilling_tv, otherFilling_tv, load_tv, breakDown_tv;
     FancyButton stoppage_btn, petrolFilling_btn, otherFilling_btn, load_btn, breakDown_btn;
 
     TextView stoppageMoney_tv, petrolMoney_tv, otherMoney_tv, breakDownMoney_tv, total_tv;
-    String stoppageMoney_tx, petrolMoney_tx, otherMoney_tx, breakDownMoney1_tx, breakDownMoney2_tx, breakDownMoney3_tx, breakDownMoney4_tx, breakDownMoney5_tx, breakDownMoney6_tx, breakDownMoney7_tx, breakDownMoney8_tx;
+    String stoppageMoney_tx, petrolMoney_tx, otherMoney_tx, breakDownMoney1_tx, breakDownMoney2_tx
+            , breakDownMoney3_tx, breakDownMoney4_tx, breakDownMoney5_tx, breakDownMoney6_tx
+            , breakDownMoney7_tx, breakDownMoney8_tx, fuelTaken_tx;
     int i = 0;
     int j = 0;
     int k = 0;
@@ -123,6 +126,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         truckLocation_tv = view.findViewById(R.id.detail_pickedFromTextView);
         moneyTaken_tv = view.findViewById(R.id.detail_moneyTakenTextView);
         petrolPrice_tv = view.findViewById(R.id.detail_petrolPriceTextView);
+        fuelTaken_tv = view.findViewById(R.id.detail_fuelTakenTextView);
 
         stoppage_tv = view.findViewById(R.id.detail_text1);
         petrolFilling_tv = view.findViewById(R.id.detail_text2);
@@ -197,9 +201,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 moneyTaken_tx = dataSnapshot.child("expenses_taken").getValue(String.class);
                 petrolPrice_tx = dataSnapshot.child("fuel_price").getValue(String.class);
                 startDate_tx = dataSnapshot.child("start_date").getValue(String.class);
-
-
-
+                fuelTaken_tx = dataSnapshot.child("fuel_taken").getValue(String.class);
 
 //                        setting values
 
@@ -210,6 +212,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 truckLocation_tv.setText(truckLocation_tx);
                 moneyTaken_tv.setText("Rs " + moneyTaken_tx);
                 petrolPrice_tv.setText("Rs " + petrolPrice_tx + "/lit");
+                fuelTaken_tv.setText(fuelTaken_tx + "Litres");
 
                 String date = startDate_tx;
 
@@ -223,6 +226,31 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
                     startDate_tv.setText(day+"-"+month+"-"+year+", "+hour+":"+minute);
 
+
+
+                }
+                catch (NullPointerException e){
+                    e.printStackTrace();
+                }
+
+                try {
+                    if (stateName_tx.equals("")){
+                        stateName_tv.setText("NA");
+                        stateName_tv.setTextColor(Color.GRAY);
+                    }
+
+                    if (cityName_tx.equals("")){
+                        cityName_tv.setText("NA");
+                        cityName_tv.setTextColor(Color.GRAY);
+                    }
+                    if (TextUtils.equals(fuelTaken_tx,null) || fuelTaken_tx.equals("") || fuelTaken_tx.isEmpty()){
+                        fuelTaken_tv.setText("NA");
+                        fuelTaken_tv.setTextColor(Color.GRAY);
+                    }
+                    if (moneyTaken_tx.equals("")){
+                        moneyTaken_tv.setText("NA");
+                        moneyTaken_tv.setTextColor(Color.GRAY);
+                    }
                 }
                 catch (NullPointerException e){
                     e.printStackTrace();
@@ -230,15 +258,8 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
 
-                if (stateName_tx.equals("")){
-                    stateName_tv.setText("NA");
-                    stateName_tv.setTextColor(Color.GRAY);
-                }
 
-                if (cityName_tx.equals("")){
-                    cityName_tv.setText("NA");
-                    cityName_tv.setTextColor(Color.GRAY);
-                }
+
 
 
 

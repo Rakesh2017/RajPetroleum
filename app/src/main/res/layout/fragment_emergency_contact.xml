@@ -1,0 +1,152 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context="com.enhabyto.rajpetroleum.EmergencyContact">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
+
+
+
+
+    <!-- TODO: Update blank fragment layout -->
+    <util.android.textviews.FontTextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:fontFamily="droidsansbold.ttf"
+        android:textColor="@color/black"
+        android:text="@string/emergencyContact"
+        android:layout_centerHorizontal="true"
+        />
+
+<!--1-->
+    <util.android.textviews.FontTextView
+        android:id="@+id/emergency_contact1TextView"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="droidsansbold.ttf"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="Contact 1"
+        android:textColor="@color/blackNinety"
+        android:textAllCaps="true"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/emergency_contact1EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emergency_contact1TextView"
+        android:background="@drawable/rounded_edit_text_black"
+        android:hint="Enter Number"
+        android:inputType="phone"
+        android:padding="5dp"
+        android:maxLength="12"
+        android:textColor="@color/black"
+        android:textColorHint="@color/blackFifty"
+        android:textSize="20sp" />
+
+
+    <!--2-->
+
+
+    <util.android.textviews.FontTextView
+        android:id="@+id/emergency_contact2TextView"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/emergency_contact1EditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="droidsansbold.ttf"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="Contact 2"
+        android:textColor="@color/blackNinety"
+        android:textAllCaps="true"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/emergency_contact2EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emergency_contact2TextView"
+        android:background="@drawable/rounded_edit_text_black"
+        android:hint="Enter Number"
+        android:inputType="phone"
+        android:padding="5dp"
+        android:maxLength="12"
+        android:textColor="@color/black"
+        android:textColorHint="@color/blackFifty"
+        android:textSize="20sp" />
+
+
+    <!--3-->
+
+
+    <util.android.textviews.FontTextView
+        android:id="@+id/emergency_contact3TextView"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/emergency_contact2EditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="droidsansbold.ttf"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="Contact 3"
+        android:textColor="@color/blackNinety"
+        android:textAllCaps="true"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/emergency_contact3EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emergency_contact3TextView"
+        android:background="@drawable/rounded_edit_text_black"
+        android:hint="Enter Number"
+        android:inputType="phone"
+        android:padding="5dp"
+        android:maxLength="12"
+        android:textColor="@color/black"
+        android:textColorHint="@color/blackFifty"
+        android:textSize="20sp" />
+
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/emergency_submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emergency_contact3EditText"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="16dp"
+        fancy:fb_borderColor="#FFFFFF"
+        fancy:fb_borderWidth="1dp"
+        fancy:fb_defaultColor="@color/lightGreen"
+        fancy:fb_focusColor="@color/black"
+        fancy:fb_fontIconResource="&#xf095;"
+        fancy:fb_iconPosition="right"
+        fancy:fb_radius="3dp"
+        fancy:fb_textColor="@color/black"
+        android:layout_marginTop="16dp"
+        fancy:fb_text="Update"
+        />
+
+
+
+</RelativeLayout>
+</RelativeLayout>

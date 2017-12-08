@@ -264,6 +264,41 @@
             <util.android.textviews.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/detail_fuelTaken1TextView"
+                android:text="Fuel Taken:"
+                android:layout_marginStart="7dp"
+                android:textStyle="normal"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/detail_pickedFromTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_fuelTakenTextView"
+                android:layout_toEndOf="@id/detail_fuelTaken1TextView"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:layout_marginEnd="7dp"
+                android:textSize="16sp"
+                android:textColor="@color/naturalBlue"
+                android:layout_below="@id/detail_pickedFromTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+
+            <!--Total Money Taken-->
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/detail_moneyTaken1TextView"
                 android:text="Total money Taken by Driver:"
                 android:layout_marginStart="7dp"
@@ -271,7 +306,7 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:textSize="14sp"
                 android:textColor="@color/black"
-                android:layout_below="@id/detail_pickedFromTextView"
+                android:layout_below="@id/detail_fuelTakenTextView"
                 android:layout_marginTop="7dp"
                 />
 
@@ -288,7 +323,7 @@
                 android:layout_marginEnd="7dp"
                 android:textSize="16sp"
                 android:textColor="@color/naturalBlue"
-                android:layout_below="@id/detail_pickedFromTextView"
+                android:layout_below="@id/detail_fuelTakenTextView"
                 android:layout_marginTop="7dp"
                 />
 
