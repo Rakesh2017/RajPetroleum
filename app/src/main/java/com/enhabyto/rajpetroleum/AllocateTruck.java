@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -29,6 +30,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.database.DataSnapshot;
@@ -47,6 +50,8 @@ import java.util.Locale;
 import dmax.dialog.SpotsDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,13 +62,14 @@ public class AllocateTruck extends Fragment {
     Spinner spinner_truck, spinner_driver, spinner_truckLocation, spinner_startPoint, spinner_endPoint;
     DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
     DatabaseReference dataRef_spinner = d_root;
-    DatabaseReference dataRef_trip_schedule;
+    DatabaseReference dataRef_trip_schedule, dataRef_trip_schedule1;
     FancyButton allocate_btn;
     String selected_contact_tx, selected_truck_tx, selected_truckLocation_tx, selected_startPoint_tx, selected_endPoint_tx;
     String truckLocation_tx, startPoint_tx, nextStoppagePoint_tx, startDate_tx, startTime_tx;
     EditText startDate_et, startTime_et;
     AutoCompleteTextView truckNumber_et, contact_et, truckLocation_et, startPoint_et, nextStoppagePoint_et;
-    String truckNumber_tx, contact_tx, connected;
+    String truckNumber_tx, contact_tx, admin_name, sub_admin_contact;
+    String user_designation, scheduler_contact;
 
 
     Calendar myCalendar = Calendar.getInstance();
@@ -84,6 +90,11 @@ public class AllocateTruck extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        SharedPreferences shared = getActivity().getSharedPreferences("firstLog", MODE_PRIVATE);
+
+        user_designation = (shared.getString("user_designation", ""));
+
         view = inflater.inflate(R.layout.fragment_allocate_truck, container, false);
         spinner_truck = view.findViewById(R.id.at_spinnerTruck);
         spinner_driver = view.findViewById(R.id.at_spinnerContact);
@@ -340,12 +351,6 @@ public class AllocateTruck extends Fragment {
                 }
 
 
-
-
-
-
-
-
                 new MaterialDialog.Builder(getActivity())
                         .title("Schedule Trip")
                         .content("Are You Sure to Allocate Truck Number\n"+truckNumber_tx
@@ -376,13 +381,13 @@ public class AllocateTruck extends Fragment {
                                         return;
                                     }
 
-                               secondKey = d_root.child("trip_schedules").child(contact_tx).push().getKey();
+                               secondKey = d_root.push().getKey();
 
-                                DatabaseReference rootRef1 = FirebaseDatabase.getInstance().getReference().child("trip_schedules");
+                                DatabaseReference rootRef1 = FirebaseDatabase.getInstance().getReference().child("trip_schedules_admin");
                                 rootRef1.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot snapshot) {
-                                        Query query1 = d_root.child("trip_schedules").child(contact_tx).orderByKey().limitToLast(1);
+                                        Query query1 = d_root.child("trip_schedules_admin").child(scheduler_contact).child(contact_tx).orderByKey().limitToLast(1);
 
                                         if (snapshot.hasChild(contact_tx)) {
                                             // run some code
@@ -589,6 +594,52 @@ public class AllocateTruck extends Fragment {
     public void onStart(){
         super.onStart();
 
+        try{
+            SharedPreferences shared = getContext().getSharedPreferences("firstLog", MODE_PRIVATE);
+            user_designation = (shared.getString("user_designation", ""));
+            sub_admin_contact = (shared.getString("subAdmin_contact", ""));
+        }
+        catch (NullPointerException e){
+
+            e.printStackTrace();
+        }
+
+
+        if (user_designation.equals("admin")){
+
+            d_root.child("admin").child("profile").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    admin_name = dataSnapshot.child("name").getValue(String.class);
+                    scheduler_contact = dataSnapshot.child("contact").getValue(String.class);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
+
+        else if (user_designation.equals("subAdmin")){
+            d_root.child("sub_admin_profiles").child(sub_admin_contact).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    admin_name = dataSnapshot.child("name").getValue(String.class);
+                    scheduler_contact = dataSnapshot.child("contact").getValue(String.class);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
         dataRef_spinner.child("truck_details").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -719,7 +770,8 @@ public class AllocateTruck extends Fragment {
     }
 
     public void setData(){
-        dataRef_trip_schedule = d_root.child("trip_schedules").child(contact_tx).child(secondKey);
+        dataRef_trip_schedule = d_root.child("trip_schedules_driver").child(contact_tx);
+        dataRef_trip_schedule1 = d_root.child("trip_schedules_admin").child(scheduler_contact).child(contact_tx).child(secondKey);
 
 
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd_mm_yyyy");
@@ -727,6 +779,8 @@ public class AllocateTruck extends Fragment {
         String date = sdf1.format(new Date());
         String time = sdf2.format(new Date());
 
+        dataRef_trip_schedule.child("scheduler_name").setValue(admin_name);
+        dataRef_trip_schedule.child("scheduler_contact").setValue(scheduler_contact);
         dataRef_trip_schedule.child("truck_number").setValue(truckNumber_tx);
         dataRef_trip_schedule.child("truck_location").setValue(truckLocation_tx);
         dataRef_trip_schedule.child("driver_contact_id").setValue(contact_tx);
@@ -737,6 +791,19 @@ public class AllocateTruck extends Fragment {
         dataRef_trip_schedule.child("status").setValue("waiting");
         dataRef_trip_schedule.child("date").setValue(date+"_"+time);
 
+
+
+        dataRef_trip_schedule1.child("scheduler_name").setValue(admin_name);
+        dataRef_trip_schedule1.child("scheduler_contact").setValue(scheduler_contact);
+        dataRef_trip_schedule1.child("truck_number").setValue(truckNumber_tx);
+        dataRef_trip_schedule1.child("truck_location").setValue(truckLocation_tx);
+        dataRef_trip_schedule1.child("driver_contact_id").setValue(contact_tx);
+        dataRef_trip_schedule1.child("start_point").setValue(startPoint_tx);
+        dataRef_trip_schedule1.child("next_stoppage").setValue(nextStoppagePoint_tx);
+        dataRef_trip_schedule1.child("expected_start_date").setValue(startDate_tx);
+        dataRef_trip_schedule1.child("expected_start_time").setValue(startTime_tx);
+        dataRef_trip_schedule1.child("status").setValue("waiting");
+        dataRef_trip_schedule1.child("date").setValue(date+"_"+time);
 
 
         Alerter.create(getActivity())
@@ -750,65 +817,10 @@ public class AllocateTruck extends Fragment {
 
     }
 
+
+
     //end
 }
 
 
 
-
-/*
-
-                                     d_root.child("trip_details").addListenerForSingleValueEvent(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                if (dataSnapshot.hasChild(contact_tx)){
-
-                                                                }
-                                                            }
-
-                                                            @Override
-                                                            public void onCancelled(DatabaseError databaseError) {
-
-                                                            }
-                                                        });
-
-                                                        Query query2 = d_root.child("trip_details").child(contact_tx).orderByKey().limitToLast(1);
-                                                        query2.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                for (DataSnapshot child : dataSnapshot.getChildren()){
-                                                                    String key = child.getKey();
-
-                                                                    d_root.child("trip_details").child(contact_tx).child(key)
-                                                                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                                @Override
-                                                                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                                    String status = dataSnapshot.child("start_trip").child("status").getValue(String.class);
-                                                                                    if (TextUtils.equals(status,"active")){
-                                                                                        Alerter.create(getActivity())
-                                                                                                .setTitle("Cannot Schedule Trip. Driver is already on Trip!")
-                                                                                                .setContentGravity(1)
-                                                                                                .setBackgroundColorRes(R.color.black)
-                                                                                                .setIcon(R.drawable.error)
-                                                                                                .show();
-                                                                                        dialog_scheduleTrip.dismiss();
-                                                                                        return;
-
-                                                                                    }
-                                                                                }
-
-                                                                                @Override
-                                                                                public void onCancelled(DatabaseError databaseError) {
-
-                                                                                }
-                                                                            });
-
-                                                                }
-                                                            }
-
-                                                            @Override
-                                                            public void onCancelled(DatabaseError databaseError) {
-
-                                                            }
-                                                        });
- */

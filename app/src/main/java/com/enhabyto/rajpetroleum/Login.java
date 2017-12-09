@@ -156,7 +156,7 @@ public class Login extends AppCompatActivity {
                                             FirebaseUser user = mAuth.getCurrentUser();
                                             DatabaseReference d_refAdminProfile;
                                             assert user != null;
-                                            d_refAdminProfile = d_root.child("admin").child(user.getUid()).child("profile");
+                                            d_refAdminProfile = d_root.child("admin").child("profile");
 
 
 
@@ -178,7 +178,7 @@ public class Login extends AppCompatActivity {
                                                         SharedPreferences.Editor editor = dataSave.edit();
                                                         editor.putString("LaunchApplication", "DashBoard");
                                                         editor.putString("user_designation", "admin");
-                                                        editor.apply();
+                                                        editor.commit();
 
 
                                                         //editor2.putString("user_designation", "admin");
@@ -199,7 +199,7 @@ public class Login extends AppCompatActivity {
 
                                             // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_Login,new BasicInformation()).addToBackStack(null).commit();
 
-                                            editor1.putString("A",email_tx).apply();
+                                            editor1.putString("A",email_tx).commit();
                                             dialog.dismiss();
 
                                         } else {

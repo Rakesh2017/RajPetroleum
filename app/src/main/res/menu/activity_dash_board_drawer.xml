@@ -17,6 +17,10 @@
             android:icon="@drawable/allocate_truck"
             android:title="Schedule Trip" />
         <item
+            android:id="@+id/nav_scheduleTripDetails"
+            android:icon="@drawable/schedule_trip_details"
+            android:title="Schedule Trip Details" />
+        <item
             android:id="@+id/nav_CreateDriver"
             android:icon="@drawable/driver_icon"
             android:title="@string/createDriver" />

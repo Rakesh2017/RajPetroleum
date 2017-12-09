@@ -1,0 +1,115 @@
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview5"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    card_view:cardElevation="2dp"
+    card_view:contentPadding="2dp"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardMaxElevation="2dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scheduleList_relativeLayout"
+        android:background="#ECEFF1">
+
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/scheduleList_startPoint1TextView"
+            android:layout_marginStart="10dp"
+            android:text="Driver Name:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/scheduleList_startPointTextView"
+            android:text=""
+            android:layout_marginEnd="4dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:layout_marginStart="4dp"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:textColor="@color/lightGreen"
+            android:layout_toEndOf="@id/scheduleList_startPoint1TextView"
+            />
+
+
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/scheduleList_startPoint1TextView"
+            android:fontFamily="droidsansbold.ttf"
+            android:layout_below="@+id/scheduleList_startPointTextView"
+            android:layout_marginTop="3dp"
+            android:textSize="14dp"
+            android:textColor="#000"
+            android:text="Driver Contact:"
+            android:gravity="center"
+            android:id="@+id/scheduleList_date1TextView"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="droidsansbold.ttf"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="4dp"
+            android:textSize="16dp"
+            android:textColor="@color/lightRed"
+            android:text=""
+            android:layout_below="@+id/scheduleList_startPointTextView"
+            android:gravity="center"
+            android:layout_toEndOf="@id/scheduleList_date1TextView"
+            android:id="@+id/scheduleList_dateTextView"
+            />
+
+        <ImageButton
+            android:layout_width="55dp"
+            android:layout_height="25dp"
+            android:background="@drawable/tank_truck_icon"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/scheduleList_dateTextView"
+            android:onClick="onClick"
+            android:id="@+id/scheduleList_truck"
+            android:layout_marginEnd="5dp"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/scheduleList_imageNumber"
+            android:layout_below="@+id/scheduleList_dateTextView"
+            android:layout_toStartOf="@+id/scheduleList_truck"
+            android:layout_marginEnd="16dp"
+            android:textSize="16sp"
+            android:text="1"
+            android:background="@drawable/background_circle"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

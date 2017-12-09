@@ -104,7 +104,7 @@ public class TripListRecyclerViewAdapter  extends RecyclerView.Adapter<TripListR
 
 
         }
-        catch (NullPointerException | ArrayIndexOutOfBoundsException e){
+        catch (NullPointerException | StringIndexOutOfBoundsException e){
             e.printStackTrace();
         }
 

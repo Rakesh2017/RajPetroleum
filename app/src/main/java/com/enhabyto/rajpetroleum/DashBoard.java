@@ -131,7 +131,7 @@ public class DashBoard extends AppCompatActivity
             if (user != null) {
                 String email = user.getEmail();
                 user_uid.setText(email);
-                d_subProfile = d_root.child("admin").child(user.getUid()).child("profile");
+                d_subProfile = d_root.child("admin").child("profile");
                 d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -514,7 +514,7 @@ public class DashBoard extends AppCompatActivity
                     SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = dataSave.edit();
                     editor.putString("LaunchApplication", "Login");
-                    editor.commit();
+                    editor.apply();
 
 
 
@@ -547,7 +547,7 @@ public class DashBoard extends AppCompatActivity
                             SharedPreferences.Editor editor1;
                             SharedPreferences sharedPreferences = getSharedPreferences("Prefs", Context.MODE_PRIVATE);
                             editor1 = sharedPreferences.edit();
-                            editor1.putString("A","").commit();
+                            editor1.putString("A","").apply();
                             dialog1.dismiss();
                             moveTaskToBack(true);
                             finish();

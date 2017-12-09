@@ -689,7 +689,7 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
 
 
         DatabaseReference dataRef_spinner = FirebaseDatabase.getInstance().getReference();
-        dataRef_spinner.child("sub_admin_credentials").addListenerForSingleValueEvent(new ValueEventListener() {
+        dataRef_spinner.child("sub_admin_profiles").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -697,8 +697,13 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                     final List<String> areas = new ArrayList<>();
                     areas.add("Select Contact");
                     for (DataSnapshot areaSnapshot : dataSnapshot.getChildren()) {
-                        String pump_name = areaSnapshot.child("identity").getValue(String.class);
-                        areas.add(pump_name);
+                        String contact = areaSnapshot.getKey();
+                        String name = areaSnapshot.child("name").getValue(String.class);
+
+                        if (TextUtils.equals(name, null)){
+                            areas.add(contact+" (Not Available)");
+                        }
+                        else areas.add(contact+" ("+name+")");
 
                     }
 

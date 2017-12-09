@@ -153,7 +153,7 @@ public class BasicInformation extends Fragment {
 
                 DatabaseReference d_refAdminProfile;
                 assert user != null;
-                d_refAdminProfile = d_root.child("admin").child(user.getUid()).child("profile");
+                d_refAdminProfile = d_root.child("admin").child("profile");
 
                 d_refAdminProfile.child("name").setValue(name_tx);
                 d_refAdminProfile.child("designation").setValue(designation_tx);
@@ -162,7 +162,7 @@ public class BasicInformation extends Fragment {
                 SharedPreferences dataSave = getActivity().getSharedPreferences("firstLog", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = dataSave.edit();
                 editor.putString("LaunchApplication", "DashBoard");
-                editor.commit();
+                editor.apply();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
