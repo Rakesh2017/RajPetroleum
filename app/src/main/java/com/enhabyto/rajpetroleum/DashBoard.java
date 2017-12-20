@@ -61,6 +61,12 @@ import java.util.List;
 import java.util.Locale;
 
 import dmax.dialog.SpotsDialog;
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 import util.android.textviews.FontTextView;
 
 
@@ -125,7 +131,7 @@ public class DashBoard extends AppCompatActivity
 
 
 
-       /* DBHelper dbHelper = new DBHelper(this);
+      /*  DBHelper dbHelper = new DBHelper(this);
         dbHelper.insertData();
 
         final Cursor cursor = dbHelper.getuser();
@@ -176,7 +182,7 @@ public class DashBoard extends AppCompatActivity
 
         } catch(IOException | WriteException e){
             e.printStackTrace();
-        }*/
+        }  */
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);

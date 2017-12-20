@@ -114,10 +114,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onSuccess(Uri uri) {
                 // Got the download URL for 'users/me/profile.png'
 
-                if (context.getApplicationContext() != null) {
+                if (context.getApplicationContext() != null && uri != null) {
 
 
-                    Glide.with(context)
+                    Glide.with(context.getApplicationContext())
                             .load(uri)
                             .asBitmap()
                             .fitCenter()
@@ -138,12 +138,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
-                Glide.with(context)
-                        .load(R.drawable.driver_default_image_icon)
-                        .fitCenter()
-                        .centerCrop()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(holder.driverProfileImage);
+                if (context.getApplicationContext() != null) {
+                    Glide.with(context.getApplicationContext())
+                            .load(R.drawable.driver_default_image_icon)
+                            .fitCenter()
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(holder.driverProfileImage);
+                }
             }
         });
 
