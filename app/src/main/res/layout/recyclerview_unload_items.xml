@@ -50,12 +50,45 @@
             />
 
 
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/unload_gpsLocation1TextView"
+            android:layout_below="@+id/unload_dateTextView"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/black"
+            android:text="GPS Location:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="3dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/unload_gpsLocationTextView"
+            android:layout_toEndOf="@id/unload_gpsLocation1TextView"
+            android:layout_below="@+id/unload_dateTextView"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/saddleBrown"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="3dp"
+            android:onClick="onClick"
+            />
+
+
+
 
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/unload_loaded1TextView"
-            android:layout_below="@+id/unload_dateTextView"
+            android:layout_below="@+id/unload_gpsLocationTextView"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="4dp"
             android:textColor="@color/black"
@@ -71,7 +104,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/unload_loadedTextView"
             android:layout_toEndOf="@id/unload_loaded1TextView"
-            android:layout_below="@+id/unload_dateTextView"
+            android:layout_below="@+id/unload_gpsLocationTextView"
             android:layout_marginEnd="10dp"
             android:textColor="@color/naturalBlue"
             android:text=""

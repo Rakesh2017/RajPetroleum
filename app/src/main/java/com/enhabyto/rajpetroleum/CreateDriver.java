@@ -57,9 +57,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.iceteck.silicompressorr.FileUtils;
 import com.tapadoo.alerter.Alerter;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.YearMonth;
@@ -72,6 +74,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import dmax.dialog.SpotsDialog;
+import id.zelory.compressor.Compressor;
 import mehdi.sakout.fancybuttons.FancyButton;
 import util.android.textviews.FontTextView;
 
@@ -445,6 +448,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
                 dialog_loading_data.show();
                 contact1_tx = contact1_et.getText().toString().trim();
+
 
                 if (!isNetworkAvailable()){
                     Alerter.create(getActivity())
@@ -865,6 +869,17 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
                     StorageReference childRef = storageRef.child("driver_profiles").child(contact1_tx).child("licence_image/").child("licence.jpg");
 
+                    File actualImage = FileUtils.getFile(getActivity(), LicenceImageFilePath);
+                    try {
+
+                        File compressedImageFile = new Compressor(getActivity())
+                                .setQuality(20)
+                                .setCompressFormat(Bitmap.CompressFormat.WEBP)
+                                .compressToFile(actualImage);
+                        LicenceImageFilePath = Uri.fromFile(compressedImageFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     //uploading the image
                     UploadTask uploadTask = childRef.putFile(LicenceImageFilePath);
 
@@ -923,6 +938,17 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
                     StorageReference childRef = storageRef.child("driver_profiles/").child(contact1_tx).child("hazardous_licence_image/").child("hazardous_licence.jpg");
 
+                    File actualImage = FileUtils.getFile(getActivity(), HazardousLicenceImageFilePath);
+                    try {
+
+                        File compressedImageFile = new Compressor(getActivity())
+                                .setQuality(20)
+                                .setCompressFormat(Bitmap.CompressFormat.WEBP)
+                                .compressToFile(actualImage);
+                        HazardousLicenceImageFilePath = Uri.fromFile(compressedImageFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     //uploading the image
                     UploadTask uploadTask = childRef.putFile(HazardousLicenceImageFilePath);
 
@@ -982,6 +1008,17 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
                     StorageReference childRef = storageRef.child("driver_profiles/").child(contact1_tx).child("profile_image/").child("image.jpg");
 
+                    File actualImage = FileUtils.getFile(getActivity(), ProfileImageFilePath);
+                    try {
+
+                        File compressedImageFile = new Compressor(getActivity())
+                                .setQuality(20)
+                                .setCompressFormat(Bitmap.CompressFormat.WEBP)
+                                .compressToFile(actualImage);
+                        ProfileImageFilePath = Uri.fromFile(compressedImageFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     //uploading the image
                     UploadTask uploadTask = childRef.putFile(ProfileImageFilePath);
 
@@ -1043,6 +1080,17 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
                     StorageReference childRef = storageRef.child("driver_profiles/").child(contact1_tx).child("document_image/").child("image.jpg");
 
+                    File actualImage = FileUtils.getFile(getActivity(), documentImageFilePath);
+                    try {
+
+                        File compressedImageFile = new Compressor(getActivity())
+                                .setQuality(20)
+                                .setCompressFormat(Bitmap.CompressFormat.WEBP)
+                                .compressToFile(actualImage);
+                        documentImageFilePath = Uri.fromFile(compressedImageFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     //uploading the image
                     UploadTask uploadTask = childRef.putFile(documentImageFilePath);
 
@@ -1206,9 +1254,11 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                         String name = areaSnapshot.child("name").getValue(String.class);
 
                         if (TextUtils.equals(name, null)){
-                            areas.add(contact+" (Not Available)");
+                            areas.add(contact+ " Not Available ");
                         }
-                        else areas.add(contact+" ("+name+")");
+                        else areas.add(contact+" "+name);
+
+
                     }
 
                     ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, areas);

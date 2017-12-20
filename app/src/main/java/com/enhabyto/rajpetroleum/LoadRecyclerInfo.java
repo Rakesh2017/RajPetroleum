@@ -6,7 +6,8 @@ package com.enhabyto.rajpetroleum;
 
 public class LoadRecyclerInfo {
 
-    public String location, next_stoppage, oil_loaded, state_name, date_time, oil_left, pump_name, oil_unloaded;
+    public String location, next_stoppage, oil_loaded, state_name, date_time, oil_left, pump_name, oil_unloaded
+            , gps_latitude, gps_longitude, gps_location;
 
 
 
@@ -49,5 +50,11 @@ public class LoadRecyclerInfo {
     public String getPump_name(){ return pump_name; }
 
     public String getOil_unloaded(){ return oil_unloaded; }
+
+    public String getGps_latitude(){ return gps_latitude; }
+
+    public String getGps_location(){ return gps_location; }
+
+    public String getGps_longitude(){ return gps_longitude; }
 
 }

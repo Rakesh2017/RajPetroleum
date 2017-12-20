@@ -60,8 +60,10 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
     private String contactUID_tx, startDate_tx, pumpName_tx, stateName_tx, cityName_tx, truckLocation_tx, moneyTaken_tx, petrolPrice_tx;
     FontTextView contact_tv, name_tv, truckNumber_tv, startDate_tv, pumpName_tv, stateName_tv
-            , cityName_tv, truckLocation_tv, moneyTaken_tv, petrolPrice_tv, fuelTaken_tv;
-    String contact_tx, name_tx, truckNumber_tx;
+            , cityName_tv, truckLocation_tv, moneyTaken_tv, petrolPrice_tv, fuelTaken_tv, sideHeader_tv
+            , totalPetrolFilled_tv, petrolLeft_tv, endLocation_tv, endPumpName_tv, endStateName_tv, tripEndDate_tv;
+
+    String contact_tx, name_tx, truckNumber_tx, totalPetrolFilled_tx;
 
     TextView stoppage_tv, petrolFilling_tv, otherFilling_tv, load_tv, breakDown_tv;
     FancyButton stoppage_btn, petrolFilling_btn, otherFilling_btn, load_btn, breakDown_btn;
@@ -70,10 +72,8 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
     String stoppageMoney_tx, petrolMoney_tx, otherMoney_tx, breakDownMoney1_tx, breakDownMoney2_tx
             , breakDownMoney3_tx, breakDownMoney4_tx, breakDownMoney5_tx, breakDownMoney6_tx
             , breakDownMoney7_tx, breakDownMoney8_tx, fuelTaken_tx;
-    int i = 0;
-    int j = 0;
-    int k = 0;
-    int l = 0;
+    int i = 0, j=0, k=0, l=0, m=0;
+
     int total = 0;
 
 
@@ -127,6 +127,12 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         moneyTaken_tv = view.findViewById(R.id.detail_moneyTakenTextView);
         petrolPrice_tv = view.findViewById(R.id.detail_petrolPriceTextView);
         fuelTaken_tv = view.findViewById(R.id.detail_fuelTakenTextView);
+        sideHeader_tv = view.findViewById(R.id.detail_sideHeader);
+        totalPetrolFilled_tv = view.findViewById(R.id.detail_totalPetrolTextView);
+        endLocation_tv = view.findViewById(R.id.detail_endLocationTextView);
+        endPumpName_tv = view.findViewById(R.id.detail_endPumpNameTextView);
+        endStateName_tv = view.findViewById(R.id.detail_endStateNameTextView);
+        tripEndDate_tv = view.findViewById(R.id.detail_tripEndTextView);
 
         stoppage_tv = view.findViewById(R.id.detail_text1);
         petrolFilling_tv = view.findViewById(R.id.detail_text2);
@@ -148,7 +154,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
 
-        profileImage = view.findViewById(R.id.detail_profileImage);
+       // profileImage = view.findViewById(R.id.detail_profileImage);
 
         contact_tv.setText(contactUID_tx);
 
@@ -212,7 +218,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 truckLocation_tv.setText(truckLocation_tx);
                 moneyTaken_tv.setText("Rs " + moneyTaken_tx);
                 petrolPrice_tv.setText("Rs " + petrolPrice_tx + "/lit");
-                fuelTaken_tv.setText(fuelTaken_tx + "Litres");
+                fuelTaken_tv.setText(fuelTaken_tx + " Litres");
 
                 String date = startDate_tx;
 
@@ -279,7 +285,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 //        profile Image
 
-        try{
+     /*   try{
 
             storageRef.child("driver_profiles").child(contactUID_tx)
                     .child("/profile_image/image.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -287,7 +293,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
 
-                    if (uri!=null){
+                    if (uri!=null  && getActivity().getIntent() != null){
                         Glide.with(getActivity())
                                 .load(uri)
                                 .asBitmap()
@@ -324,7 +330,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         }
         catch (NullPointerException e){
             e.printStackTrace();
-        }
+        }*/
 
 
 
@@ -637,6 +643,14 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 });
 
 
+        d_root.child("trip_details").child(contactUID_tx).child(petrolkey).child("start_trip")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        totalPetrolFilled_tx = dataSnapshot.child("fuel_taken").getValue(String.class);
+
+
         FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(petrolkey).child("petrol_filled")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -653,11 +667,33 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                         petrolMoney_tv.setText("Rs "+String.valueOf(j));
                         total = total + j;
 
+                        m = 0;
+                        if (TextUtils.equals(totalPetrolFilled_tx, "")){
+                            totalPetrolFilled_tx = "0";
+                        }
+                        m = Integer.parseInt(totalPetrolFilled_tx);
+                        for (DataSnapshot snapshot1 : dataSnapshot.getChildren()){
+                            totalPetrolFilled_tx = snapshot1.child("petrol_filled").getValue(String.class);
+                            m = m + Integer.parseInt(totalPetrolFilled_tx);
+                        }
+                        totalPetrolFilled_tv.setText(String.valueOf(m)+" Litres");
+
+
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
 
 
         FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(petrolkey).child("other_filling")
@@ -851,6 +887,62 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
         }
+    }
+
+
+    public void onStart(){
+        super.onStart();
+
+        d_root.child("trip_details").child(contactUID_tx).child(petrolkey)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String status = dataSnapshot.child("start_trip").child("status").getValue(String.class);
+                        String endLocation = dataSnapshot.child("end_trip").child("address").getValue(String.class);
+                        String endPumpName = dataSnapshot.child("end_trip").child("pump_name").getValue(String.class);
+                        String endStateName = dataSnapshot.child("end_trip").child("state_name").getValue(String.class);
+                        String endDate = dataSnapshot.child("end_trip").child("end_date").getValue(String.class);
+
+                        if (TextUtils.equals(endDate,"") || TextUtils.equals(endDate,null)){
+                            tripEndDate_tv.setTextColor(getResources().getColor(R.color.lightGreen));
+                            tripEndDate_tv.setText("Trip is Active");
+                        }
+                        else {
+                            try {
+                                String day = TextUtils.substring(endDate, 0, 2);
+                                month = TextUtils.substring(endDate, 3, 5);
+                                String year = TextUtils.substring(endDate, 6, 10);
+                                String hour = TextUtils.substring(endDate, 11, 13);
+                                String minute = TextUtils.substring(endDate, 14, 16);
+                                conversion();
+
+                                tripEndDate_tv.setText(day+"-"+month+"-"+year+", "+hour+":"+minute);
+
+
+
+                            }
+                            catch (NullPointerException | StringIndexOutOfBoundsException e){
+                                e.printStackTrace();
+                            }
+                        }
+
+
+
+                        endLocation_tv.setText(endLocation);
+                        endPumpName_tv.setText(endPumpName);
+                        endStateName_tv.setText(endStateName);
+
+                        sideHeader_tv.setText(status);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
     }
 
 

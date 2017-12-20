@@ -20,27 +20,34 @@
         android:id="@+id/all_relativeLayout"
         android:background="#ECEFF1">
 
-        <ImageView
-            android:id="@+id/all_profileImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:src="@mipmap/ic_launcher"
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/all_index"
+            android:layout_alignParentEnd="true"
+            android:padding="3dp"
+            android:text=""
+            android:gravity="center"
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:textColor="@color/naturalBlue"
             />
+
+
 
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/all_contactTextView"
-            android:layout_toEndOf="@id/all_profileImage"
             android:layout_marginStart="10dp"
             android:text=""
             android:textStyle="bold"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="16sp"
             android:layout_marginTop="10dp"
-            android:textColor="@color/lightRed"
+            android:textColor="@color/black"
             />
 
         <util.android.textviews.FontTextView
@@ -63,13 +70,12 @@
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/all_profileImage"
             android:layout_alignStart="@id/all_contactTextView"
             android:fontFamily="droidsansbold.ttf"
             android:layout_below="@+id/all_nameTextView"
             android:layout_marginTop="4dp"
             android:textSize="14dp"
-            android:textColor="#000"
+            android:textColor="@color/blackNinety"
             android:text="Total Number of Trips:"
             android:gravity="center"
             android:id="@+id/all_tripStart1TextView"

@@ -45,7 +45,7 @@
                 android:gravity="center"
                 android:textStyle="bold"
                 android:padding="2dp"
-                android:text=""
+                android:text="All Trips: "
                 android:background="@drawable/rounded_edit_text_black"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/black"

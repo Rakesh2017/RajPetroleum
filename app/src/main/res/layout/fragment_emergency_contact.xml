@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
     tools:context="com.enhabyto.rajpetroleum.EmergencyContact">
 
     <RelativeLayout
@@ -53,6 +55,7 @@
         android:layout_below="@id/emergency_contact1TextView"
         android:background="@drawable/rounded_edit_text_black"
         android:hint="Enter Number"
+        android:textStyle="bold"
         android:inputType="phone"
         android:padding="5dp"
         android:maxLength="12"
@@ -85,6 +88,7 @@
         android:layout_below="@id/emergency_contact2TextView"
         android:background="@drawable/rounded_edit_text_black"
         android:hint="Enter Number"
+        android:textStyle="bold"
         android:inputType="phone"
         android:padding="5dp"
         android:maxLength="12"
@@ -117,6 +121,7 @@
         android:layout_below="@id/emergency_contact3TextView"
         android:background="@drawable/rounded_edit_text_black"
         android:hint="Enter Number"
+        android:textStyle="bold"
         android:inputType="phone"
         android:padding="5dp"
         android:maxLength="12"
@@ -145,6 +150,9 @@
         android:layout_marginTop="16dp"
         fancy:fb_text="Update"
         />
+
+
+
 
 
 

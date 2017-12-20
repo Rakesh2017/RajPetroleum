@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -47,32 +48,42 @@ public class ScheduleDetailRecyclerViewAdapter  extends RecyclerView.Adapter<Sch
         final ScheduleDetailRecyclerViewInfo UploadInfo = MainImageUploadInfoList.get(position);
 
 
-
         position++;
+        String status = UploadInfo.getStatus();
+        holder.status_tv.setText(status);
+        holder.truckNumber_tv.setText(UploadInfo.getTruck_number());
+        holder.index_tv.setText(String.valueOf(position));
+
+        if (TextUtils.equals(status, "accepted")){
+            holder.imageView.setBackgroundResource(R.drawable.ic_check_black);
+            holder.status_tv.setTextColor(context.getResources().getColor(R.color.lightGreen));
+        }
+        else if (TextUtils.equals(status, "rejected")){
+            holder.imageView.setBackgroundResource(R.drawable.ic_close_black);
+            holder.status_tv.setTextColor(context.getResources().getColor(R.color.lightRed));
+        }
+        else if (TextUtils.equals(status, "waiting")){
+            holder.imageView.setBackgroundResource(R.drawable.ic_help_outline_black);
+        }
 
 
 
+        String date = UploadInfo.getDate();
+       try {
 
-
-      /*  try {
             String day = TextUtils.substring(date, 0, 2);
-            month = TextUtils.substring(date, 3, 5);
             String year = TextUtils.substring(date, 6, 10);
             String hour = TextUtils.substring(date, 11, 13);
             String minute = TextUtils.substring(date, 14, 16);
+            month = TextUtils.substring(date, 3, 5);
             conversion();
 
-            SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = dataSave.edit();
-            editor.putString("startDate", day+" "+month+" "+year+", "+hour+":"+minute);
-            editor.apply();
-
-            holder.dateTime_tv.setText(day+"-"+month+"-"+year+", "+hour+":"+minute);
+            holder.date_tv.setText(day+"-"+month+"-"+year+", "+hour+":"+minute);
         }
         catch (NullPointerException e){
             e.printStackTrace();
         }
-*/
+
 
 
 
@@ -95,10 +106,21 @@ public class ScheduleDetailRecyclerViewAdapter  extends RecyclerView.Adapter<Sch
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        FontTextView status_tv, date_tv, truckNumber_tv, index_tv;
+        ImageView imageView;
 
 
         ViewHolder(View itemView) {
             super(itemView);
+
+            status_tv = itemView.findViewById(R.id.scheduleDetails_endDateTextView);
+            truckNumber_tv = itemView.findViewById(R.id.scheduleDetails_dateTextView);
+            date_tv = itemView.findViewById(R.id.scheduleDetails_endPointTextView);
+            index_tv = itemView.findViewById(R.id.scheduleDetails_index1);
+
+            imageView = itemView.findViewById(R.id.scheduleDetails_image);
+
+
 
 
 

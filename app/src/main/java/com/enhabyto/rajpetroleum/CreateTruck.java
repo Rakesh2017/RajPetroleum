@@ -4,10 +4,12 @@ package com.enhabyto.rajpetroleum;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,17 +19,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -49,7 +55,8 @@ import mehdi.sakout.fancybuttons.FancyButton;
 public class CreateTruck extends Fragment implements View.OnClickListener {
 
     private View view;
-    EditText truckNumber_et1, truckNumber_et2, chsssis_et, engine_et, ownerName_et, attached_et
+    AutoCompleteTextView truckNumber_et1;
+    EditText  truckNumber_et2, chsssis_et, engine_et, ownerName_et, attached_et
             , chamber_et, capacity_et, rc_et, rcValid_et, rcRenew_et
             , fit_et, fitValid_et, fitrenew_et, pollution_et, pollutionValid_et
             , pollutionRenew_et, insuranceName_et, insuranceAmount_et, insuranceValid_et
@@ -71,18 +78,18 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
     DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
     DatabaseReference dataRef_spinner = d_root.child("truck_details");
 
-    DatabaseReference d_parent = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
 
     Calendar myCalendar = Calendar.getInstance();
-    String myFormat = "dd/MM/yyyy"; // your format
+    String myFormat = "dd_MM_yyyy"; // your format
     DatePickerDialog.OnDateSetListener date_birth;
     Spinner spinner;
     String selected_val;
 
+     List<String> areas = new ArrayList<String>();
 
-    FancyButton submit_btn, loadData_btn;
+    FancyButton submit_btn, loadData_btn, remove_btn;
 
-    AlertDialog dialog_updateTruck, dialog_loading;
+    AlertDialog dialog_updateTruck, dialog_loading, dialog_removing_truck;
 
 
     public CreateTruck() {
@@ -135,6 +142,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
         calibrationRenew_et = view.findViewById(R.id.ct_caliRenewEditText);
         relativeLayout = view.findViewById(R.id.ct_RelativeLayout2);
         spinner = view.findViewById(R.id.ct_spinner);
+        remove_btn = view.findViewById(R.id.ct_removeTruckButton);
 
         submit_btn = view.findViewById(R.id.ct_submitTruckButton);
         loadData_btn = view.findViewById(R.id.ct_openCreateTruckButton);
@@ -190,9 +198,11 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
         roadRenew_et.setOnClickListener(this);
         insuranceValid_et.setOnClickListener(this);
         insuranceRenew_et.setOnClickListener(this);
+        remove_btn.setOnClickListener(this);
 
         dialog_updateTruck = new SpotsDialog(getActivity(),R.style.dialog_updatingTruck);
         dialog_loading = new SpotsDialog(getActivity(),R.style.loadingData);
+        dialog_removing_truck = new SpotsDialog(getActivity(),R.style.dialog_removing);
 
         spinner.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -258,28 +268,17 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                     return;
                 }
                 dialog_loading.show();
-                d_parent.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        connected = dataSnapshot.getValue(String.class);
 
-
-
-                        if (!TextUtils.equals(connected, "connected")){
-                            Alerter.create(getActivity())
-                                    .setTitle("Unable to Connect to Server!")
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.no_internet)
-                                    .show();
-                            //    Log.w("123", connected);
-                            dialog_loading.dismiss();
-                            return;
-                        }
+                FirebaseDatabase.getInstance().getReference(".info/connected")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                boolean connect = dataSnapshot.getValue(Boolean.class);
+                                if (connect) {
 
 
                         DatabaseReference dataRef_truckDetails = d_root.child("truck_details").child(truckNumber_tx1);
-                        dataRef_truckDetails.addValueEventListener(new ValueEventListener() {
+                        dataRef_truckDetails.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -370,14 +369,29 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                             }
                         });
 
+                                }
+                                else {
+                                    Alerter.create(getActivity())
+                                            .setTitle("No Internet Connection!")
+                                            .setText("There is no internet Connection! please check your internet connection")
+                                            .setContentGravity(1)
+                                            .setBackgroundColorRes(R.color.black)
+                                            .setIcon(R.drawable.no_internet)
+                                            .show();
+                                    dialog_loading.dismiss();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
                         dialog_loading.dismiss();
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+
 
                 break;
 
@@ -397,22 +411,13 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                     return;
                 }
 
+                FirebaseDatabase.getInstance().getReference(".info/connected")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                boolean connect = dataSnapshot.getValue(Boolean.class);
+                                if (connect) {
 
-                d_parent.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        connected = dataSnapshot.getValue(String.class);
-
-                        if (!TextUtils.equals(connected, "connected")){
-                            Alerter.create(getActivity())
-                                    .setTitle("Unable to Connect to Server!")
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.no_internet)
-                                    .show();
-                            dialog_updateTruck.dismiss();
-                            return;
-                        }
 
                         truckNumber_tx2 = truckNumber_et2.getText().toString().trim();
 
@@ -491,9 +496,13 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                         dataRef_truckDetails.child("labour_permit").setValue(labourPermit_tx);
 
 
-                        if (!TextUtils.equals(truckNumber_tx1, truckNumber_tx2)){
-                            d_root.child("pump_details").child(truckNumber_tx1).setValue(null);
-                        }
+
+                     /*   if (!TextUtils.equals(truckNumber_tx1, truckNumber_tx2)){
+                            d_root.child("truck_details").child(truckNumber_tx1).setValue(null);
+                        } */
+
+
+
                         Alerter.create(getActivity())
                                 .setTitle("Truck Details Updated")
                                 .setContentGravity(1)
@@ -501,14 +510,26 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                                 .setIcon(R.drawable.success_icon)
                                 .show();
                         dialog_updateTruck.dismiss();
+                                }
+                                else {
+                                    Alerter.create(getActivity())
+                                            .setTitle("No Internet Connection!")
+                                            .setText("There is no internet Connection! please check your internet connection")
+                                            .setContentGravity(1)
+                                            .setBackgroundColorRes(R.color.black)
+                                            .setIcon(R.drawable.no_internet)
+                                            .show();
+                                    dialog_loading.dismiss();
+                                }
+                            }
 
-                    }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
 
-                    }
-                });
+
                 break;
 
 
@@ -854,6 +875,67 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                 };
                 new DatePickerDialog(getContext(), date_birth, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                 break;
+
+
+            case R.id.ct_removeTruckButton:
+
+                truckNumber_tx2 = truckNumber_et2.getText().toString().trim();
+                new MaterialDialog.Builder(getActivity())
+
+                        .title("Are You Sure to Remove "+truckNumber_tx2+ " Truck.")
+                        .content("This cannot be undone, so be very sure.")
+                        .positiveText("Yes")
+                        .positiveColor(getResources().getColor(R.color.lightRed))
+                        .negativeText("No")
+                        .negativeColor(getResources().getColor(R.color.lightGreen))
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull final MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog_removing_truck.show();
+
+                                if(!isNetworkAvailable()){
+                                    Alerter.create(getActivity())
+                                            .setTitle("No Internet Connection!")
+                                            .setContentGravity(1)
+                                            .setBackgroundColorRes(R.color.black)
+                                            .setIcon(R.drawable.no_internet)
+                                            .show();
+                                    return;
+                                }
+
+                                d_root.child("truck_details").child(truckNumber_tx2).setValue(null);
+
+                                Alerter.create(getActivity())
+                                        .setTitle("Truck Removed!")
+                                        .setText("Truck "+truckNumber_tx2+" is successfully removed.")
+                                        .setContentGravity(1)
+                                        .setBackgroundColorRes(R.color.black)
+                                        .setIcon(R.drawable.no_internet)
+                                        .show();
+                                view.findViewById(R.id.ct_RelativeLayout2).setVisibility(View.GONE);
+                                truckNumber_et1.setText("");
+                                areas.remove(truckNumber_tx2);
+                                dialog_removing_truck.dismiss();
+
+                                // TODO
+                            }
+                        })
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                // TODO
+
+                            }
+                        }) .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        // TODO
+                    }
+                })
+                        .show();
+
+                break;
+
         }
 
     }
@@ -870,6 +952,14 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
         super.onStart();
 
 
+
+        FirebaseDatabase.getInstance().getReference(".info/connected")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        boolean connect = dataSnapshot.getValue(Boolean.class);
+                        if (connect) {
+
         dataRef_spinner.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -877,7 +967,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                 // of the iterator returned by dataSnapshot.getChildren() to
                 // initialize the array
                 try {
-                    final List<String> areas = new ArrayList<String>();
+
                     areas.add("Select Truck");
                     for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
                         String areaName = areaSnapshot.child("truck_number").getValue(String.class);
@@ -889,6 +979,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                     ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, areas);
                     areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(areasAdapter);
+                    truckNumber_et1.setAdapter(areasAdapter);
                 }
                 catch (NullPointerException e){
                     e.printStackTrace();
@@ -902,6 +993,26 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                 throw databaseError.toException();
             }
         });
+
+                        }
+                        else {
+                            Alerter.create(getActivity())
+                                    .setTitle("No Internet Connection!")
+                                    .setText("There is no internet Connection! please check your internet connection")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.no_internet)
+                                    .show();
+                            dialog_loading.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
 
     }
     //end

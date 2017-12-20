@@ -68,7 +68,7 @@ public class AllocateTruck extends Fragment {
     String truckLocation_tx, startPoint_tx, nextStoppagePoint_tx, startDate_tx, startTime_tx;
     EditText startDate_et, startTime_et;
     AutoCompleteTextView truckNumber_et, contact_et, truckLocation_et, startPoint_et, nextStoppagePoint_et;
-    String truckNumber_tx, contact_tx, admin_name, sub_admin_contact;
+    String truckNumber_tx, contact_tx, admin_name, sub_admin_contact, contact_tx10;
     String user_designation, scheduler_contact;
 
 
@@ -328,7 +328,6 @@ public class AllocateTruck extends Fragment {
                 startTime_tx = startTime_et.getText().toString().trim();
 
                 truckNumber_tx = truckNumber_et.getText().toString().trim();
-                contact_tx = contact_et.getText().toString().trim();
 
                 if (TextUtils.equals(truckNumber_tx, "")){
                     Alerter.create(getActivity())
@@ -340,7 +339,7 @@ public class AllocateTruck extends Fragment {
                     return;
                 }
 
-                if (contact_tx.length()<10){
+                if (contact_tx.length() != 10){
                     Alerter.create(getActivity())
                             .setTitle("Invalid Mobile Number!")
                             .setContentGravity(1)
@@ -383,184 +382,83 @@ public class AllocateTruck extends Fragment {
 
                                secondKey = d_root.push().getKey();
 
-                                DatabaseReference rootRef1 = FirebaseDatabase.getInstance().getReference().child("trip_schedules_admin");
-                                rootRef1.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot snapshot) {
-                                        Query query1 = d_root.child("trip_schedules_admin").child(scheduler_contact).child(contact_tx).orderByKey().limitToLast(1);
+                                FirebaseDatabase.getInstance().getReference().child("trip_schedules_driver")
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                if (!dataSnapshot.hasChild(contact_tx)){
+                                                    FirebaseDatabase.getInstance().getReference().child("trip_details")
+                                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                    if (!dataSnapshot.hasChild(contact_tx)){
+                                                                        setData();
+                                                                    }
+                                                                    else {
+                                                                       Query query = FirebaseDatabase.getInstance().getReference()
+                                                                               .child("trip_details").child(contact_tx)
+                                                                               .orderByKey().limitToLast(1);
 
-                                        if (snapshot.hasChild(contact_tx)) {
-                                            // run some code
-                                            query1.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                                        decider = child.child("status").getValue(String.class);
+                                                                       query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                           @Override
+                                                                           public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                               for (DataSnapshot child : dataSnapshot.getChildren()){
 
+                                                                                   if (TextUtils.equals(child.child("start_trip").child("status").getValue(String.class),"ended")) {
+                                                                                       setData();
+                                                                                   }
+                                                                                   else {
+                                                                                       if (getActivity().getIntent()!=null){
+                                                                                           Alerter.create(getActivity())
+                                                                                                   .setTitle("Failed to Schedule Trip!")
+                                                                                                   .setText("Driver is already on Trip")
+                                                                                                   .setContentGravity(1)
+                                                                                                   .setBackgroundColorRes(R.color.black)
+                                                                                                   .setIcon(R.drawable.success_icon)
+                                                                                                   .show();
+                                                                                           dialog_scheduleTrip.dismiss();
+                                                                                           return;
+                                                                                       }
 
-                                                        if (TextUtils.equals(decider, "waiting")){
-                                                            Alerter.create(getActivity())
-                                                                    .setTitle("Driver Still have not accepted your last Trip!")
-                                                                    .setContentGravity(1)
-                                                                    .setBackgroundColorRes(R.color.black)
-                                                                    .setIcon(R.drawable.error)
-                                                                    .show();
-                                                            dialog_scheduleTrip.dismiss();
-                                                            return;
+                                                                                   }
+                                                                               }
+                                                                           }
 
-                                                        }
+                                                                           @Override
+                                                                           public void onCancelled(DatabaseError databaseError) {
 
-                                                        d_root.child("trip_details").addListenerForSingleValueEvent(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                if (!dataSnapshot.hasChild(contact_tx)){
-                                                                    setData();
-                                                                    return;
+                                                                           }
+                                                                       });
+                                                                    }
                                                                 }
-                                                                Query query2 = d_root.child("trip_details").child(contact_tx).orderByKey().limitToLast(1);
-                                                                query2.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                    @Override
-                                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                        for (DataSnapshot child : dataSnapshot.getChildren()){
-                                                                            String key = child.getKey();
 
+                                                                @Override
+                                                                public void onCancelled(DatabaseError databaseError) {
 
-                                                                            d_root.child("trip_details").child(contact_tx).child(key)
-                                                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                                        @Override
-                                                                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                                            String status = dataSnapshot.child("start_trip").child("status").getValue(String.class);
-                                                                                            if (TextUtils.equals(status,"active")){
-                                                                                                Alerter.create(getActivity())
-                                                                                                        .setTitle("Cannot Schedule Trip. Driver is already on Trip!")
-                                                                                                        .setContentGravity(1)
-                                                                                                        .setBackgroundColorRes(R.color.black)
-                                                                                                        .setIcon(R.drawable.error)
-                                                                                                        .show();
-                                                                                                dialog_scheduleTrip.dismiss();
-                                                                                                return;
+                                                                }
+                                                            });
+                                                }
 
-                                                                                            }
-                                                                                            setData();
-                                                                                        }
+                                                else {
 
-                                                                                        @Override
-                                                                                        public void onCancelled(DatabaseError databaseError) {
-                                                                                            dialog_scheduleTrip.dismiss();
-                                                                                        }
-                                                                                    });
-
-                                                                        }
-                                                                    }
-
-                                                                    @Override
-                                                                    public void onCancelled(DatabaseError databaseError) {
-
-                                                                    }
-                                                                });
-
-
-
-
-
-
-                                                            }
-
-                                                            @Override
-                                                            public void onCancelled(DatabaseError databaseError) {
-
-                                                            }
-                                                        });
-
-
-
-
-
+                                                    if (getActivity().getIntent()!=null) {
+                                                        Alerter.create(getActivity())
+                                                                .setTitle("Failed to Schedule Trip!")
+                                                                .setText("Driver still have not accepted last scheduled Trip")
+                                                                .setContentGravity(1)
+                                                                .setBackgroundColorRes(R.color.black)
+                                                                .setIcon(R.drawable.success_icon)
+                                                                .show();
+                                                        dialog_scheduleTrip.dismiss();
                                                     }
-
-
                                                 }
+                                            }
 
-                                                @Override
-                                                public void onCancelled(DatabaseError databaseError) {
-                                                    dialog_scheduleTrip.dismiss();
-                                                }
-                                            });
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
 
-                                        }
-
-                                        else {
-
-                                            d_root.child("trip_details").addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                                    if (!dataSnapshot.hasChild(contact_tx)){
-                                                        setData();
-                                                        return;
-                                                    }
-
-                                                    Query query2 = d_root.child("trip_details").child(contact_tx).orderByKey().limitToLast(1);
-                                                    query2.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                                            for (DataSnapshot child : dataSnapshot.getChildren()){
-                                                                String key = child.getKey();
-
-
-                                                                d_root.child("trip_details").child(contact_tx).child(key)
-                                                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                            @Override
-                                                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                                String status = dataSnapshot.child("start_trip").child("status").getValue(String.class);
-                                                                                if (TextUtils.equals(status,"active")){
-                                                                                    Alerter.create(getActivity())
-                                                                                            .setTitle("Cannot Schedule Trip. Driver is already on Trip!")
-                                                                                            .setContentGravity(1)
-                                                                                            .setBackgroundColorRes(R.color.black)
-                                                                                            .setIcon(R.drawable.error)
-                                                                                            .show();
-                                                                                    dialog_scheduleTrip.dismiss();
-                                                                                    return;
-
-                                                                                }
-                                                                                setData();
-                                                                            }
-
-                                                                            @Override
-                                                                            public void onCancelled(DatabaseError databaseError) {
-                                                                                dialog_scheduleTrip.dismiss();
-                                                                            }
-                                                                        });
-
-                                                            }
-                                                        }
-
-                                                        @Override
-                                                        public void onCancelled(DatabaseError databaseError) {
-
-                                                        }
-                                                    });
-
-
-                                                }
-
-                                                @Override
-                                                public void onCancelled(DatabaseError databaseError) {
-
-                                                }
-                                            });
-
-
-                                        }
-
-                                        //else
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                        dialog_scheduleTrip.dismiss();
-                                    }
-                                });
+                                            }
+                                        });
 
 
 
@@ -687,19 +585,18 @@ public class AllocateTruck extends Fragment {
                         String name = areaSnapshot.child("name").getValue(String.class);
 
                         if (TextUtils.equals(name, null)){
-                            areas.add(contact+" (Not Available)");
+                            areas.add(contact+ " Not Available ");
                         }
-                        else areas.add(contact+" ("+name+")");
+                        else areas.add(contact+" "+name);
 
 
                     }
 
                     ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, areas);
-                    ArrayAdapter<String> areasAdapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, areas);
 
                     areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner_driver.setAdapter(areasAdapter);
-                    contact_et.setAdapter(areasAdapter1);
+                    contact_et.setAdapter(areasAdapter);
 
                 }
                 catch (NullPointerException e){
@@ -770,11 +667,12 @@ public class AllocateTruck extends Fragment {
     }
 
     public void setData(){
+        Toast.makeText(getContext(), ""+contact_tx, Toast.LENGTH_SHORT).show();
         dataRef_trip_schedule = d_root.child("trip_schedules_driver").child(contact_tx);
         dataRef_trip_schedule1 = d_root.child("trip_schedules_admin").child(scheduler_contact).child(contact_tx).child(secondKey);
 
 
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd_mm_yyyy");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd_MM_yyyy");
         SimpleDateFormat sdf2 = new SimpleDateFormat("HH_mm");
         String date = sdf1.format(new Date());
         String time = sdf2.format(new Date());
@@ -806,13 +704,15 @@ public class AllocateTruck extends Fragment {
         dataRef_trip_schedule1.child("date").setValue(date+"_"+time);
 
 
-        Alerter.create(getActivity())
-                .setTitle("Trip Successfully Scheduled")
-                .setContentGravity(1)
-                .setBackgroundColorRes(R.color.black)
-                .setIcon(R.drawable.success_icon)
-                .show();
-        dialog_scheduleTrip.dismiss();
+        if (getActivity().getIntent()!=null) {
+            Alerter.create(getActivity())
+                    .setTitle("Trip Successfully Scheduled")
+                    .setContentGravity(1)
+                    .setBackgroundColorRes(R.color.black)
+                    .setIcon(R.drawable.success_icon)
+                    .show();
+            dialog_scheduleTrip.dismiss();
+        }
 
 
     }

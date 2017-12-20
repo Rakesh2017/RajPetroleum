@@ -23,7 +23,7 @@
               android:layout_height="wrap_content"
               android:text="A C T I V E   T R I P S"
               android:gravity="center"
-              android:textSize="22sp"
+              android:textSize="20sp"
               android:id="@+id/shana_pandu"
               android:padding="2dp"
               android:background="@drawable/rounded_edit_text_black"

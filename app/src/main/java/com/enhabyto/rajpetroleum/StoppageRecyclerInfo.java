@@ -6,7 +6,8 @@ package com.enhabyto.rajpetroleum;
 
 public class StoppageRecyclerInfo {
 
-    public String place_name, money_paid, money_paid_for, description, date_time;
+    public String place_name, money_paid, money_paid_for, description, date_time
+            , gps_latitude, gps_longitude, gps_location;
 
 
 
@@ -39,6 +40,12 @@ public class StoppageRecyclerInfo {
     public String getMoney_paid(){ return money_paid; }
 
     public String getDate_time(){ return date_time; }
+
+    public String getGps_latitude(){ return gps_latitude; }
+
+    public String getGps_location(){ return gps_location; }
+
+    public String getGps_longitude(){ return gps_longitude; }
 
 
 }

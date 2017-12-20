@@ -1,16 +1,21 @@
 package com.enhabyto.rajpetroleum;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -30,6 +35,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -45,8 +51,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tapadoo.alerter.Alerter;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import dmax.dialog.SpotsDialog;
 import util.android.textviews.FontTextView;
 
@@ -72,13 +85,100 @@ public class DashBoard extends AppCompatActivity
 
     String connected = "no";
     TextView noInternet;
-
+    private Context context;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
+
+        this.context = this;
+        Intent alarm = new Intent(this.context, AlarmReceiver.class);
+        boolean alarmRunning = (PendingIntent.getBroadcast(this.context, 0, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+        if(!alarmRunning) {
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this.context, 281234, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
+           /* Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, 10);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);*/
+
+            Date dat  = new Date();//initializes to now
+            Calendar cal_alarm = Calendar.getInstance();
+            Calendar cal_now = Calendar.getInstance();
+            cal_now.setTime(dat);
+            cal_alarm.setTime(dat);
+            cal_alarm.set(Calendar.HOUR_OF_DAY, 13);//set the alarm time
+            cal_alarm.set(Calendar.MINUTE, 27);
+            cal_alarm.set(Calendar.SECOND, 0);
+            if(cal_alarm.before(cal_now)){//if its in the past increment
+                cal_alarm.add(Calendar.DATE,1);
+            }
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            if (alarmManager != null) {
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal_alarm.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
+            }
+        }
+
+
+
+       /* DBHelper dbHelper = new DBHelper(this);
+        dbHelper.insertData();
+
+        final Cursor cursor = dbHelper.getuser();
+
+        File sd = Environment.getExternalStorageDirectory();
+        String csvFile = "myData.xls";
+
+        File directory = new File(sd.getAbsolutePath());
+        //create directory if not exist
+        if (!directory.isDirectory()) {
+            directory.mkdirs();
+        }
+        try {
+
+            //file path
+            File file = new File(directory, csvFile);
+            WorkbookSettings wbSettings = new WorkbookSettings();
+            wbSettings.setLocale(new Locale("en", "EN"));
+            WritableWorkbook workbook;
+            workbook = Workbook.createWorkbook(file, wbSettings);
+
+            //Excel sheet name. 0 represents first sheet
+            WritableSheet sheet = workbook.createSheet("userList", 0);
+
+            sheet.addCell(new Label(0, 0, "UserName"));
+            sheet.addCell(new Label(1, 0, "PhoneNumber"));
+
+            if (cursor.moveToFirst()) {
+                do {
+                    String name = cursor.getString(cursor.getColumnIndex("user_name"));
+                    String phoneNumber = cursor.getString(cursor.getColumnIndex("phone_number"));
+
+                    int i = cursor.getPosition() + 1;
+
+
+                        sheet.addCell(new Label(1, i, phoneNumber));
+                        sheet.addCell(new Label(0, i, name));
+
+                } while (cursor.moveToNext());
+            }
+            //closing cursor
+            cursor.close();
+            workbook.write();
+            workbook.close();
+            Toast.makeText(getApplication(),
+                    "Data Exported in a Excel Sheet", Toast.LENGTH_SHORT).show();
+
+
+        } catch(IOException | WriteException e){
+            e.printStackTrace();
+        }*/
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Admin Dashboard");
         setSupportActionBar(toolbar);
@@ -93,7 +193,9 @@ public class DashBoard extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         InternetChecker();
+
 
 
 
@@ -231,6 +333,7 @@ public class DashBoard extends AppCompatActivity
                     }
 
 
+                    adapter = null;
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
 
@@ -247,8 +350,14 @@ public class DashBoard extends AppCompatActivity
                         findViewById(R.id.dash_text).setVisibility(View.VISIBLE);
                         findViewById(R.id.shana_pandu).setVisibility(View.GONE);
                     }
-                    else  findViewById(R.id.dash_text).setVisibility(View.GONE);
-                    findViewById(R.id.shana_pandu).setVisibility(View.VISIBLE);
+                    else {
+                        findViewById(R.id.dash_text).setVisibility(View.GONE);
+                        findViewById(R.id.shana_pandu).setVisibility(View.VISIBLE);
+                        FontTextView text = findViewById(R.id.shana_pandu);
+                        text.setText("");
+                        text.setText("ACTIVE TRIPS"+" ("+String.valueOf(adapter.getItemCount()+")"));
+                       }
+
 
 
                     // Hiding the progress dialog.
@@ -339,7 +448,7 @@ public class DashBoard extends AppCompatActivity
         } else if (id == R.id.nav_CreateDriver) {
 
             if (TextUtils.equals(user_designation, "admin")){
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateDriver()).addToBackStack("DriverFragment").commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard,new CreateDriver()).addToBackStack("DriverFragment").commit();
             }
             else {
 
@@ -380,7 +489,7 @@ public class DashBoard extends AppCompatActivity
         } else if (id == R.id.nav_CreateAdmin) {
 
             if (TextUtils.equals(user_designation, "admin")) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new CreateSubAdmin()).addToBackStack("AdminFragment").commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new CreateSubAdmin()).addToBackStack("AdminFragment").commit();
 
             }
             else {
@@ -398,7 +507,7 @@ public class DashBoard extends AppCompatActivity
         } else if (id == R.id.nav_TruckDetails) {
 
             if (TextUtils.equals(user_designation, "admin")){
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateTruck()).addToBackStack("TruckFragments").commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard,new CreateTruck()).addToBackStack("TruckFragments").commit();
             }
             else {
 
@@ -435,7 +544,7 @@ public class DashBoard extends AppCompatActivity
         } else if (id == R.id.nav_pumpDetails) {
 
             if (TextUtils.equals(user_designation, "admin")){
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreatePump()).addToBackStack("PumpFragments").commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard,new CreatePump()).addToBackStack("PumpFragments").commit();
             }
             else {
 
@@ -472,7 +581,7 @@ public class DashBoard extends AppCompatActivity
 
         }
         else if (id == R.id.nav_allocateTruck){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new AllocateTruck()).addToBackStack("AdminFragment").commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new AllocateTruck()).addToBackStack("AdminFragment").commit();
 
         }
 
@@ -482,6 +591,11 @@ public class DashBoard extends AppCompatActivity
         }
         else if (id == R.id.nav_emergencyContact){
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new EmergencyContact()).addToBackStack("AdminFragment").commit();
+
+        }
+
+        else if (id == R.id.nav_scheduleTripDetails){
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new ScheduleList()).addToBackStack("AdminFragment").commit();
 
         }
 
@@ -636,7 +750,6 @@ public class DashBoard extends AppCompatActivity
             }
         },10000);
     }
-
 
     //end
 }

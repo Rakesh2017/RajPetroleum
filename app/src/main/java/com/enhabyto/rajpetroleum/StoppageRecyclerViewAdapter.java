@@ -1,6 +1,7 @@
 package com.enhabyto.rajpetroleum;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,8 @@ public class StoppageRecyclerViewAdapter  extends RecyclerView.Adapter<StoppageR
     Context context;
     List<StoppageRecyclerInfo> MainImageUploadInfoList;
     String month;
+    int position1;
+    String day, year, hour, minute;
 
 
     public StoppageRecyclerViewAdapter(Context context, List<StoppageRecyclerInfo> TempList) {
@@ -53,22 +56,23 @@ public class StoppageRecyclerViewAdapter  extends RecyclerView.Adapter<StoppageR
 
 
         position++;
-
+        position1 = position;
         holder.header_tv.setText("");
         holder.header_tv.setText("Stoppage "+position);
         holder.moneyPaidFor_tv.setText(UploadInfo.getMoney_paid_for());
         holder.moneyPaid_tv.setText("Rs "+UploadInfo.getMoney_paid());
         holder.description_tv.setText(UploadInfo.getDescription());
         holder.placeName_tv.setText(UploadInfo.getPlace_name());
+        holder.gpsLocation_tv.setText(UploadInfo.getGps_location());
 
         String date = UploadInfo.getDate_time();
 
         try {
-            String day = TextUtils.substring(date, 0, 2);
+             day = TextUtils.substring(date, 0, 2);
             month = TextUtils.substring(date, 3, 5);
-            String year = TextUtils.substring(date, 6, 10);
-            String hour = TextUtils.substring(date, 11, 13);
-            String minute = TextUtils.substring(date, 14, 16);
+            year = TextUtils.substring(date, 6, 10);
+            hour = TextUtils.substring(date, 11, 13);
+             minute = TextUtils.substring(date, 14, 16);
             conversion();
 
             SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
@@ -100,6 +104,24 @@ public class StoppageRecyclerViewAdapter  extends RecyclerView.Adapter<StoppageR
 
 
 
+        holder.gpsLocation_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences dataSave = context.getSharedPreferences("maps", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = dataSave.edit();
+                editor.putString("gps_longitude", UploadInfo.getGps_longitude());
+                editor.putString("gps_latitude", UploadInfo.getGps_latitude());
+                editor.putString("gps_message", "Stoppage "+ position1 +" ("+ day+"-"+month+"-"+year+", "+hour+":"+minute+")");
+
+                editor.apply();
+
+                Intent intent = new Intent(context,MapsActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+
+
     }
 
     @Override
@@ -119,7 +141,8 @@ public class StoppageRecyclerViewAdapter  extends RecyclerView.Adapter<StoppageR
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        FontTextView placeName_tv, description_tv, moneyPaid_tv, moneyPaidFor_tv, dateTime_tv, header_tv;
+        FontTextView placeName_tv, description_tv, moneyPaid_tv, moneyPaidFor_tv, dateTime_tv, header_tv, gpsLocation_tv;
+        ImageView map_image;
 
 
 
@@ -132,6 +155,7 @@ public class StoppageRecyclerViewAdapter  extends RecyclerView.Adapter<StoppageR
             moneyPaidFor_tv = itemView.findViewById(R.id.stop_paidForTextView);
             dateTime_tv = itemView.findViewById(R.id.stop_dateTextView);
             header_tv = itemView.findViewById(R.id.stop_headerTextView);
+            gpsLocation_tv = itemView.findViewById(R.id.stop_gpsLocationTextView);
 
 
 

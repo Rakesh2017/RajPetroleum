@@ -1,8 +1,10 @@
 package com.enhabyto.rajpetroleum;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -28,13 +30,15 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
     Context context;
     List<PetrolFillingRecyclerInfo> MainImageUploadInfoList;
     String month;
-
+    int position1;
+    String day, year, hour, minute;
 
     public PetrolRecyclerViewAdapter(Context context, List<PetrolFillingRecyclerInfo> TempList) {
 
         this.MainImageUploadInfoList = TempList;
 
         this.context = context;
+
     }
 
 
@@ -52,7 +56,9 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
     public void onBindViewHolder(ViewHolder holder, int position) {
         final PetrolFillingRecyclerInfo UploadInfo = MainImageUploadInfoList.get(position);
 
+
         position++;
+        position1 = position;
         holder.header_tv.setText("");
         holder.header_tv.setText("Petrol Filling "+position);
         holder.pumpName_tv.setText(UploadInfo.getName());
@@ -61,15 +67,16 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
         holder.stateName_tv.setText(UploadInfo.getState());
         holder.moneyPaid_tv.setText("Rs "+UploadInfo.getMoney_paid());
         holder.litres_tv.setText(UploadInfo.getPetrol_filled()+" litres");
+        holder.gpsLocation_tv.setText(UploadInfo.getGps_location());
 
         String date = UploadInfo.getDate_time();
 
         try {
-            String day = TextUtils.substring(date, 0, 2);
-            month = TextUtils.substring(date, 3, 5);
-            String year = TextUtils.substring(date, 6, 10);
-            String hour = TextUtils.substring(date, 11, 13);
-            String minute = TextUtils.substring(date, 14, 16);
+             day = TextUtils.substring(date, 0, 2);
+             month = TextUtils.substring(date, 3, 5);
+             year = TextUtils.substring(date, 6, 10);
+             hour = TextUtils.substring(date, 11, 13);
+             minute = TextUtils.substring(date, 14, 16);
             conversion();
 
             SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
@@ -114,6 +121,31 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
         }
 
 
+        holder.gpsLocation_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences dataSave = context.getSharedPreferences("maps", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = dataSave.edit();
+                editor.putString("gps_longitude", UploadInfo.getGps_longitude());
+                editor.putString("gps_latitude", UploadInfo.getGps_latitude());
+                editor.putString("gps_message", "Petrol Filling "+ position1 +" ("+ day+"-"+month+"-"+year+", "+hour+":"+minute+")");
+                editor.apply();
+
+                Intent intent = new Intent(context,MapsActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse(UploadInfo.getImageURL()), "image/*");
+                context.startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -135,8 +167,8 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
     class ViewHolder extends RecyclerView.ViewHolder {
 
         FontTextView pumpName_tv, tokenNumber_tv, pumpAddress_tv, stateName_tv, moneyPaid_tv, litres_tv, bill_tv, date_time_tv
-                ,header_tv;
-        ImageView image;
+                ,header_tv, gpsLocation_tv;
+        ImageView image, map_image;
 
 
         ViewHolder(View itemView) {
@@ -151,8 +183,10 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
             bill_tv = itemView.findViewById(R.id.petrol_billPhotoTextView);
             date_time_tv = itemView.findViewById(R.id.petrol_dateTextView);
             header_tv = itemView.findViewById(R.id.petrol_headerTextView);
+            gpsLocation_tv = itemView.findViewById(R.id.petrol_gpsLocationTextView);
 
             image = itemView.findViewById(R.id.petrol_billImage);
+
 
 
 

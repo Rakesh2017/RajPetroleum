@@ -32,7 +32,7 @@
 
 
             <util.android.textviews.FontTextView
-                android:id="@+id/all_text"
+                android:id="@+id/scheduleDetail_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -41,11 +41,11 @@
                 android:fontFamily="droidsansbold.ttf"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="SCHEDULE TRIP DETAILS"
+                android:text=""
                 android:background="@drawable/rounded_edit_text_black"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/black"
-                android:textSize="24sp"/>
+                android:textSize="16sp"/>
 
 
         </android.support.design.widget.CollapsingToolbarLayout>

@@ -6,6 +6,8 @@
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:id="@+id/showDetailSwipe"
+    android:clickable="true"
+    android:focusable="true"
     tools:context="com.enhabyto.rajpetroleum.ShowTripDetails">
 
     <!-- TODO: Update blank fragment layout -->
@@ -22,25 +24,41 @@
         android:layout_marginEnd="12dp"
         >
 
-        <ImageView
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_sideHeader"
+            android:text=""
+            android:maxLength="6"
+            android:layout_alignParentEnd="true"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:padding="2dp"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            />
+
+
+       <!--<ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="16dp"
             android:id="@+id/detail_profileImage"
-            />
+            android:visibility="gone"
+            />-->
 
         <util.android.textviews.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/detail_contactTextView"
-            android:layout_toEndOf="@+id/detail_profileImage"
-            android:layout_alignTop="@+id/detail_profileImage"
-            android:layout_marginStart="10dp"
+
             android:text="contact"
             android:textStyle="bold"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="16sp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:textColor="@color/lightRed"
             />
 
@@ -49,8 +67,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/detail_nameTextView"
             android:layout_toEndOf="@+id/detail_contactTextView"
-            android:layout_alignTop="@+id/detail_profileImage"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="4dp"
             android:text=" "
             android:textStyle="bold"
@@ -69,7 +86,7 @@
             android:textStyle="bold"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="16sp"
-            android:textColor="@color/black"
+            android:textColor="@color/saddleBrown"
             />
 
         <util.android.textviews.FontTextView
@@ -78,7 +95,7 @@
             android:id="@+id/detail_tripStart1TextView"
             android:layout_alignStart="@+id/detail_contactTextView"
             android:layout_below="@+id/detail_truckNumberTextView"
-            android:text="Trip Started on"
+            android:text="Trip Started on:"
             android:textStyle="bold"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="14sp"
@@ -96,7 +113,7 @@
             android:textStyle="bold"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="16sp"
-            android:textColor="@color/black"
+            android:textColor="@color/naturalBlue"
             />
 
         <RelativeLayout
@@ -104,7 +121,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_edit_text_black"
             android:layout_below="@+id/detail_tripStartTextView"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/detail_relativeLayout"
             >
 
@@ -359,6 +376,7 @@
                 android:textColor="@color/naturalBlue"
                 android:layout_below="@id/detail_moneyTakenTextView"
                 android:layout_marginTop="7dp"
+                android:layout_marginBottom="2dp"
                 />
 
 
@@ -372,7 +390,7 @@
             android:layout_below="@+id/detail_relativeLayout"
             android:layout_width="115dp"
             android:layout_height="115dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             fancy:fb_fontIconSize="40sp"
             fancy:fb_borderColor="@color/black"
             fancy:fb_borderWidth="2dp"
@@ -426,7 +444,7 @@
             android:layout_below="@+id/detail_relativeLayout"
             android:layout_width="115dp"
             android:layout_height="115dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             fancy:fb_fontIconSize="40sp"
             android:layout_alignParentEnd="true"
             android:padding="10dp"
@@ -623,6 +641,8 @@
             android:layout_marginBottom="24dp"
             />
 
+
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -632,6 +652,7 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/rounded_edit_text_black"
             android:padding="7dp"
+            android:id="@+id/detail_relative1"
             >
 
             <util.android.textviews.FontTextView
@@ -666,9 +687,232 @@
                 />
 
 
+        </RelativeLayout>
+
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_tripEnd1TextView"
+            android:layout_alignStart="@+id/detail_contactTextView"
+            android:layout_below="@+id/detail_text15"
+            android:text="Trip Ended on:"
+            android:layout_marginTop="12dp"
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_tripEndTextView"
+            android:layout_toEndOf="@id/detail_tripEnd1TextView"
+            android:layout_below="@+id/detail_text15"
+            android:layout_marginTop="12dp"
+            android:text=" "
+            android:layout_marginStart="4dp"
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:textColor="@color/naturalBlue"
+            />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_text_black"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="16dp"
+            android:id="@+id/detail_relative2"
+            android:layout_below="@+id/detail_tripEndTextView"
+            >
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_overViewTextView1"
+                android:text="@string/tripEndOverView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="4dp"
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                />
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_totalPetrol1TextView"
+                android:text="Total Petrol Filled During Trip:"
+                android:textStyle="normal"
+                android:fontFamily="droidsansbold.ttf"
+                android:layout_marginStart="7dp"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/detail_overViewTextView1"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_totalPetrolTextView"
+                android:layout_toEndOf="@id/detail_totalPetrol1TextView"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="16sp"
+                android:textColor="@color/naturalBlue"
+                android:layout_below="@id/detail_overViewTextView1"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="7dp"
+                />
+
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_petrolLeft1TextView"
+                android:text="Petrol Left:"
+                android:textStyle="normal"
+                android:fontFamily="droidsansbold.ttf"
+                android:layout_marginStart="7dp"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/detail_totalPetrolTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_petrolLeftTextView"
+                android:layout_toEndOf="@id/detail_petrolLeft1TextView"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="16sp"
+                android:textColor="@color/naturalBlue"
+                android:layout_below="@id/detail_totalPetrolTextView"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_endLocation1TextView"
+                android:text="End Location:"
+                android:textStyle="normal"
+                android:fontFamily="droidsansbold.ttf"
+                android:layout_marginStart="7dp"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/detail_petrolLeftTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_endLocationTextView"
+                android:layout_toEndOf="@id/detail_endLocation1TextView"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="16sp"
+                android:textColor="@color/naturalBlue"
+                android:layout_below="@id/detail_petrolLeftTextView"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_endPumpName1TextView"
+                android:text="Pump Name:"
+                android:textStyle="normal"
+                android:fontFamily="droidsansbold.ttf"
+                android:layout_marginStart="7dp"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/detail_endLocationTextView"
+                android:layout_marginTop="7dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_endPumpNameTextView"
+                android:layout_toEndOf="@id/detail_endPumpName1TextView"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="16sp"
+                android:textColor="@color/naturalBlue"
+                android:layout_below="@id/detail_endLocationTextView"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="7dp"
+                />
+
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_endStateName1TextView"
+                android:text="State Name:"
+                android:textStyle="normal"
+                android:fontFamily="droidsansbold.ttf"
+                android:layout_marginStart="7dp"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/detail_endPumpNameTextView"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                />
+
+
+            <util.android.textviews.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_endStateNameTextView"
+                android:layout_toEndOf="@id/detail_endStateName1TextView"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:textStyle="bold"
+                android:fontFamily="droidsansbold.ttf"
+                android:textSize="16sp"
+                android:textColor="@color/naturalBlue"
+                android:layout_below="@id/detail_endPumpNameTextView"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                />
+
+
 
 
         </RelativeLayout>
+
+
+
 
 
 

@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     tools:context="com.enhabyto.rajpetroleum.CreatePump">
 
@@ -41,7 +43,7 @@
                 android:textAllCaps="true"
                 android:textSize="16sp" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/cp_pumpNameEditText1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,7 +59,7 @@
 
 
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/ct_openCreatePumpButton"
+                android:id="@+id/cp_openCreatePumpButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -87,7 +89,7 @@
                 android:layout_marginTop="10dp"
                 android:prompt="@string/spinnerTitle"
                 android:textAlignment="textEnd"
-                android:layout_toStartOf="@+id/ct_openCreatePumpButton"
+                android:layout_toStartOf="@+id/cp_openCreatePumpButton"
                 android:layout_marginEnd="16dp"
                 android:spinnerMode="dropdown"
                 />
@@ -123,6 +125,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_edit_text_black"
                 android:inputType="text"
+                android:focusable="false"
+                android:clickable="false"
                 android:padding="5dp"
                 android:textStyle="bold"
                 android:textColor="@color/naturalBlue"
@@ -151,6 +155,7 @@
                 android:background="@drawable/rounded_edit_text_black"
                 android:inputType="textCapWords"
                 android:hint="Enter Person Name"
+                android:textStyle="bold"
                 android:padding="5dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/blackFifty"
@@ -179,6 +184,7 @@
                 android:inputType="phone"
                 android:maxLength="10"
                 android:hint="Enter Phone Number"
+                android:textStyle="bold"
                 android:padding="5dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/blackFifty"
@@ -207,6 +213,7 @@
                 android:background="@drawable/rounded_edit_text_black"
                 android:inputType="phone"
                 android:hint="Enter Whatsapp Phone Number"
+                android:textStyle="bold"
                 android:padding="5dp"
                 android:maxLength="10"
                 android:textColor="@color/black"
@@ -236,6 +243,7 @@
                 android:background="@drawable/rounded_edit_text_black"
                 android:inputType="phone"
                 android:hint="Enter Landline Number"
+                android:textStyle="bold"
                 android:maxLength="11"
                 android:padding="5dp"
                 android:textColor="@color/black"
@@ -263,6 +271,7 @@
                 android:background="@drawable/rounded_edit_text_black"
                 android:inputType="text"
                 android:hint="Enter SAP code"
+                android:textStyle="bold"
                 android:padding="5dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/blackFifty"
@@ -291,6 +300,7 @@
                 android:background="@drawable/rounded_edit_text_black"
                 android:inputType="textPostalAddress"
                 android:hint="address, city, state"
+                android:textStyle="bold"
                 android:padding="5dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/blackFifty"
@@ -320,6 +330,7 @@
                 android:background="@drawable/rounded_edit_text_black"
                 android:inputType="text"
                 android:hint="Enter GSTIN number"
+                android:textStyle="bold"
                 android:padding="5dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/blackFifty"
@@ -348,6 +359,7 @@
                 android:background="@drawable/rounded_edit_text_black"
                 android:inputType="text"
                 android:hint="Enter TIN number"
+                android:textStyle="bold"
                 android:padding="5dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/blackFifty"
@@ -376,6 +388,7 @@
                 android:background="@drawable/rounded_edit_text_black"
                 android:inputType="textMultiLine"
                 android:hint="Enter Company Name"
+                android:textStyle="bold"
                 android:padding="5dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/blackFifty"
@@ -441,7 +454,7 @@
 
 
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/ct_submitPumpButton"
+                android:id="@+id/cp_submitPumpButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cp_pumpImage"
@@ -459,6 +472,28 @@
                 fancy:fb_textColor="@color/black"
                 android:layout_marginTop="16dp"
                 fancy:fb_text="Update"
+                />
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/cp_removePumpButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cp_submitPumpButton"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/lightRed"
+                fancy:fb_focusColor="@color/black"
+                fancy:fb_fontIconResource="&#xf00d;"
+                fancy:fb_iconPosition="right"
+                fancy:fb_radius="3dp"
+                fancy:fb_textColor="@color/black"
+                android:layout_marginTop="16dp"
+                fancy:fb_text="Remove"
                 />
 
 

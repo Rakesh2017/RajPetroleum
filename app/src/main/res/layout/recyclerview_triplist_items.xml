@@ -44,7 +44,7 @@
             android:fontFamily="droidsansbold.ttf"
             android:textSize="14sp"
             android:layout_marginTop="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/blackNinety"
             />
 
         <util.android.textviews.FontTextView
@@ -72,7 +72,7 @@
             android:layout_below="@+id/list_startPointTextView"
             android:layout_marginTop="3dp"
             android:textSize="14dp"
-            android:textColor="#000"
+            android:textColor="@color/blackNinety"
             android:text="Started On:"
             android:gravity="center"
             android:id="@+id/list_date1TextView"
@@ -103,7 +103,7 @@
             android:layout_below="@+id/list_dateTextView"
             android:layout_marginTop="3dp"
             android:textSize="14dp"
-            android:textColor="#000"
+            android:textColor="@color/blackNinety"
             android:text="Trip End Point:"
             android:gravity="center"
             android:id="@+id/list_endPoint1TextView"
@@ -134,7 +134,7 @@
             android:layout_below="@+id/list_endPointTextView"
             android:layout_marginTop="3dp"
             android:textSize="14dp"
-            android:textColor="#000"
+            android:textColor="@color/blackNinety"
             android:text="Ended On:"
             android:gravity="center"
             android:id="@+id/list_endDate1TextView"

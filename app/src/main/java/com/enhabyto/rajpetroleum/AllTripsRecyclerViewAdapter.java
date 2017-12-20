@@ -58,6 +58,7 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
         this.MainImageUploadInfoList = TempList;
 
         this.context = context;
+
     }
 
 
@@ -75,6 +76,8 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final AllTripsInfo UploadInfo = MainImageUploadInfoList.get(position);
 
+        position++;
+        holder.index_tv.setText(String.valueOf(position));
 
         holder.contact_tv.setText(UploadInfo.getKey());
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("driver_profiles").child(UploadInfo.getKey())
@@ -110,11 +113,13 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
         });
 
 
-        storageRef.child("driver_profiles").child(UploadInfo.getKey())
+     /*   storageRef.child("driver_profiles").child(UploadInfo.getKey())
                 .child("/profile_image/image.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 // Got the download URL for 'users/me/profile.png'
+
+
 
                 Glide.with(context)
                         .load(uri)
@@ -143,7 +148,7 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(holder.imageView);
             }
-        });
+        }); */
 
 
         holder.truckImage.setOnClickListener(new View.OnClickListener() {
@@ -182,7 +187,7 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
     class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView name_tv, contact_tv, totalTrips_tv;
+        TextView name_tv, contact_tv, totalTrips_tv, index_tv;
         ImageView imageView, truckImage;
 
 
@@ -192,8 +197,8 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
             name_tv = itemView.findViewById(R.id.all_nameTextView);
             contact_tv = itemView.findViewById(R.id.all_contactTextView);
             totalTrips_tv = itemView.findViewById(R.id.all_totalTripsTextView);
-            imageView = itemView.findViewById(R.id.all_profileImage);
             truckImage = itemView.findViewById(R.id.all_truckImage);
+            index_tv = itemView.findViewById(R.id.all_index);
 
         }
     }

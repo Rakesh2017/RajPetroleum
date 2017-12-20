@@ -10,7 +10,7 @@ public class BrokenRecyclerInfo {
             ,resource_name1 ,resource_name2 ,resource_name3 ,resource_name4 ,resource_name5
             ,resource_price1 ,resource_price2 ,resource_price3 ,resource_price4 ,resource_price5
             ,resource_quantity1 ,resource_quantity2 ,resource_quantity3 ,resource_quantity4 ,resource_quantity5
-            ,bill_paid1 ,bill_paid2 ,bill_paid3 ;
+            ,bill_paid1 ,bill_paid2 ,bill_paid3, gps_latitude, gps_longitude, gps_location ;
 
 
 
@@ -81,6 +81,11 @@ public class BrokenRecyclerInfo {
 
     public String getBill_paid3(){ return bill_paid3; }
 
+    public String getGps_latitude(){ return gps_latitude; }
+
+    public String getGps_location(){ return gps_location; }
+
+    public String getGps_longitude(){ return gps_longitude; }
 
 
 

@@ -6,7 +6,8 @@ package com.enhabyto.rajpetroleum;
 
 public class OtherRecyclerInfo {
 
-    public String description, filling_name, money_paid, quantity, imageURL, date_time;
+    public String description, filling_name, money_paid, quantity, imageURL, date_time
+            , gps_latitude, gps_longitude, gps_location;
 
 
 
@@ -46,6 +47,12 @@ public class OtherRecyclerInfo {
     }
 
     public String getMoney_paid(){ return money_paid; }
+
+    public String getGps_latitude(){ return gps_latitude; }
+
+    public String getGps_location(){ return gps_location; }
+
+    public String getGps_longitude(){ return gps_longitude; }
 
 
 }

@@ -1,6 +1,7 @@
 package com.enhabyto.rajpetroleum;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,9 @@ public class BrokenRecyclerViewAdapter  extends RecyclerView.Adapter<BrokenRecyc
     Context context;
     List<BrokenRecyclerInfo> MainImageUploadInfoList;
     String month;
+    int position1;
+    String day, year, hour, minute;
+
 
 
     public BrokenRecyclerViewAdapter(Context context, List<BrokenRecyclerInfo> TempList) {
@@ -52,20 +56,22 @@ public class BrokenRecyclerViewAdapter  extends RecyclerView.Adapter<BrokenRecyc
 
 
         position++;
+        position1 = position;
         holder.header_tv.setText("");
         holder.header_tv.setText("Breakage "+position);
         holder.failureName_tv.setText(UploadInfo.getFailure_name());
         holder.address_tv.setText(UploadInfo.getAddress());
         holder.state_tv.setText(UploadInfo.getState_name());
+        holder.gpsLocation_tv.setText(UploadInfo.getGps_location());
 
         String date = UploadInfo.getDate_time();
 
         try {
-            String day = TextUtils.substring(date, 0, 2);
+             day = TextUtils.substring(date, 0, 2);
             month = TextUtils.substring(date, 3, 5);
-            String year = TextUtils.substring(date, 6, 10);
-            String hour = TextUtils.substring(date, 11, 13);
-            String minute = TextUtils.substring(date, 14, 16);
+             year = TextUtils.substring(date, 6, 10);
+             hour = TextUtils.substring(date, 11, 13);
+             minute = TextUtils.substring(date, 14, 16);
             conversion();
 
             SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
@@ -361,6 +367,23 @@ public class BrokenRecyclerViewAdapter  extends RecyclerView.Adapter<BrokenRecyc
         }
 
 
+        holder.gpsLocation_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences dataSave = context.getSharedPreferences("maps", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = dataSave.edit();
+                editor.putString("gps_longitude", UploadInfo.getGps_longitude());
+                editor.putString("gps_latitude", UploadInfo.getGps_latitude());
+                editor.putString("gps_message", "BreakDown "+ position1 +" ("+ day+"-"+month+"-"+year+", "+hour+":"+minute+")");
+
+                editor.apply();
+
+                Intent intent = new Intent(context,MapsActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
@@ -390,9 +413,9 @@ public class BrokenRecyclerViewAdapter  extends RecyclerView.Adapter<BrokenRecyc
                 ,brokenPhotoMainHeader_tv, brokenHeader1, brokenHeader2, brokenHeader3
                 ,resourceMainHeader, resourceHeader1,resourceHeader2,resourceHeader3,resourceHeader4,resourceHeader5
                 ,price1 ,price2 ,price3 ,price4 ,price5
-                ,quantity1 ,quantity2 ,quantity3 ,quantity4 ,quantity5 ;
+                ,quantity1 ,quantity2 ,quantity3 ,quantity4 ,quantity5, gpsLocation_tv;
 
-        ImageView image1 ,image2 ,image3 ,image4 ,image5 ,image6;
+        ImageView image1 ,image2 ,image3 ,image4 ,image5 ,image6, map_image;
 
 
 
@@ -409,6 +432,7 @@ public class BrokenRecyclerViewAdapter  extends RecyclerView.Adapter<BrokenRecyc
             resourcePrice3_tv = itemView.findViewById(R.id.break_priceTextView3);
             resourcePrice4_tv = itemView.findViewById(R.id.break_priceTextView4);
             resourcePrice5_tv = itemView.findViewById(R.id.break_priceTextView5);
+            gpsLocation_tv = itemView.findViewById(R.id.break_gpsLocationTextView);
 
             resourceUsed1_tv = itemView.findViewById(R.id.break_resourceUsedTextView1);
             resourceUsed2_tv = itemView.findViewById(R.id.break_resourceUsedTextView2);
@@ -460,6 +484,8 @@ public class BrokenRecyclerViewAdapter  extends RecyclerView.Adapter<BrokenRecyc
             quantity3 = itemView.findViewById(R.id.break_quantity1TextView3);
             quantity4 = itemView.findViewById(R.id.break_quantity1TextView4);
             quantity5 = itemView.findViewById(R.id.break_quantity1TextView5);
+
+
 
         }
     }

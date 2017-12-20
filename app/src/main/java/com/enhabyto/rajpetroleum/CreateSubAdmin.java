@@ -701,9 +701,9 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                         String name = areaSnapshot.child("name").getValue(String.class);
 
                         if (TextUtils.equals(name, null)){
-                            areas.add(contact+" (Not Available)");
+                            areas.add(contact+" Not Available");
                         }
-                        else areas.add(contact+" ("+name+")");
+                        else areas.add(contact+" "+name);
 
                     }
 

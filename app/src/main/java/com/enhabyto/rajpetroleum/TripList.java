@@ -89,12 +89,14 @@ public class TripList extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 name = dataSnapshot.child("name").getValue(String.class);
+                FontTextView text;
+                text = view.findViewById(R.id.all_text);
 
                 String contact = dataSnapshot.child("contact").getValue(String.class);
-                ((FontTextView)view.findViewById(R.id.all_text)).setText(contact+" ("+name+")");
+                    text.setText(text.getText().toString()+contact+" ("+name+")");
 
                 if (TextUtils.equals(name,null) || TextUtils.equals(name,"")){
-                    ((FontTextView)view.findViewById(R.id.all_text)).setText(contact+" (not known)");
+                    text.setText(text.getText().toString()+contact+" (not known)");
                 }
             }
 

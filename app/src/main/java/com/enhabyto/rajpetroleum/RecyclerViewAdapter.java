@@ -114,21 +114,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onSuccess(Uri uri) {
                 // Got the download URL for 'users/me/profile.png'
 
-                Glide.with(context)
-                        .load(uri)
-                        .asBitmap()
-                        .fitCenter()
-                        .centerCrop()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(new BitmapImageViewTarget(holder.driverProfileImage) {
-                            @Override
-                            protected void setResource(Bitmap resource) {
-                                RoundedBitmapDrawable circularBitmapDrawable =
-                                        RoundedBitmapDrawableFactory.create(context.getResources(), resource);
-                                circularBitmapDrawable.setCircular(true);
-                                holder.driverProfileImage.setImageDrawable(circularBitmapDrawable);
-                            }
-                        });
+                if (context.getApplicationContext() != null) {
+
+
+                    Glide.with(context)
+                            .load(uri)
+                            .asBitmap()
+                            .fitCenter()
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(new BitmapImageViewTarget(holder.driverProfileImage) {
+                                @Override
+                                protected void setResource(Bitmap resource) {
+                                    RoundedBitmapDrawable circularBitmapDrawable =
+                                            RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                                    circularBitmapDrawable.setCircular(true);
+                                    holder.driverProfileImage.setImageDrawable(circularBitmapDrawable);
+                                }
+                            });
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -142,6 +146,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         .into(holder.driverProfileImage);
             }
         });
+
+
 
 
         String date = UploadInfo.getTripStarted();

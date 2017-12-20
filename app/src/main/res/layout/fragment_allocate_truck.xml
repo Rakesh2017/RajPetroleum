@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     tools:context="com.enhabyto.rajpetroleum.AllocateTruck">
 
@@ -23,7 +25,6 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:padding="5dp"
             android:fontFamily="droidsansbold.ttf"
             android:textColor="@color/black"
             android:text="@string/scheduleTrip"
@@ -49,6 +50,7 @@
         android:layout_below="@id/at_text1"
         android:hint="Enter Truck Number"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:padding="7dp"
         android:background="@drawable/rounded_edit_text_black"
         android:inputType="text"
@@ -86,6 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/at_text3"
         android:hint="Enter Truck Location"
+        android:textStyle="bold"
         android:inputType="textMultiLine"
         android:textColor="@color/black"
         android:padding="7dp"
@@ -121,7 +124,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/at_text2"
             android:hint="Enter Contact Number"
-            android:inputType="phone"
+            android:textStyle="bold"
+            android:inputType="text"
             android:maxLength="10"
             android:padding="7dp"
             android:background="@drawable/rounded_edit_text_black"
@@ -158,6 +162,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/at_text5"
         android:hint="Enter Trip start Location"
+        android:textStyle="bold"
         android:inputType="textMultiLine"
         android:textColor="@color/black"
         android:padding="7dp"
@@ -195,6 +200,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/at_text6"
         android:hint="Enter Next Expected Stoppage"
+        android:textStyle="bold"
         android:inputType="textMultiLine"
         android:textColor="@color/black"
         android:padding="7dp"
@@ -230,6 +236,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/at_text7"
             android:hint="dd/mm/yyyy"
+            android:textStyle="bold"
             android:inputType="date"
             android:textColor="@color/black"
             android:maxLength="10"
@@ -260,6 +267,7 @@
             android:layout_below="@id/at_text8"
             android:layout_alignParentEnd="true"
             android:hint="hh/mm"
+            android:textStyle="bold"
             android:inputType="time"
             android:textColor="@color/black"
             android:maxLength="5"
@@ -282,7 +290,7 @@
         android:paddingTop="10dp"
         fancy:fb_borderColor="@color/black"
         fancy:fb_borderWidth="3dp"
-        fancy:fb_defaultColor="@color/black"
+        fancy:fb_defaultColor="@color/lightGreen"
         fancy:fb_focusColor="@color/black"
         fancy:fb_fontIconResource="&#xf0d1;"
         fancy:fb_iconPosition="right"
@@ -290,7 +298,7 @@
         fancy:fb_text="Schedule Trip"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="24dp"
-        fancy:fb_textColor="@color/white" />
+        fancy:fb_textColor="@color/black" />
 
 
 

@@ -25,10 +25,12 @@
     <string name="myPreferenceTitle">myPreferenceTitle</string>
     <string name="scheduleTrip"><u><u>SCHEDULE TRIP</u></u></string>
     <string name="tripOverView"><u><u>TRIP START OVERVIEW</u></u></string>
+    <string name="tripEndOverView"><u><u>TRIP END OVERVIEW</u></u></string>
     <string name="load"><u><u>LOAD</u></u></string>
     <string name="unLoad"><u><u>UNLOAD</u></u></string>
     <string name="emergencyContact"><u><u>Emergency Contact</u></u></string>
     <string name="litres">litres</string>
+    <string name="google_maps_key">AIzaSyCC8AwPmh1gZLhBpYluDocq5vMZSaZTYXw</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -38,4 +40,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

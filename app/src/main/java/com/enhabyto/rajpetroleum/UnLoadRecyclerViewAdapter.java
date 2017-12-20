@@ -1,6 +1,7 @@
 package com.enhabyto.rajpetroleum;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class UnLoadRecyclerViewAdapter extends RecyclerView.Adapter<UnLoadRecycl
     Context context;
     List<LoadRecyclerInfo> MainImageUploadInfoList;
     String month;
+    int position1;
+    String day, year, hour, minute;
 
 
     public UnLoadRecyclerViewAdapter(Context context, List<LoadRecyclerInfo> TempList) {
@@ -48,6 +52,7 @@ public class UnLoadRecyclerViewAdapter extends RecyclerView.Adapter<UnLoadRecycl
 
 
         position++;
+        position1 = position;
         holder.header_tv.setText(holder.header_tv.getText()+" "+position);
         holder.oilunLoaded_tv.setText(UploadInfo.getOil_unloaded()+" litres");
         holder.oilLeft_tv.setText(UploadInfo.getOil_left()+" litres");
@@ -55,15 +60,16 @@ public class UnLoadRecyclerViewAdapter extends RecyclerView.Adapter<UnLoadRecycl
         holder.address_tv.setText(UploadInfo.getLocation());
         holder.state_tv.setText(UploadInfo.getState_name());
         holder.going_tv.setText(UploadInfo.getNext_stoppage());
+        holder.gpsLocation_tv.setText(UploadInfo.getGps_location());
 
         String date = UploadInfo.getDate_time();
 
         try {
-            String day = TextUtils.substring(date, 0, 2);
+            day = TextUtils.substring(date, 0, 2);
             month = TextUtils.substring(date, 3, 5);
-            String year = TextUtils.substring(date, 6, 10);
-            String hour = TextUtils.substring(date, 11, 13);
-            String minute = TextUtils.substring(date, 14, 16);
+             year = TextUtils.substring(date, 6, 10);
+            hour = TextUtils.substring(date, 11, 13);
+             minute = TextUtils.substring(date, 14, 16);
             conversion();
 
             SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
@@ -89,6 +95,23 @@ public class UnLoadRecyclerViewAdapter extends RecyclerView.Adapter<UnLoadRecycl
         }
 
 
+        holder.gpsLocation_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences dataSave = context.getSharedPreferences("maps", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = dataSave.edit();
+                editor.putString("gps_longitude", UploadInfo.getGps_longitude());
+                editor.putString("gps_latitude", UploadInfo.getGps_latitude());
+                editor.putString("gps_message", "unLoad "+ position1 +" ("+ day+"-"+month+"-"+year+", "+hour+":"+minute+")");
+
+                editor.apply();
+
+                Intent intent = new Intent(context,MapsActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
@@ -98,8 +121,9 @@ public class UnLoadRecyclerViewAdapter extends RecyclerView.Adapter<UnLoadRecycl
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        FontTextView oilunLoaded_tv, address_tv, state_tv, going_tv, date_tv, header_tv, pumpName_tv, oilLeft_tv;
+        FontTextView oilunLoaded_tv, address_tv, state_tv, going_tv, date_tv, header_tv, pumpName_tv, oilLeft_tv, gpsLocation_tv;
 
+        ImageView map_image;
 
 
         ViewHolder(View itemView) {
@@ -113,6 +137,7 @@ public class UnLoadRecyclerViewAdapter extends RecyclerView.Adapter<UnLoadRecycl
             header_tv = itemView.findViewById(R.id.unload_headerTextView);
             pumpName_tv = itemView.findViewById(R.id.unload_pumpNameTextView);
             oilLeft_tv = itemView.findViewById(R.id.unload_leftTextView);
+            gpsLocation_tv = itemView.findViewById(R.id.unload_gpsLocationTextView);
 
 
 
