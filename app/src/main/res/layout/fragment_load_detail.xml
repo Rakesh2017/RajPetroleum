@@ -19,11 +19,12 @@
         <util.android.textviews.FontTextView
             android:id="@+id/load_text1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:layout_marginTop="2dp"
             android:fontFamily="droidsansbold.ttf"
+            android:layout_toStartOf="@+id/load_excel"
             android:gravity="center"
             android:textStyle="bold"
             android:text="L O A D"
@@ -31,6 +32,17 @@
             android:layout_centerHorizontal="true"
             android:textColor="@color/black"
             android:textSize="20sp"/>
+
+        <ImageButton
+            android:id="@+id/load_excel"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/load_text1"
+            android:background="@drawable/excel_icon"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+
+            />
 
 
         <android.support.v7.widget.RecyclerView
@@ -49,6 +61,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="droidsansbold.ttf"
             android:background="@drawable/rounded_edit_text_black"
+            android:layout_toStartOf="@+id/unload_excel"
             android:layout_marginEnd="4dp"
             android:layout_marginTop="4dp"
             android:gravity="center"
@@ -57,6 +70,19 @@
             android:layout_centerHorizontal="true"
             android:textColor="@color/black"
             android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/unload_excel"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@+id/load_text2"
+            android:background="@drawable/excel_icon"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+
+            />
+
+
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

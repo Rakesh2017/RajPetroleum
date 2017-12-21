@@ -198,9 +198,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                             editor.putString("TripSuperKey", key);
                                             editor.putString("driverName", name1);
                                             editor.apply();
-                                            AppCompatActivity activity = (AppCompatActivity) context;
-                                            activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("FragmentTripDetail").commit();
-                                            progressDialog.dismiss();
+                                            try {
+                                                AppCompatActivity activity = (AppCompatActivity) context;
+                                                activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("FragmentTripDetail").commit();
+                                                progressDialog.dismiss();
+                                            }
+                                            catch (IllegalStateException e){
+                                                e.printStackTrace();
+                                            }
+
                                         }
 
                                         @Override

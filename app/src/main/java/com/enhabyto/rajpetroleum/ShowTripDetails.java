@@ -668,7 +668,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                         total = total + j;
 
                         m = 0;
-                        if (TextUtils.equals(totalPetrolFilled_tx, "")){
+                        if (TextUtils.equals(totalPetrolFilled_tx, "") || TextUtils.equals(totalPetrolFilled_tx, null)){
                             totalPetrolFilled_tx = "0";
                         }
                         m = Integer.parseInt(totalPetrolFilled_tx);

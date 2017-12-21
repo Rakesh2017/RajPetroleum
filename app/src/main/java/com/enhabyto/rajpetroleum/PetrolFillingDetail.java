@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,12 +55,12 @@ public class PetrolFillingDetail extends Fragment {
     // Creating RecyclerView.Adapter.
     RecyclerView.Adapter adapter ;
     List<PetrolFillingRecyclerInfo> list = new ArrayList<>();
-    ProgressDialog progressDialog;
+    ProgressDialog progressDialog, excelDialog;
     DatabaseReference databaseReference;
 
     private String contactUID_tx;
     private DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
-    String key;
+    String key, userNameUID;
 
     ImageButton excel_export;
 
@@ -101,9 +102,11 @@ public class PetrolFillingDetail extends Fragment {
 
         // Assign activity this to progress dialog.
         progressDialog = new ProgressDialog(getContext());
+        excelDialog = new ProgressDialog(getContext());
 
         // Setting up message in Progress dialog.
         progressDialog.setMessage("Loading Data...");
+        excelDialog.setMessage("Exporting Data into Excel...");
 
         // Showing progress dialog.
         progressDialog.show();
@@ -150,12 +153,27 @@ public class PetrolFillingDetail extends Fragment {
                 });
 
 
+                d_root.child("driver_profiles").child(contactUID_tx).child("name")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                userNameUID = dataSnapshot.getValue(String.class);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
 
 
                 // export excel
                 excel_export.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        excelDialog.show();
 
                         databaseReference = d_root.child("trip_details").child(contactUID_tx)
                                 .child(key).child("petrol_filled");
@@ -171,12 +189,17 @@ public class PetrolFillingDetail extends Fragment {
                                 String actualDate = sdf.format(c.getTime());
                                 String actualTime = sdf1.format(c.getTime());
 
-
+                                DBHelper dbHelper2 = new DBHelper(getActivity());
+                                dbHelper2.dropPetrolTable();
 
 
                                 SharedPreferences dataSave = getActivity().getSharedPreferences("excel_data", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = dataSave.edit();
                                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+
+                                    String date = TextUtils.substring(postSnapshot.child("date_time").getValue(String.class),0,10);
+                                    String time = TextUtils.substring(postSnapshot.child("date_time").getValue(String.class),11,16);
 
 
                                     editor.putString("pump_name", postSnapshot.child("name").getValue(String.class));
@@ -186,15 +209,18 @@ public class PetrolFillingDetail extends Fragment {
                                     editor.putString("state", postSnapshot.child("state").getValue(String.class));
                                     editor.putString("token_number", postSnapshot.child("token_number").getValue(String.class));
                                     editor.putString("gps_location", postSnapshot.child("gps_location").getValue(String.class));
+                                    editor.putString("date", date);
+                                    editor.putString("time", time);
                                     editor.apply();
 
                                     DBHelper dbHelper = new DBHelper(getActivity());
-                                    dbHelper.insertData();
+                                    dbHelper.insertPetrolData();
 
                                     final Cursor cursor = dbHelper.getuser();
 
+
                                     File sd = Environment.getExternalStorageDirectory();
-                                    String csvFile = contactUID_tx+"Petrol filling"+actualDate+actualTime+".xls";
+                                    String csvFile = userNameUID+" Petrol filling "+actualDate+"_"+actualTime+".xls";
 
                                     File directory = new File(sd.getAbsolutePath());
                                     //create directory if not exist
@@ -212,21 +238,41 @@ public class PetrolFillingDetail extends Fragment {
                                         workbook = Workbook.createWorkbook(file, wbSettings);
 
                                         //Excel sheet name. 0 represents first sheet
-                                        WritableSheet sheet = workbook.createSheet("userList", 0);
+                                        WritableSheet sheet = workbook.createSheet("Petrol Filling Details", 0);
 
-                                        sheet.addCell(new Label(0, 0, "UserName"));
-                                        sheet.addCell(new Label(1, 0, "PhoneNumber"));
+                                        sheet.addCell(new Label(0, 0, "Pump Name"));
+                                        sheet.addCell(new Label(1, 0, "Petrol Filled"));
+                                        sheet.addCell(new Label(2, 0, "Address"));
+                                        sheet.addCell(new Label(3, 0, "Date"));
+                                        sheet.addCell(new Label(4, 0, "Time"));
+                                        sheet.addCell(new Label(5, 0, "GPS Location"));
+                                        sheet.addCell(new Label(6, 0, "Token"));
+                                        sheet.addCell(new Label(7, 0, "Money Paid"));
+                                        sheet.addCell(new Label(8, 0, "State"));
 
                                         if (cursor.moveToFirst()) {
                                             do {
-                                                String name = cursor.getString(cursor.getColumnIndex("user_name"));
-                                                String phoneNumber = cursor.getString(cursor.getColumnIndex("phone_number"));
+                                                String pumpName = cursor.getString(cursor.getColumnIndex("pump_name"));
+                                                String petrolFilled = cursor.getString(cursor.getColumnIndex("petrol_filled"));
+                                                String address = cursor.getString(cursor.getColumnIndex("address"));
+                                                String date1 = cursor.getString(cursor.getColumnIndex("date"));
+                                                String time1 = cursor.getString(cursor.getColumnIndex("time"));
+                                                String gpsLocation = cursor.getString(cursor.getColumnIndex("gps_location"));
+                                                String tokenNumber = cursor.getString(cursor.getColumnIndex("token_number"));
+                                                String moneyPaid = cursor.getString(cursor.getColumnIndex("money_paid"));
+                                                String state = cursor.getString(cursor.getColumnIndex("state"));
 
                                                 int i = cursor.getPosition() + 1;
 
-
-                                                sheet.addCell(new Label(1, i, phoneNumber));
-                                                sheet.addCell(new Label(0, i, name));
+                                                sheet.addCell(new Label(8, i, state));
+                                                sheet.addCell(new Label(7, i, moneyPaid));
+                                                sheet.addCell(new Label(6, i, tokenNumber));
+                                                sheet.addCell(new Label(5, i, gpsLocation));
+                                                sheet.addCell(new Label(4, i, time1));
+                                                sheet.addCell(new Label(3, i, date1));
+                                                sheet.addCell(new Label(2, i, address));
+                                                sheet.addCell(new Label(1, i, petrolFilled));
+                                                sheet.addCell(new Label(0, i, pumpName));
 
                                             } while (cursor.moveToNext());
                                         }
@@ -234,8 +280,7 @@ public class PetrolFillingDetail extends Fragment {
                                         cursor.close();
                                         workbook.write();
                                         workbook.close();
-                                        Toast.makeText(getActivity(),
-                                                "Data Exported in a Excel Sheet", Toast.LENGTH_SHORT).show();
+
 
 
                                     } catch(IOException | WriteException e){
@@ -246,6 +291,9 @@ public class PetrolFillingDetail extends Fragment {
 
                                 }
 
+                                Toast.makeText(getActivity(),
+                                        "Data Exported Successfully in a Excel Sheet", Toast.LENGTH_SHORT).show();
+                                excelDialog.dismiss();
 
                             }
 
@@ -264,5 +312,6 @@ public class PetrolFillingDetail extends Fragment {
 
         return view;
     }
+
 
 }

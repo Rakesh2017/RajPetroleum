@@ -59,7 +59,7 @@ public class TripListRecyclerViewAdapter  extends RecyclerView.Adapter<TripListR
 
         SharedPreferences shared = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
         try{
-            contactUID_tx = (shared.getString("contactUID_AllTrip", ""));
+            contactUID_tx = shared.getString("contactUID_AllTrip", "");
         }
         catch (NullPointerException e){
             contactUID_tx  = "";
