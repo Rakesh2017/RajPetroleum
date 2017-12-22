@@ -10,9 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import java.util.List;
-
 import util.android.textviews.FontTextView;
 
 /**
