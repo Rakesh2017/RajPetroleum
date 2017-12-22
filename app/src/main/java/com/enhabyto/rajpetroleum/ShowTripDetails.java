@@ -265,11 +265,6 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
 
-
-
-
-
-
             }
 
             @Override
@@ -378,7 +373,14 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
                 else
-                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new PetrolFillingDetail()).addToBackStack("petrol").commit();
+                    try {
+                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new PetrolFillingDetail()).addToBackStack("petrol").commit();
+
+                    }
+                    catch (IllegalStateException e){
+                        e.printStackTrace();
+                    }
+
                 break;
 
 
@@ -405,7 +407,14 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
                 else
-                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new StoppageDetail()).addToBackStack("stoppage").commit();
+                    try {
+                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new StoppageDetail()).addToBackStack("stoppage").commit();
+
+                    }
+                    catch (IllegalStateException e){
+                        e.printStackTrace();
+                    }
+
                 break;
 
             case R.id.detail_loadButton:
@@ -431,7 +440,14 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
                 else
-                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new LoadDetail()).addToBackStack("load").commit();
+
+                    try {
+                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new LoadDetail()).addToBackStack("load").commit();
+
+                    }
+                    catch (IllegalStateException e){
+                        e.printStackTrace();
+                    }
                 break;
 
 
@@ -594,7 +610,15 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
                                 failureSize = (int) (dataSnapshot.getChildrenCount());
                                 breakDown_tv.setText(String.valueOf(failureSize));
-                                dialog_loading.dismiss();
+
+
+                                try {
+                                    dialog_loading.dismiss();
+                                }
+                                catch (IllegalStateException e){
+                                    e.printStackTrace();
+                                }
+
                             }
 
 

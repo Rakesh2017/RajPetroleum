@@ -159,8 +159,15 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
                 editor.putString("contactUID_AllTrip", UploadInfo.getKey());
                 editor.apply();
 
-                AppCompatActivity activity = (AppCompatActivity) context;
-                activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new TripList()).addToBackStack("FragmentTripDetails").commit();
+                try {
+                    AppCompatActivity activity = (AppCompatActivity) context;
+                    activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new TripList()).addToBackStack("FragmentTripDetails").commit();
+
+                }
+                catch (IllegalStateException e){
+                    e.printStackTrace();
+                }
+
 
             }
         });

@@ -131,8 +131,15 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
                 editor.putString("gps_message", "Petrol Filling "+ position1 +" ("+ day+"-"+month+"-"+year+", "+hour+":"+minute+")");
                 editor.apply();
 
-                Intent intent = new Intent(context,MapsActivity.class);
-                context.startActivity(intent);
+                try {
+                    Intent intent = new Intent(context,MapsActivity.class);
+                    context.startActivity(intent);
+                }
+                catch (IllegalStateException e){
+                    e.printStackTrace();
+                }
+
+
             }
         });
 

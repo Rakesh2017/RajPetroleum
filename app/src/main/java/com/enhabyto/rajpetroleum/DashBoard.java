@@ -93,6 +93,8 @@ public class DashBoard extends AppCompatActivity
     TextView noInternet;
     private Context context;
 
+    int counter = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,12 +106,6 @@ public class DashBoard extends AppCompatActivity
         boolean alarmRunning = (PendingIntent.getBroadcast(this.context, 0, alarm, PendingIntent.FLAG_NO_CREATE) != null);
         if(!alarmRunning) {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this.context, 281234, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
-           /* Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, 10);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);*/
 
             Date dat  = new Date();//initializes to now
             Calendar cal_alarm = Calendar.getInstance();
@@ -117,7 +113,7 @@ public class DashBoard extends AppCompatActivity
             cal_now.setTime(dat);
             cal_alarm.setTime(dat);
             cal_alarm.set(Calendar.HOUR_OF_DAY, 13);//set the alarm time
-            cal_alarm.set(Calendar.MINUTE, 27);
+            cal_alarm.set(Calendar.MINUTE, 30);
             cal_alarm.set(Calendar.SECOND, 0);
             if(cal_alarm.before(cal_now)){//if its in the past increment
                 cal_alarm.add(Calendar.DATE,1);
@@ -128,62 +124,6 @@ public class DashBoard extends AppCompatActivity
                 alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal_alarm.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
             }
         }
-
-
-
-      /*  DBHelper dbHelper = new DBHelper(this);
-        dbHelper.insertData();
-
-        final Cursor cursor = dbHelper.getuser();
-
-        File sd = Environment.getExternalStorageDirectory();
-        String csvFile = "myData.xls";
-
-        File directory = new File(sd.getAbsolutePath());
-        //create directory if not exist
-        if (!directory.isDirectory()) {
-            directory.mkdirs();
-        }
-        try {
-
-            //file path
-            File file = new File(directory, csvFile);
-            WorkbookSettings wbSettings = new WorkbookSettings();
-            wbSettings.setLocale(new Locale("en", "EN"));
-            WritableWorkbook workbook;
-            workbook = Workbook.createWorkbook(file, wbSettings);
-
-            //Excel sheet name. 0 represents first sheet
-            WritableSheet sheet = workbook.createSheet("userList", 0);
-
-            sheet.addCell(new Label(0, 0, "UserName"));
-            sheet.addCell(new Label(1, 0, "PhoneNumber"));
-
-            if (cursor.moveToFirst()) {
-                do {
-                    String name = cursor.getString(cursor.getColumnIndex("user_name"));
-                    String phoneNumber = cursor.getString(cursor.getColumnIndex("phone_number"));
-
-                    int i = cursor.getPosition() + 1;
-
-
-                        sheet.addCell(new Label(1, i, phoneNumber));
-                        sheet.addCell(new Label(0, i, name));
-
-                } while (cursor.moveToNext());
-            }
-            //closing cursor
-            cursor.close();
-            workbook.write();
-            workbook.close();
-            Toast.makeText(getApplication(),
-                    "Data Exported in a Excel Sheet", Toast.LENGTH_SHORT).show();
-
-
-        } catch(IOException | WriteException e){
-            e.printStackTrace();
-        }  */
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Admin Dashboard");
@@ -352,6 +292,7 @@ public class DashBoard extends AppCompatActivity
                     //   Collections.reverse(list);
                     adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
+                    noInternet.setVisibility(View.GONE);
                     if (adapter.getItemCount() == 0){
                         findViewById(R.id.dash_text).setVisibility(View.VISIBLE);
                         findViewById(R.id.shana_pandu).setVisibility(View.GONE);

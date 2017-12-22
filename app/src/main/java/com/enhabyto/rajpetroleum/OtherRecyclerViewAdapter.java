@@ -131,8 +131,15 @@ public class OtherRecyclerViewAdapter  extends RecyclerView.Adapter<OtherRecycle
 
                 editor.apply();
 
-                Intent intent = new Intent(context,MapsActivity.class);
-                context.startActivity(intent);
+                try {
+                    Intent intent = new Intent(context,MapsActivity.class);
+                    context.startActivity(intent);
+                }
+                catch (IllegalStateException e){
+                    e.printStackTrace();
+                }
+
+
             }
         });
 

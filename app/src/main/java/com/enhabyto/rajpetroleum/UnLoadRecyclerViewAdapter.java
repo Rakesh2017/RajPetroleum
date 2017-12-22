@@ -106,8 +106,15 @@ public class UnLoadRecyclerViewAdapter extends RecyclerView.Adapter<UnLoadRecycl
 
                 editor.apply();
 
-                Intent intent = new Intent(context,MapsActivity.class);
-                context.startActivity(intent);
+                try {
+                    Intent intent = new Intent(context,MapsActivity.class);
+                    context.startActivity(intent);
+                }
+                catch (IllegalStateException e){
+                    e.printStackTrace();
+                }
+
+
             }
         });
 

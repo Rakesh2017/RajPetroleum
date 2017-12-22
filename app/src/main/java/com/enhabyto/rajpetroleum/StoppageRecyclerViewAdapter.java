@@ -115,8 +115,15 @@ public class StoppageRecyclerViewAdapter  extends RecyclerView.Adapter<StoppageR
 
                 editor.apply();
 
-                Intent intent = new Intent(context,MapsActivity.class);
-                context.startActivity(intent);
+                try {
+                    Intent intent = new Intent(context,MapsActivity.class);
+                    context.startActivity(intent);
+                }
+                catch (IllegalStateException e){
+                    e.printStackTrace();
+                }
+
+
             }
         });
 

@@ -162,8 +162,17 @@ public class ScheduleListRecyclerViewAdapter extends RecyclerView.Adapter<Schedu
                 editor.putString("scheduleTripContactUID", UploadInfo.getKey());
                 editor.apply();
 
-                AppCompatActivity activity = (AppCompatActivity) context;
-                activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new ScheduleTripDetails()).addToBackStack("FragmentTripDetails").commit();
+
+                try {
+                    AppCompatActivity activity = (AppCompatActivity) context;
+                    activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new ScheduleTripDetails()).addToBackStack("FragmentTripDetails").commit();
+
+                }
+                catch (IllegalStateException e){
+                    e.printStackTrace();
+                }
+
+
 
             }
         });

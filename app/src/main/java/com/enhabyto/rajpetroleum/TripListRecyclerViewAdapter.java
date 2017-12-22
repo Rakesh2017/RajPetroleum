@@ -138,8 +138,13 @@ public class TripListRecyclerViewAdapter  extends RecyclerView.Adapter<TripListR
                                 editor.putString("driverName", name1);
                                 editor.apply();
 
-                                AppCompatActivity activity = (AppCompatActivity) context;
-                                activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("FragmentTripDetails").commit();
+                                try {
+                                    AppCompatActivity activity = (AppCompatActivity) context;
+                                    activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("FragmentTripDetails").commit();
+                                }
+                                catch (IllegalStateException e){
+                                    e.printStackTrace();
+                                }
 
 
 

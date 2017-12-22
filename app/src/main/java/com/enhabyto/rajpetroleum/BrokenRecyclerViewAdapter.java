@@ -378,8 +378,15 @@ public class BrokenRecyclerViewAdapter  extends RecyclerView.Adapter<BrokenRecyc
 
                 editor.apply();
 
-                Intent intent = new Intent(context,MapsActivity.class);
-                context.startActivity(intent);
+                try {
+                    Intent intent = new Intent(context,MapsActivity.class);
+                    context.startActivity(intent);
+                }
+                catch (IllegalStateException e){
+                    e.printStackTrace();
+                }
+
+
             }
         });
 
