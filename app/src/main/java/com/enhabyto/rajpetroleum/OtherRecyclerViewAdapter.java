@@ -161,7 +161,7 @@ public class OtherRecyclerViewAdapter  extends RecyclerView.Adapter<OtherRecycle
 
         FontTextView description_tv, fillingName_tv, imageURL, moneyPaid_tv, quantity_tv, date_time_tv
                 ,header_tv, bill_tv, gpsLocation_tv;
-        ImageView image, map_image;
+        ImageView image;
 
 
         ViewHolder(View itemView) {

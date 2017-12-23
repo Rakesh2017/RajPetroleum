@@ -66,6 +66,7 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
         holder.pumpAddress_tv.setText(UploadInfo.getAddress());
         holder.stateName_tv.setText(UploadInfo.getState());
         holder.moneyPaid_tv.setText("Rs "+UploadInfo.getMoney_paid());
+        holder.total_tv.setText("Rs "+UploadInfo.getTotal_money());
         holder.litres_tv.setText(UploadInfo.getPetrol_filled()+" litres");
         holder.gpsLocation_tv.setText(UploadInfo.getGps_location());
 
@@ -174,7 +175,7 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
     class ViewHolder extends RecyclerView.ViewHolder {
 
         FontTextView pumpName_tv, tokenNumber_tv, pumpAddress_tv, stateName_tv, moneyPaid_tv, litres_tv, bill_tv, date_time_tv
-                ,header_tv, gpsLocation_tv;
+                ,header_tv, gpsLocation_tv, total_tv;
         ImageView image, map_image;
 
 
@@ -191,6 +192,7 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
             date_time_tv = itemView.findViewById(R.id.petrol_dateTextView);
             header_tv = itemView.findViewById(R.id.petrol_headerTextView);
             gpsLocation_tv = itemView.findViewById(R.id.petrol_gpsLocationTextView);
+            total_tv = itemView.findViewById(R.id.petrol_totalTextView);
 
             image = itemView.findViewById(R.id.petrol_billImage);
 

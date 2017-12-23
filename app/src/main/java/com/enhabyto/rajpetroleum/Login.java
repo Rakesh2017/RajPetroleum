@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity {
 
     private EditText email_et, password_et, contact_et, sub_password_et;
     private String email_tx, password_tx, contact_tx, sub_password_tx, match_contact_tx, match_password_tx;
-    private FancyButton forgotPass_btn;
+
 
     private SharedPreferences.Editor editor1;
 
@@ -62,7 +62,6 @@ public class Login extends AppCompatActivity {
         sub_password_et = findViewById(R.id.main_sub_admin_passwordEditText);
         FancyButton login_btn = findViewById(R.id.main_loginButton);
         FancyButton sub_login_btn = findViewById(R.id.main_sub_admin_loginButton);
-        forgotPass_btn = findViewById(R.id.main_ForgotButton);
         dialog = new SpotsDialog(Login.this, R.style.logging);
 
         mAuth = FirebaseAuth.getInstance();
@@ -200,7 +199,6 @@ public class Login extends AppCompatActivity {
                                             editor.putString("LaunchApplication", "Login");
                                             editor.commit();
 
-                                            forgotPass_btn.setVisibility(View.VISIBLE);
                                             String message = "";
                                             try {
                                                 message = task.getException().getMessage();

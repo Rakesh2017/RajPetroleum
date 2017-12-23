@@ -219,7 +219,7 @@
             />
 
 
-        <!--Money Paid-->
+        <!--Petrol Rate-->
 
 
         <util.android.textviews.FontTextView
@@ -230,7 +230,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="4dp"
             android:textColor="@color/black"
-            android:text="Money Paid:"
+            android:text="Petrol Rate/Litre:"
             android:textStyle="normal"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="14sp"
@@ -283,6 +283,40 @@
             android:textStyle="normal"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            />
+
+
+        <!--Total-->
+
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/petrol_total1TextView"
+            android:layout_below="@+id/petrol_litres1TextView"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/black"
+            android:text="Total Money Spent:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/petrol_totalTextView"
+            android:layout_toEndOf="@id/petrol_total1TextView"
+            android:layout_below="@+id/petrol_litres1TextView"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/naturalBlue"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
             android:layout_marginTop="4dp"
             />
 

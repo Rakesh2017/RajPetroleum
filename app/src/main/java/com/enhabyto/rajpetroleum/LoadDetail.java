@@ -148,6 +148,14 @@ public class LoadDetail extends Fragment {
 
                         // Hiding the progress dialog.
 
+                        if (adapter.getItemCount() == 0){
+                            view.findViewById(R.id.load_text1).setVisibility(View.GONE);
+                            view.findViewById(R.id.load_excel).setVisibility(View.GONE);
+                            view.findViewById(R.id.load_recyclerView).setVisibility(View.GONE);
+                        }
+
+                        progressDialog.dismiss();
+
                     }
 
                     @Override
@@ -179,6 +187,13 @@ public class LoadDetail extends Fragment {
                         //   Collections.reverse(list);
                         adapter1.notifyDataSetChanged();
                         recyclerView1.setAdapter(adapter1);
+
+
+                        if (adapter1.getItemCount() == 0){
+                            view.findViewById(R.id.load_text2).setVisibility(View.GONE);
+                            view.findViewById(R.id.unload_excel).setVisibility(View.GONE);
+                            view.findViewById(R.id.unLoad_recyclerView).setVisibility(View.GONE);
+                        }
 
                         // Hiding the progress dialog.
                         progressDialog.dismiss();
