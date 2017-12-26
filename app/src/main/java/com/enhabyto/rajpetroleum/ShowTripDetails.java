@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -666,7 +668,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         j = 0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            petrolMoney_tx = snapshot.child("money_paid").getValue(String.class);
+                            petrolMoney_tx = snapshot.child("total_money").getValue(String.class);
 
                             if (TextUtils.equals(petrolMoney_tx,"")){
                                 petrolMoney_tx = "0";
@@ -675,6 +677,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                         }
                         petrolMoney_tv.setText("Rs "+String.valueOf(j));
                         total = total + j;
+
 
                         m = 0;
                         if (TextUtils.equals(totalPetrolFilled_tx, "") || TextUtils.equals(totalPetrolFilled_tx, null)){
@@ -687,12 +690,108 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                         }
                         totalPetrolFilled_tv.setText(String.valueOf(m)+" Litres");
 
+                        FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(petrolkey).child("other_filling")
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        k = 0;
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            otherMoney_tx = snapshot.child("money_paid").getValue(String.class);
+                                            if (TextUtils.equals(otherMoney_tx,"")){
+                                                otherMoney_tx = "0";
+                                            }
+                                            k = k + Integer.parseInt(otherMoney_tx);
+                                        }
+                                        otherMoney_tv.setText("Rs "+String.valueOf(k));
+                                        total = total + k;
+
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
+
+
+
+
+
+
+                        FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(petrolkey).child("failure")
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        l = 0;
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            breakDownMoney1_tx = snapshot.child("bill_paid1").getValue(String.class);
+                                            breakDownMoney2_tx = snapshot.child("bill_paid2").getValue(String.class);
+                                            breakDownMoney3_tx = snapshot.child("bill_paid3").getValue(String.class);
+                                            breakDownMoney4_tx = snapshot.child("resource_price1").getValue(String.class);
+                                            breakDownMoney5_tx = snapshot.child("resource_price2").getValue(String.class);
+                                            breakDownMoney6_tx = snapshot.child("resource_price3").getValue(String.class);
+                                            breakDownMoney7_tx = snapshot.child("resource_price4").getValue(String.class);
+                                            breakDownMoney8_tx = snapshot.child("resource_price5").getValue(String.class);
+
+                                            if (TextUtils.equals(breakDownMoney1_tx,"")){
+                                                breakDownMoney1_tx = "0";
+                                            }
+
+                                            if (TextUtils.equals(breakDownMoney2_tx,"")){
+                                                breakDownMoney2_tx = "0";
+                                            }
+
+                                            if (TextUtils.equals(breakDownMoney3_tx,"")){
+                                                breakDownMoney3_tx = "0";
+                                            }
+
+                                            if (TextUtils.equals(breakDownMoney4_tx,"")){
+                                                breakDownMoney4_tx = "0";
+                                            }
+
+                                            if (TextUtils.equals(breakDownMoney5_tx,"")){
+                                                breakDownMoney5_tx = "0";
+                                            }
+
+                                            if (TextUtils.equals(breakDownMoney6_tx,"")){
+                                                breakDownMoney6_tx = "0";
+                                            }
+
+                                            if (TextUtils.equals(breakDownMoney7_tx,"")){
+                                                breakDownMoney7_tx = "0";
+                                            }
+
+                                            if (TextUtils.equals(breakDownMoney8_tx,"")){
+                                                breakDownMoney8_tx = "0";
+                                            }
+                                            try{
+                                                l = l + Integer.parseInt(breakDownMoney1_tx) + Integer.parseInt(breakDownMoney2_tx)+  Integer.parseInt(breakDownMoney3_tx)+
+                                                        Integer.parseInt(breakDownMoney4_tx)+  Integer.parseInt(breakDownMoney5_tx)+  Integer.parseInt(breakDownMoney6_tx)+
+                                                        Integer.parseInt(breakDownMoney7_tx)+  Integer.parseInt(breakDownMoney8_tx);
+                                            }
+                                            catch (NumberFormatException e){
+                                                e.printStackTrace();
+                                            }
+
+
+                                        }
+
+                                        breakDownMoney_tv.setText("Rs "+String.valueOf(l));
+                                        total = total + l;
+                                        total_tv.setText(String.valueOf("Rs "+total));
+
+                                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
+
+
+
 
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
-                });
+                  });
 
                     }
 
@@ -705,96 +804,11 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
 
-        FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(petrolkey).child("other_filling")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        k = 0;
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            otherMoney_tx = snapshot.child("money_paid").getValue(String.class);
-                            if (TextUtils.equals(otherMoney_tx,"")){
-                                otherMoney_tx = "0";
-                            }
-                            k = k + Integer.parseInt(otherMoney_tx);
-                        }
-                        otherMoney_tv.setText("Rs "+String.valueOf(k));
-                        total = total + k;
-
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
 
 
 
-        FirebaseDatabase.getInstance().getReference().child("trip_details").child(contactUID_tx).child(petrolkey).child("failure")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        l = 0;
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                breakDownMoney1_tx = snapshot.child("bill_paid1").getValue(String.class);
-                                breakDownMoney2_tx = snapshot.child("bill_paid2").getValue(String.class);
-                                breakDownMoney3_tx = snapshot.child("bill_paid3").getValue(String.class);
-                                breakDownMoney4_tx = snapshot.child("resource_price1").getValue(String.class);
-                                breakDownMoney5_tx = snapshot.child("resource_price2").getValue(String.class);
-                                breakDownMoney6_tx = snapshot.child("resource_price3").getValue(String.class);
-                                breakDownMoney7_tx = snapshot.child("resource_price4").getValue(String.class);
-                                breakDownMoney8_tx = snapshot.child("resource_price5").getValue(String.class);
-
-                                if (TextUtils.equals(breakDownMoney1_tx,"")){
-                                    breakDownMoney1_tx = "0";
-                                }
-
-                            if (TextUtils.equals(breakDownMoney2_tx,"")){
-                                breakDownMoney2_tx = "0";
-                            }
-
-                            if (TextUtils.equals(breakDownMoney3_tx,"")){
-                                breakDownMoney3_tx = "0";
-                            }
-
-                            if (TextUtils.equals(breakDownMoney4_tx,"")){
-                                breakDownMoney4_tx = "0";
-                            }
-
-                            if (TextUtils.equals(breakDownMoney5_tx,"")){
-                                breakDownMoney5_tx = "0";
-                            }
-
-                            if (TextUtils.equals(breakDownMoney6_tx,"")){
-                                breakDownMoney6_tx = "0";
-                            }
-
-                            if (TextUtils.equals(breakDownMoney7_tx,"")){
-                                breakDownMoney7_tx = "0";
-                            }
-
-                            if (TextUtils.equals(breakDownMoney8_tx,"")){
-                                breakDownMoney8_tx = "0";
-                            }
-                            try{
-                                l = l + Integer.parseInt(breakDownMoney1_tx) + Integer.parseInt(breakDownMoney2_tx)+  Integer.parseInt(breakDownMoney3_tx)+
-                                        Integer.parseInt(breakDownMoney4_tx)+  Integer.parseInt(breakDownMoney5_tx)+  Integer.parseInt(breakDownMoney6_tx)+
-                                        Integer.parseInt(breakDownMoney7_tx)+  Integer.parseInt(breakDownMoney8_tx);
-                            }
-                            catch (NumberFormatException e){
-                                e.printStackTrace();
-                            }
 
 
-                        }
-
-                        breakDownMoney_tv.setText("Rs "+String.valueOf(l));
-                        total = total + l;
-                        total_tv.setText(String.valueOf("Rs "+total));
-
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
 
 
 

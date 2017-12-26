@@ -1,0 +1,208 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@color/white"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    tools:context="com.enhabyto.rajpetroleum.FuelRate">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        >
+
+
+
+
+    <!-- TODO: Update blank fragment layout -->
+    <util.android.textviews.FontTextView
+        android:id="@+id/fr_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="droidsansbold.ttf"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="pump name"
+        android:textColor="@color/black"
+        android:textAllCaps="true"
+        android:textSize="16sp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/fr_pumpNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fr_text"
+        android:background="@drawable/rounded_edit_text_black"
+        android:hint="Enter Pump Name"
+        android:inputType="text"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/blackFifty"
+        android:textSize="20sp" />
+
+
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/fr_openCreatePumpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/fr_pumpNameEditText"
+        android:paddingBottom="8dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="8dp"
+        fancy:fb_borderColor="#FFFFFF"
+        fancy:fb_borderWidth="1dp"
+        fancy:fb_defaultColor="@color/lightRed"
+        fancy:fb_focusColor="@color/black"
+        fancy:fb_fontIconResource="&#xf1d9;"
+        fancy:fb_iconPosition="right"
+        fancy:fb_radius="3dp"
+        fancy:fb_text="Select"
+        fancy:fb_textColor="@color/black"
+        android:layout_marginTop="8dp"
+        />
+
+    <!-- Spinner Element -->
+    <Spinner
+        android:id="@+id/fr_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fr_pumpNameEditText"
+        android:layout_marginTop="10dp"
+        android:prompt="@string/spinnerTitle"
+        android:textAlignment="textEnd"
+        android:layout_toStartOf="@+id/fr_openCreatePumpButton"
+        android:layout_marginEnd="16dp"
+        android:spinnerMode="dropdown"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_below="@+id/fr_openCreatePumpButton"
+        android:visibility="gone"
+        >
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/fr_previousRateTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Previous Rate: "
+            android:textColor="@color/blackNinety"
+            android:textSize="14sp" />
+
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/fr_previousRateTextView"
+            android:layout_toEndOf="@+id/fr_previousRateTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Previous Rate"
+            android:textColor="@color/lightGreen"
+            android:textSize="16sp" />
+
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/fr_updatedOnTextView1"
+            android:layout_below="@+id/fr_previousRateTextView"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Update Date Time: "
+            android:textColor="@color/blackNinety"
+            android:textSize="14sp" />
+
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/fr_updatedOnTextView"
+            android:layout_toEndOf="@+id/fr_updatedOnTextView1"
+            android:layout_alignTop="@+id/fr_updatedOnTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Previous Rate"
+            android:textColor="@color/lightGreen"
+            android:textSize="16sp" />
+
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/fr_NewRateTextView1"
+            android:layout_below="@+id/fr_updatedOnTextView"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:gravity="center"
+            android:textStyle="normal"
+            android:text="Enter New Rate"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/fr_NewRateEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fr_NewRateTextView1"
+            android:background="@drawable/rounded_edit_text_black"
+            android:padding="5dp"
+            android:hint="       "
+            android:maxLength="2"
+            android:textStyle="bold"
+            android:drawableLeft="@drawable/rupee_logo_mini"
+            android:drawablePadding="7dp"
+            android:gravity="center"
+            />
+
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/emergency_submitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/emergency_contact3EditText"
+            android:layout_alignBottom="@+id/fr_NewRateEditText"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@color/lightGreen"
+            fancy:fb_focusColor="@color/black"
+            fancy:fb_fontIconResource="&#xf043;"
+            fancy:fb_iconPosition="right"
+            fancy:fb_radius="3dp"
+            fancy:fb_textColor="@color/black"
+            android:layout_marginTop="16dp"
+            fancy:fb_text="Update"
+            />
+
+
+
+
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</FrameLayout>

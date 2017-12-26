@@ -509,6 +509,8 @@ public class DashBoard extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_FuelRate) {
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new FuelRate()).addToBackStack("AdminFragment").commit();
+
 
         }
         else if (id == R.id.nav_allocateTruck){
@@ -679,7 +681,7 @@ public class DashBoard extends AppCompatActivity
 
                 }
             }
-        },10000);
+        },15000);
     }
 
     //end
