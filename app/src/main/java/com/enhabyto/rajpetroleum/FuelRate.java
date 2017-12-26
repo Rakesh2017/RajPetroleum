@@ -1,6 +1,7 @@
 package com.enhabyto.rajpetroleum;
 
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -19,10 +20,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import dmax.dialog.SpotsDialog;
+import mehdi.sakout.fancybuttons.FancyButton;
 import util.android.textviews.FontTextView;
 
 
@@ -33,8 +37,13 @@ public class FuelRate extends Fragment {
 
     View view;
 
+    DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+    private AlertDialog dialog;
+
     EditText newPrice_et;
-    String newPrice_tx;
+    String newPrice_tx, pumpName_tx;
+
+    FancyButton select_btn;
 
     AutoCompleteTextView pumpName_et;
     Spinner spinner;
@@ -61,6 +70,10 @@ public class FuelRate extends Fragment {
         spinner = view.findViewById(R.id.fr_spinner);
         previousRate_tv = view.findViewById(R.id.fr_previousRateTextView);
         updatedOn_tv = view.findViewById(R.id.fr_updatedOnTextView);
+        select_btn = view.findViewById(R.id.fr_openCreatePumpButton);
+
+        dialog = new SpotsDialog(getActivity(), R.style.dialog_updating);
+
 
 
 //     spinner
@@ -89,6 +102,89 @@ public class FuelRate extends Fragment {
 
                 }
                 return false;
+            }
+        });
+
+
+
+        select_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.show();
+                pumpName_tx = pumpName_et.getText().toString().trim();
+
+                if (pumpName_tx.isEmpty()){
+                    Alerter.create(getActivity())
+                            .setTitle("Enter Pump Name!")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                    dialog.dismiss();
+                    return;
+                }
+
+                root.child("pump_details")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.hasChild(pumpName_tx)){
+
+                                    root.child("fuel_rate").child(pumpName_tx)
+                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            view.findViewById(R.id.fr_relative).setVisibility(View.VISIBLE);
+                                            String previousRate_tx = dataSnapshot.child("previous_rate").getValue(String.class);
+                                            String updatedOn_tx = dataSnapshot.child("updated_on").getValue(String.class);
+
+                                            if (TextUtils.isEmpty(previousRate_tx)){
+                                                previousRate_tx = "unknown";
+                                                previousRate_tv.setTextColor(getResources().getColor(R.color.lightRed));
+                                            }
+
+                                            if (TextUtils.isEmpty(updatedOn_tx)){
+                                                updatedOn_tx = "unknown";
+                                                updatedOn_tv.setTextColor(getResources().getColor(R.color.lightRed));
+                                            }
+
+
+                                            previousRate_tv.setText(previousRate_tx);
+                                            updatedOn_tv.setText(updatedOn_tx);
+
+                                            newPrice_et.setText("");
+                                            dialog.dismiss();
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                }
+
+
+                                else {
+                                    Alerter.create(getActivity())
+                                            .setTitle("There is no such Pump!")
+                                            .setContentGravity(1)
+                                            .setBackgroundColorRes(R.color.black)
+                                            .setIcon(R.drawable.error)
+                                            .show();
+                                    dialog.dismiss();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
             }
         });
 

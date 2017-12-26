@@ -84,15 +84,35 @@
         />
 
     <RelativeLayout
+        android:id="@+id/fr_relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:layout_marginTop="16dp"
         android:layout_below="@+id/fr_openCreatePumpButton"
-        android:visibility="gone"
+
         >
+
+
+
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="PUMP NAME"
+            android:textColor="@color/blackNinety"
+            android:textSize="18sp" />
+
 
         <util.android.textviews.FontTextView
             android:id="@+id/fr_previousRateTextView1"
+            android:layout_below="@+id/header_text"
+            android:layout_marginTop="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="droidsansbold.ttf"
@@ -105,21 +125,22 @@
 
         <util.android.textviews.FontTextView
             android:id="@+id/fr_previousRateTextView"
-            android:layout_toEndOf="@+id/fr_previousRateTextView1"
+            android:layout_below="@+id/fr_previousRateTextView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="droidsansbold.ttf"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="Previous Rate"
+            android:text="chgfdhgfhg"
             android:textColor="@color/lightGreen"
             android:textSize="16sp" />
 
 
         <util.android.textviews.FontTextView
             android:id="@+id/fr_updatedOnTextView1"
-            android:layout_below="@+id/fr_previousRateTextView"
-            android:layout_marginTop="8dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/header_text"
+            android:layout_marginTop="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="droidsansbold.ttf"
@@ -132,8 +153,8 @@
 
         <util.android.textviews.FontTextView
             android:id="@+id/fr_updatedOnTextView"
-            android:layout_toEndOf="@+id/fr_updatedOnTextView1"
-            android:layout_alignTop="@+id/fr_updatedOnTextView1"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/fr_updatedOnTextView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="droidsansbold.ttf"
@@ -147,7 +168,7 @@
         <util.android.textviews.FontTextView
             android:id="@+id/fr_NewRateTextView1"
             android:layout_below="@+id/fr_updatedOnTextView"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="droidsansbold.ttf"
@@ -155,7 +176,7 @@
             android:textStyle="normal"
             android:text="Enter New Rate"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/fr_NewRateEditText"
@@ -164,12 +185,25 @@
             android:layout_below="@+id/fr_NewRateTextView1"
             android:background="@drawable/rounded_edit_text_black"
             android:padding="5dp"
-            android:hint="       "
+            android:hint="             "
             android:maxLength="2"
             android:textStyle="bold"
             android:drawableLeft="@drawable/rupee_logo_mini"
             android:drawablePadding="7dp"
             android:gravity="center"
+            android:textColor="@color/naturalBlue"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/fr_NewRateEditText"
+            android:text="/ Litre"
+            android:layout_alignBottom="@+id/fr_NewRateEditText"
+            android:layout_marginStart="6dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             />
 
 
@@ -180,7 +214,7 @@
             android:layout_alignParentEnd="true"
             android:layout_below="@id/emergency_contact3EditText"
             android:layout_alignBottom="@+id/fr_NewRateEditText"
-            android:paddingBottom="10dp"
+            android:paddingBottom="8dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="10dp"

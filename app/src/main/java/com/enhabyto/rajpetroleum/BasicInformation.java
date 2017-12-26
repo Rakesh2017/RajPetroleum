@@ -41,8 +41,6 @@ public class BasicInformation extends Fragment {
     private AlertDialog dialog;
     private FirebaseUser user;
 
-    private int count = 1;
-
 
     public BasicInformation() {
         // Required empty public constructor
@@ -158,13 +156,18 @@ public class BasicInformation extends Fragment {
                 d_refAdminProfile.child("designation").setValue(designation_tx);
                 d_refAdminProfile.child("contact").setValue(contact_tx);
                 d_refAdminProfile.child("age").setValue(age_tx);
-                SharedPreferences dataSave = getActivity().getSharedPreferences("firstLog", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = dataSave.edit();
-                editor.putString("LaunchApplication", "DashBoard");
-                editor.apply();
+
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+
+
+                        SharedPreferences dataSave = getActivity().getSharedPreferences("firstLog", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = dataSave.edit();
+                        editor.putString("LaunchApplication", "DashBoard");
+                        editor.putString("user_designation", "admin");
+                        editor.apply();
+
 
                         Intent intent = new Intent(getContext(), DashBoard.class);
                         startActivity(intent);
@@ -194,9 +197,9 @@ public class BasicInformation extends Fragment {
 
         DatabaseReference d_refAdminProfile;
         assert user != null;
-        d_refAdminProfile = d_root.child("admin").child(user.getUid()).child("profile");
+        d_refAdminProfile = d_root.child("admin").child("profile");
 
-        if (count == 1){
+
 
             d_refAdminProfile.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -221,7 +224,7 @@ public class BasicInformation extends Fragment {
             });
 
 
-        }
+
 
     }
 }

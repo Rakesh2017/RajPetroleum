@@ -119,22 +119,6 @@ public class Login extends AppCompatActivity {
                     dialog.dismiss();
                     return;
                 }
-                connectedRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        connected = dataSnapshot.getValue(String.class);
-
-                        if (!TextUtils.equals(connected, "connected")){
-                            Alerter.create(Login.this)
-                                    .setTitle("Unable to Connect to Server!")
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.no_internet)
-                                    .show();
-                            //    Log.w("123", connected);
-                            dialog.dismiss();
-                            return;
-                        }
 
                         mAuth.signInWithEmailAndPassword(email_tx, password_tx)
                                 .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
@@ -144,50 +128,9 @@ public class Login extends AppCompatActivity {
                                             // Sign in success, update UI with the signed-in user's information
                                             //   Log.d("123", "signInWithEmail:success");
                                             FirebaseUser user = mAuth.getCurrentUser();
-                                            DatabaseReference d_refAdminProfile;
-                                            assert user != null;
-                                            d_refAdminProfile = d_root.child("admin").child("profile");
 
 
-
-                                            d_refAdminProfile.addValueEventListener(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                                    String name_tx = dataSnapshot.child("name").getValue(String.class);
-                                                    String designation_tx = dataSnapshot.child("designation").getValue(String.class);
-                                                    String contact_tx = dataSnapshot.child("contact").getValue(String.class);
-                                                    String age_tx = dataSnapshot.child("age").getValue(String.class);
-
-
-                                                    if (TextUtils.isEmpty(name_tx) || TextUtils.isEmpty(contact_tx) || TextUtils.isEmpty(designation_tx) || TextUtils.isEmpty(age_tx)){
-                                                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_Login,new BasicInformation()).addToBackStack(null).commit();
-                                                        dialog.dismiss();
-                                                    }
-                                                    else {
-                                                        SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
-                                                        SharedPreferences.Editor editor = dataSave.edit();
-                                                        editor.putString("LaunchApplication", "DashBoard");
-                                                        editor.putString("user_designation", "admin");
-                                                        editor.commit();
-
-
-                                                        //editor2.putString("user_designation", "admin");
-                                                        //editor2.commit();
-
-                                                        Intent intent = new Intent(Login.this, DashBoard.class);
-                                                        startActivity(intent);
-                                                    }
-
-
-                                                }
-
-                                                @Override
-                                                public void onCancelled(DatabaseError databaseError) {
-
-                                                }
-                                            });
-
-                                            // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_Login,new BasicInformation()).addToBackStack(null).commit();
+                                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_Login,new BasicInformation()).addToBackStack(null).commit();
 
                                             editor1.putString("A",email_tx).commit();
                                             dialog.dismiss();
@@ -220,13 +163,6 @@ public class Login extends AppCompatActivity {
                                         // ...
                                     }
                                 });
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
 
 
             }

@@ -155,7 +155,7 @@
             fancy:fb_fontIconResource="&#xf1d8;"
             fancy:fb_iconPosition="right"
             fancy:fb_radius="3dp"
-            fancy:fb_text="Submit"
+            fancy:fb_text="Continue"
             fancy:fb_textColor="@color/black"
             android:layout_below="@+id/bi_b"
             android:layout_centerHorizontal="true"
