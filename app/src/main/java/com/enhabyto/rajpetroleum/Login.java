@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -127,12 +128,10 @@ public class Login extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             // Sign in success, update UI with the signed-in user's information
                                             //   Log.d("123", "signInWithEmail:success");
-                                            FirebaseUser user = mAuth.getCurrentUser();
-
 
                                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_Login,new BasicInformation()).addToBackStack(null).commit();
 
-                                            editor1.putString("A",email_tx).commit();
+
                                             dialog.dismiss();
 
                                         } else {
@@ -140,7 +139,7 @@ public class Login extends AppCompatActivity {
                                             SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
                                             SharedPreferences.Editor editor = dataSave.edit();
                                             editor.putString("LaunchApplication", "Login");
-                                            editor.commit();
+                                            editor.apply();
 
                                             String message = "";
                                             try {
@@ -242,7 +241,7 @@ public class Login extends AppCompatActivity {
                                     editor.putString("LaunchApplication", "DashBoard");
                                     editor.putString("user_designation", "subAdmin");
                                     editor.putString("subAdmin_contact", contact_tx);
-                                    editor.commit();
+                                    editor.apply();
 
 
                                     // editor2.putString("user_designation", "subAdmin");
@@ -252,11 +251,13 @@ public class Login extends AppCompatActivity {
 
                                     Intent intent = new Intent(Login.this, DashBoard.class);
                                     startActivity(intent);
+                                    Login.this.finish();
                                     dialog.dismiss();
                                 }
                                 else {
                                     Alerter.create(Login.this)
-                                            .setTitle("Invalid Login Credentials, Contact Admin for more information!")
+                                            .setTitle("Invalid Login Credentials")
+                                            .setText("Contact Owner/Admin for more information!")
                                             .setContentGravity(1)
                                             .setBackgroundColorRes(R.color.black)
                                             .setIcon(R.drawable.no_internet)
@@ -305,17 +306,17 @@ public class Login extends AppCompatActivity {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
-    public void onStart(){
+ /*   public void onStart(){
         super.onStart();
 
 
         SharedPreferences dataSave = getSharedPreferences("firstLog", 0);
 
-        if(dataSave.getString("LaunchApplication","keys").equals("DashBoard")){
+        if(dataSave.getString("LaunchApplication","").equals("DashBoard")){
             Intent intent = new Intent(Login.this, DashBoard.class);
             startActivity(intent);
         }
 
-    }
+    }*/
 
 }//end

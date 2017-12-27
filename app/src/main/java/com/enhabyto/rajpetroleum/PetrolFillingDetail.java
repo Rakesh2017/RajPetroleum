@@ -202,6 +202,8 @@ public class PetrolFillingDetail extends Fragment {
                                     editor.putString("money_paid", postSnapshot.child("money_paid").getValue(String.class));
                                     editor.putString("state", postSnapshot.child("state").getValue(String.class));
                                     editor.putString("token_number", postSnapshot.child("token_number").getValue(String.class));
+                                    editor.putString("pump_fuel_rate", postSnapshot.child("pump_fuel_rate").getValue(String.class));
+                                    editor.putString("pump_fuel_rate_date", postSnapshot.child("pump_fuel_rate_date").getValue(String.class));
                                     editor.putString("gps_location", postSnapshot.child("gps_location").getValue(String.class));
                                     editor.putString("date", date);
                                     editor.putString("time", time);
@@ -243,6 +245,9 @@ public class PetrolFillingDetail extends Fragment {
                                         sheet.addCell(new Label(6, 0, "Token"));
                                         sheet.addCell(new Label(7, 0, "Money Paid"));
                                         sheet.addCell(new Label(8, 0, "State"));
+                                        sheet.addCell(new Label(9, 0, "Pump Fuel Rate"));
+                                        sheet.addCell(new Label(10, 0, "Pump Fuel Date"));
+                                        sheet.addCell(new Label(11, 0, ""));
 
                                         if (cursor.moveToFirst()) {
                                             do {
@@ -255,9 +260,14 @@ public class PetrolFillingDetail extends Fragment {
                                                 String tokenNumber = cursor.getString(cursor.getColumnIndex("token_number"));
                                                 String moneyPaid = cursor.getString(cursor.getColumnIndex("money_paid"));
                                                 String state = cursor.getString(cursor.getColumnIndex("state"));
+                                                String pumpFuelRate = cursor.getString(cursor.getColumnIndex("pump_fuel_rate"));
+                                                String pumpFuelRateDate = cursor.getString(cursor.getColumnIndex("pump_fuel_rate_date"));
 
                                                 int i = cursor.getPosition() + 1;
 
+                                                sheet.addCell(new Label(11, i, ""));
+                                                sheet.addCell(new Label(10, i, pumpFuelRateDate));
+                                                sheet.addCell(new Label(9, i, pumpFuelRate));
                                                 sheet.addCell(new Label(8, i, state));
                                                 sheet.addCell(new Label(7, i, moneyPaid));
                                                 sheet.addCell(new Label(6, i, tokenNumber));

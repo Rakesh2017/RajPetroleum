@@ -103,7 +103,7 @@
             android:layout_marginTop="3dp"
             android:textSize="14dp"
             android:textColor="@color/blackNinety"
-            android:text="Total Scheduled Trips By You:"
+            android:text="Total Trips Scheduled By You:"
             android:gravity="center"
             android:id="@+id/scheduleList_total1TextView"
             />

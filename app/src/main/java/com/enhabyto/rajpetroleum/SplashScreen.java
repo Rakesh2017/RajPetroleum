@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
+
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
@@ -36,14 +38,22 @@ public class SplashScreen extends AppCompatActivity {
                 .playOn(findViewById(R.id.splash_logo));
 
 
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkPermissions();
+            }
+        });
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                checkPermissions();
 
                 SharedPreferences dataSave = getSharedPreferences("firstLog", 0);
 
                 try {
-                    if(dataSave.getString("LaunchApplication","keys").equals("DashBoard")){
+                    if(dataSave.getString("LaunchApplication","").equals("DashBoard")){
                         Intent intent = new Intent(SplashScreen.this, DashBoard.class);
                         startActivity(intent);
                         SplashScreen.this.finish();
@@ -53,17 +63,12 @@ public class SplashScreen extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                checkPermissions();
-                button = findViewById(R.id.splash_submitButton);
+                button.setVisibility(View.VISIBLE);
+                YoYo.with(Techniques.FadeIn)
+                        .duration(3000)
+                        .repeat(0)
+                        .playOn(button);
 
-                checkPermissions();
-
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        checkPermissions();
-                    }
-                });
 
             }
         },3500);
@@ -80,11 +85,7 @@ public class SplashScreen extends AppCompatActivity {
             ActivityCompat.requestPermissions(SplashScreen.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION
                     , android.Manifest.permission.CALL_PHONE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
-            button.setVisibility(View.VISIBLE);
-            YoYo.with(Techniques.FadeIn)
-                    .duration(3000)
-                    .repeat(0)
-                    .playOn(button);
+
         }
 
         else {

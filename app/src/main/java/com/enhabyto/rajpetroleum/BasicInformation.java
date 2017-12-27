@@ -171,6 +171,8 @@ public class BasicInformation extends Fragment {
 
                         Intent intent = new Intent(getContext(), DashBoard.class);
                         startActivity(intent);
+
+                        getActivity().finish();
                         dialog.dismiss();
                     }
                 },1500);

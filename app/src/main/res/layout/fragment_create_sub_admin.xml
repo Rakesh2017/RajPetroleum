@@ -555,7 +555,182 @@
                 </co.ceryle.radiorealbutton.RadioRealButtonGroup>
 
 
-                <mehdi.sakout.fancybuttons.FancyButton
+                <!--all trips Priveleges-->
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_allTripsTextView"
+                    android:layout_below="@+id/cs_truckSelector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:text="App Trips"
+                    android:textColor="@color/blackNinety"
+                    android:textSize="16sp" />
+
+                <!--Selector-->
+                <co.ceryle.radiorealbutton.RadioRealButtonGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cs_allTripsSelector"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_below="@+id/cs_allTripsTextView"
+                    app:rrbg_animateDrawables_enter="overshoot"
+                    app:rrbg_animateTexts_enter="overshoot"
+                    app:rrbg_dividerColor="@color/black"
+                    app:rrbg_dividerSize="1dp"
+                    app:rrbg_radius="10dp"
+                    app:rrbg_selectorColor="@color/lightGreen"
+                    app:rrbg_selectorSize="6dp">
+
+                    <co.ceryle.radiorealbutton.RadioRealButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cs_cs_allTripsTextViewYes"
+                        app:rrb_drawableHeight="36dp"
+                        app:rrb_drawablePadding="8dp"
+                        app:rrb_drawableWidth="36dp"
+                        app:rrb_ripple="true"
+                        app:rrb_rippleColor="@color/black"
+                        app:rrb_text="Grant"
+                        app:rrb_textColor="@color/black"/>
+
+                    <co.ceryle.radiorealbutton.RadioRealButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cs_cs_allTripsTextViewNo"
+                        app:rrb_drawableGravity="right"
+                        app:rrb_drawableHeight="36dp"
+                        app:rrb_drawablePadding="8dp"
+                        app:rrb_drawableWidth="36dp"
+                        app:rrb_ripple="true"
+                        app:rrb_rippleColor="@color/black"
+                        app:rrb_text="Deny"
+                        app:rrb_textColor="@color/black"/>
+                </co.ceryle.radiorealbutton.RadioRealButtonGroup>
+
+
+
+
+                <!--Schedule trips Priveleges-->
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_scheduleTripsTextView"
+                    android:layout_below="@+id/cs_allTripsSelector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:text="Schedule Trip"
+                    android:textColor="@color/blackNinety"
+                    android:textSize="16sp" />
+
+                <!--Selector-->
+                <co.ceryle.radiorealbutton.RadioRealButtonGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cs_scheduleTripsSelector"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_below="@+id/cs_scheduleTripsTextView"
+                    app:rrbg_animateDrawables_enter="overshoot"
+                    app:rrbg_animateTexts_enter="overshoot"
+                    app:rrbg_dividerColor="@color/black"
+                    app:rrbg_dividerSize="1dp"
+                    app:rrbg_radius="10dp"
+                    app:rrbg_selectorColor="@color/lightGreen"
+                    app:rrbg_selectorSize="6dp">
+
+                    <co.ceryle.radiorealbutton.RadioRealButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cs_cs_scheduleTripsTextViewYes"
+                        app:rrb_drawableHeight="36dp"
+                        app:rrb_drawablePadding="8dp"
+                        app:rrb_drawableWidth="36dp"
+                        app:rrb_ripple="true"
+                        app:rrb_rippleColor="@color/black"
+                        app:rrb_text="Grant"
+                        app:rrb_textColor="@color/black"/>
+
+                    <co.ceryle.radiorealbutton.RadioRealButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cs_cs_scheduleTripsTextViewNo"
+                        app:rrb_drawableGravity="right"
+                        app:rrb_drawableHeight="36dp"
+                        app:rrb_drawablePadding="8dp"
+                        app:rrb_drawableWidth="36dp"
+                        app:rrb_ripple="true"
+                        app:rrb_rippleColor="@color/black"
+                        app:rrb_text="Deny"
+                        app:rrb_textColor="@color/black"/>
+                </co.ceryle.radiorealbutton.RadioRealButtonGroup>
+
+
+
+
+                <!--Fuel Rate Priveleges-->
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/cs_fuelRateTextView"
+                    android:layout_below="@+id/cs_scheduleTripsSelector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="droidsansbold.ttf"
+                    android:text="Schedule Trip"
+                    android:textColor="@color/blackNinety"
+                    android:textSize="16sp" />
+
+                <!--Selector-->
+                <co.ceryle.radiorealbutton.RadioRealButtonGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cs_fuelRateSelector"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_below="@+id/cs_fuelRateTextView"
+                    app:rrbg_animateDrawables_enter="overshoot"
+                    app:rrbg_animateTexts_enter="overshoot"
+                    app:rrbg_dividerColor="@color/black"
+                    app:rrbg_dividerSize="1dp"
+                    app:rrbg_radius="10dp"
+                    app:rrbg_selectorColor="@color/lightGreen"
+                    app:rrbg_selectorSize="6dp">
+
+                    <co.ceryle.radiorealbutton.RadioRealButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cs_cs_fuelRateTextViewYes"
+                        app:rrb_drawableHeight="36dp"
+                        app:rrb_drawablePadding="8dp"
+                        app:rrb_drawableWidth="36dp"
+                        app:rrb_ripple="true"
+                        app:rrb_rippleColor="@color/black"
+                        app:rrb_text="Grant"
+                        app:rrb_textColor="@color/black"/>
+
+                    <co.ceryle.radiorealbutton.RadioRealButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cs_cs_fuelRateTextViewNo"
+                        app:rrb_drawableGravity="right"
+                        app:rrb_drawableHeight="36dp"
+                        app:rrb_drawablePadding="8dp"
+                        app:rrb_drawableWidth="36dp"
+                        app:rrb_ripple="true"
+                        app:rrb_rippleColor="@color/black"
+                        app:rrb_text="Deny"
+                        app:rrb_textColor="@color/black"/>
+                </co.ceryle.radiorealbutton.RadioRealButtonGroup>
+
+
+               <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/cs_submitButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -572,9 +747,9 @@
                     fancy:fb_radius="3dp"
                     fancy:fb_text="Update"
                     fancy:fb_textColor="@color/black"
-                    android:layout_below="@+id/cs_truckSelector"
+                    android:layout_below="@+id/cs_fuelRateSelector"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="16dp"
                     />
 
 

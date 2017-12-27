@@ -492,7 +492,6 @@ public class DashBoard extends AppCompatActivity
                                     .setTitle("Access Denied!")
                                     .setText("You do not have permission to Create Pump")
                                     .setContentGravity(1)
-                                    .setContentGravity(1)
                                     .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.error)
                                     .show();
@@ -509,7 +508,42 @@ public class DashBoard extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_FuelRate) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new FuelRate()).addToBackStack("AdminFragment").commit();
+
+            if (TextUtils.equals(user_designation, "admin")){
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new FuelRate()).addToBackStack("AdminFragment").commit();
+            }
+            else {
+
+                d_subProfile = d_root.child("sub_admin_profiles").child(sub_admin_contact).child("permissions");
+                d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String permission = dataSnapshot.child("fuel_rate_permission").getValue(String.class);
+                        if (TextUtils.equals(permission, "granted")) {
+                            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new FuelRate()).addToBackStack("AdminFragment").commit();
+
+                        } else {
+                            Alerter.create(DashBoard.this)
+                                    .setTitle("Access Denied!")
+                                    .setText("You do not have permission to update Fuel Price")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.error)
+                                    .show();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+
+
 
 
         }
@@ -558,11 +592,6 @@ public class DashBoard extends AppCompatActivity
                 public void onClick(@NonNull final MaterialDialog dialog, @NonNull DialogAction which) {
                     final AlertDialog dialog1 = new SpotsDialog(DashBoard.this,R.style.LoggingOut);
                     dialog1.show();
-                    SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = dataSave.edit();
-                    editor.putString("LaunchApplication", "Login");
-                    editor.apply();
-
 
 
                     try {
@@ -591,6 +620,12 @@ public class DashBoard extends AppCompatActivity
 
                     new Handler().postDelayed(new Runnable() {
                         public void run() {
+                            SharedPreferences dataSave = getSharedPreferences("firstLog", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = dataSave.edit();
+                            editor.putString("LaunchApplication", "Login");
+                            editor.apply();
+
+
                             SharedPreferences.Editor editor1;
                             SharedPreferences sharedPreferences = getSharedPreferences("Prefs", Context.MODE_PRIVATE);
                             editor1 = sharedPreferences.edit();

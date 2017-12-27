@@ -8,7 +8,7 @@ package com.enhabyto.rajpetroleum;
 public class ImageUploadInfo {
 
 
-    public String imageURL;
+    public String imageURL, current_rate, set_by, updated_on;
 
     public ImageUploadInfo() {
 
@@ -21,6 +21,18 @@ public class ImageUploadInfo {
 
     public String getImageURL() {
         return imageURL;
+    }
+
+    public String getCurrent_rate() {
+        return current_rate;
+    }
+
+    public String getSet_by() {
+        return set_by;
+    }
+
+    public String getUpdated_on() {
+        return updated_on;
     }
 
 }

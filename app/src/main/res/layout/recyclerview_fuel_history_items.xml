@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    card_view:contentPadding="2dp"
+    android:background="@color/white"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dash_relativeLayout"
+        android:background="@drawable/rounded_edit_text_black"
+        android:paddingBottom="4dp"
+        >
+
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fr_indexTextView"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            />
+
+        <!--gps location-->
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fr_price1TextView"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/black"
+            android:text="Fuel Price:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="3dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fr_priceTextView"
+            android:layout_toEndOf="@id/fr_price1TextView"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/saddleBrown"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:onClick="onClick"
+            android:layout_marginTop="3dp"
+            />
+
+
+
+
+        <!--pump name-->
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fr_updatedOn1TextView"
+            android:layout_below="@+id/fr_priceTextView"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/black"
+            android:text="Updated On:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="3dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fr_updatedOnTextView"
+            android:layout_toEndOf="@id/fr_updatedOn1TextView"
+            android:layout_below="@+id/fr_priceTextView"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/naturalBlue"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="3dp"
+            />
+
+
+        <!--token number-->
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fr_setBy1TextView"
+            android:layout_below="@+id/fr_updatedOnTextView"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/black"
+            android:text="Updated By:"
+            android:textStyle="normal"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fr_setByTextView"
+            android:layout_toEndOf="@id/fr_setBy1TextView"
+            android:layout_below="@+id/fr_updatedOnTextView"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/naturalBlue"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"
+            />
+
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

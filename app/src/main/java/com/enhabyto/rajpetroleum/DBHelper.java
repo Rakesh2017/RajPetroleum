@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
             ,description, amount_paid, amount_paid_for, filling_name, quantity, oil_loaded, next_stoppage, location
             , state_name, oil_unloaded, oil_left, failure_name, resource_name1, resource_price1, resource_quantity1, resource_name2, resource_price2, resource_quantity2
             , resource_name3, resource_price3, resource_quantity3, resource_name4, resource_price4, resource_quantity4, resource_name5, resource_price5, resource_quantity5
-            , bill_paid1, bill_paid2, bill_paid3;
+            , bill_paid1, bill_paid2, bill_paid3, pump_fuel_rate, pump_fuel_rate_date;
 
 
     SharedPreferences sharedPreferences;
@@ -55,6 +55,8 @@ public class DBHelper extends SQLiteOpenHelper {
             money_paid = sharedPreferences.getString("money_paid", "");
             state = sharedPreferences.getString("state", "");
             token_number = sharedPreferences.getString("token_number", "");
+            pump_fuel_rate = sharedPreferences.getString("pump_fuel_rate", "");
+            pump_fuel_rate_date = sharedPreferences.getString("pump_fuel_rate_date", "");
 
 
             SQLiteDatabase db1 = this.getWritableDatabase();
@@ -68,6 +70,8 @@ public class DBHelper extends SQLiteOpenHelper {
             contentValues.put("token_number", token_number);
             contentValues.put("state", state);
             contentValues.put("money_paid", money_paid);
+            contentValues.put("pump_fuel_rate", pump_fuel_rate);
+            contentValues.put("pump_fuel_rate_date", pump_fuel_rate_date);
 
             db1.insert(table_name, null, contentValues);
         }
@@ -91,7 +95,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(
                 "CREATE TABLE IF NOT EXISTS " + table_name +
                         "(id integer primary key, pump_name text, petrol_filled text, address text, date text, time text" +
-                        ", gps_location text, token_number text, money_paid text, state text)"
+                        ", gps_location text, token_number text, money_paid text, state text, pump_fuel_rate text" +
+                        ", pump_fuel_rate_date text)"
         );
     }
 

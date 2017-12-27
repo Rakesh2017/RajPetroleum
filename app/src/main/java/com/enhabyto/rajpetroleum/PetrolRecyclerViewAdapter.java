@@ -29,7 +29,7 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
 
     Context context;
     List<PetrolFillingRecyclerInfo> MainImageUploadInfoList;
-    String month;
+    String month, date;
     int position1;
     String day, year, hour, minute;
 
@@ -69,27 +69,23 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
         holder.total_tv.setText("Rs "+UploadInfo.getTotal_money());
         holder.litres_tv.setText(UploadInfo.getPetrol_filled()+" litres");
         holder.gpsLocation_tv.setText(UploadInfo.getGps_location());
+        holder.pumpRate_tv.setText("Rs "+UploadInfo.getPump_fuel_rate()+"/litre");
 
-        String date = UploadInfo.getDate_time();
 
-        try {
-             day = TextUtils.substring(date, 0, 2);
-             month = TextUtils.substring(date, 3, 5);
-             year = TextUtils.substring(date, 6, 10);
-             hour = TextUtils.substring(date, 11, 13);
-             minute = TextUtils.substring(date, 14, 16);
-            conversion();
-
-            SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = dataSave.edit();
-            editor.putString("startDate", day+" "+month+" "+year+", "+hour+":"+minute);
-            editor.apply();
-
-            holder.date_time_tv.setText(day+"-"+month+"-"+year+", "+hour+":"+minute);
+        if (TextUtils.isEmpty(UploadInfo.getPump_fuel_rate())){
+            holder.pumpRate_tv.setText("NA");
+            holder.pumpRate_tv.setTextColor(Color.GRAY);
         }
-        catch (NullPointerException e){
-            e.printStackTrace();
-        }
+
+        date = UploadInfo.getDate_time();
+        dateTime();
+        holder.date_time_tv.setText(day+"-"+month+"-"+year+", "+hour+":"+minute);
+
+        date = UploadInfo.getPump_fuel_rate_date();
+        dateTime();
+        holder.pumpRateDate_tv.setText(day+"-"+month+"-"+year+", "+hour+":"+minute);
+
+
 
         String url = UploadInfo.getImageURL();
 
@@ -175,7 +171,7 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
     class ViewHolder extends RecyclerView.ViewHolder {
 
         FontTextView pumpName_tv, tokenNumber_tv, pumpAddress_tv, stateName_tv, moneyPaid_tv, litres_tv, bill_tv, date_time_tv
-                ,header_tv, gpsLocation_tv, total_tv;
+                ,header_tv, gpsLocation_tv, total_tv, pumpRate_tv, pumpRateDate_tv;
         ImageView image, map_image;
 
 
@@ -193,6 +189,8 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
             header_tv = itemView.findViewById(R.id.petrol_headerTextView);
             gpsLocation_tv = itemView.findViewById(R.id.petrol_gpsLocationTextView);
             total_tv = itemView.findViewById(R.id.petrol_totalTextView);
+            pumpRate_tv = itemView.findViewById(R.id.petrol_pumpRateTextView);
+            pumpRateDate_tv = itemView.findViewById(R.id.petrol_pumpRateDateTextView);
 
             image = itemView.findViewById(R.id.petrol_billImage);
 
@@ -256,6 +254,28 @@ public class PetrolRecyclerViewAdapter  extends RecyclerView.Adapter<PetrolRecyc
 
 
         }
+      }
+
+      public void dateTime(){
+          try {
+              day = TextUtils.substring(date, 0, 2);
+              month = TextUtils.substring(date, 3, 5);
+              year = TextUtils.substring(date, 6, 10);
+              hour = TextUtils.substring(date, 11, 13);
+              minute = TextUtils.substring(date, 14, 16);
+              conversion();
+
+              SharedPreferences dataSave = context.getSharedPreferences("driverContact", Context.MODE_PRIVATE);
+              SharedPreferences.Editor editor = dataSave.edit();
+              editor.putString("startDate", day+" "+month+" "+year+", "+hour+":"+minute);
+              editor.apply();
+
+
+          }
+          catch (NullPointerException e){
+              e.printStackTrace();
+          }
+
       }
 
 }

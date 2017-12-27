@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,11 +8,13 @@
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     tools:context="com.enhabyto.rajpetroleum.FuelRate">
 
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:layout_marginTop="8dp"
         >
 
@@ -85,19 +87,20 @@
 
     <RelativeLayout
         android:id="@+id/fr_relative"
+        android:layout_marginTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_edit_text_black"
         android:layout_below="@+id/fr_openCreatePumpButton"
+        android:padding="7dp"
+        android:layout_marginBottom="3dp"
 
+        android:visibility="gone"
         >
 
 
-
-
         <util.android.textviews.FontTextView
-            android:id="@+id/header_text"
+            android:id="@+id/fr_headerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="droidsansbold.ttf"
@@ -105,20 +108,21 @@
             android:gravity="center"
             android:textStyle="bold"
             android:text="PUMP NAME"
-            android:textColor="@color/blackNinety"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
 
         <util.android.textviews.FontTextView
             android:id="@+id/fr_previousRateTextView1"
-            android:layout_below="@+id/header_text"
-            android:layout_marginTop="12dp"
+            android:layout_below="@+id/fr_headerText"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="droidsansbold.ttf"
             android:gravity="center"
-            android:textStyle="bold"
-            android:text="Previous Rate: "
+            android:textStyle="normal"
+            android:text="Current Rate"
             android:textColor="@color/blackNinety"
             android:textSize="14sp" />
 
@@ -131,7 +135,7 @@
             android:fontFamily="droidsansbold.ttf"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="chgfdhgfhg"
+            android:text=""
             android:textColor="@color/lightGreen"
             android:textSize="16sp" />
 
@@ -139,14 +143,14 @@
         <util.android.textviews.FontTextView
             android:id="@+id/fr_updatedOnTextView1"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/header_text"
-            android:layout_marginTop="12dp"
+            android:layout_below="@+id/fr_headerText"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="droidsansbold.ttf"
             android:gravity="center"
-            android:textStyle="bold"
-            android:text="Update Date Time: "
+            android:textStyle="normal"
+            android:text="Update Date Time"
             android:textColor="@color/blackNinety"
             android:textSize="14sp" />
 
@@ -160,15 +164,46 @@
             android:fontFamily="droidsansbold.ttf"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="Previous Rate"
+            android:text=""
             android:textColor="@color/lightGreen"
             android:textSize="16sp" />
 
 
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/fr_updatedByTextView1"
+            android:layout_below="@+id/fr_updatedOnTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textStyle="normal"
+            android:text="Set By:  "
+            android:textColor="@color/blackNinety"
+            android:textSize="14sp" />
+
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/fr_updatedByTextView"
+            android:layout_below="@+id/fr_updatedOnTextView"
+            android:layout_toEndOf="@+id/fr_updatedByTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text=" "
+            android:textColor="@color/lightGreen"
+            android:textSize="16sp" />
+
+
+
         <util.android.textviews.FontTextView
             android:id="@+id/fr_NewRateTextView1"
-            android:layout_below="@+id/fr_updatedOnTextView"
-            android:layout_marginTop="12dp"
+            android:layout_below="@+id/fr_updatedByTextView"
+            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="droidsansbold.ttf"
@@ -208,7 +243,7 @@
 
 
         <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/emergency_submitButton"
+            android:id="@+id/fr_submitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -231,6 +266,20 @@
             />
 
 
+        <android.support.v7.widget.RecyclerView
+            android:layout_below="@+id/fr_submitButton"
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fr_recyclerView"
+            android:fitsSystemWindows="true"
+            android:layout_marginBottom="2dp"
+            android:background="@color/white"
+            />
+
+
+
+
 
 
 
@@ -238,5 +287,4 @@
 
     </RelativeLayout>
 
-
-</FrameLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -49,8 +49,8 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
     EditText contact1_et, password_et, name_et, address_et, birth_et;
     AutoCompleteTextView contact2_et;
     String contact1_tx, contact2_tx, password_tx, name_tx, address_tx, birth_tx;
-    RadioRealButtonGroup driver_group, pump_group, truck_group;
-    String driver_permission, pump_permission, truck_permission;
+    RadioRealButtonGroup driver_group, pump_group, truck_group, allTrips_group, scheduleTrip_group, fuelRate_group;
+    String driver_permission, pump_permission, truck_permission, allTrips_permission, scheduleTrip_permission, fuelRate_permission ;
 
     AlertDialog dialogCreatingSubAdmin ,dialog_loading_data, dialog_updating_data;
 
@@ -92,6 +92,9 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
         driver_group = view.findViewById(R.id.cs_driverSelector);
         pump_group = view.findViewById(R.id.cs_pumpSelector);
         truck_group = view.findViewById(R.id.cs_truckSelector);
+        allTrips_group = view.findViewById(R.id.cs_allTripsSelector);
+        scheduleTrip_group = view.findViewById(R.id.cs_scheduleTripsSelector);
+        fuelRate_group = view.findViewById(R.id.cs_fuelRateSelector);
 
 
         openCreateSubAdmin_btn.setOnClickListener(this);
@@ -180,6 +183,49 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
         });
 
 
+        // onClickButton listener detects any click performed on buttons by touch
+        allTrips_group.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
+            @Override
+            public void onClickedButton(RadioRealButton button, int position) {
+                if (position == 0){
+                    allTrips_permission = "granted";
+                }
+                else {
+                    allTrips_permission = "denied";
+
+                }
+            }
+        });
+
+        // onClickButton listener detects any click performed on buttons by touch
+        scheduleTrip_group.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
+            @Override
+            public void onClickedButton(RadioRealButton button, int position) {
+                if (position == 0){
+                    scheduleTrip_permission = "granted";
+                }
+                else {
+                    scheduleTrip_permission = "denied";
+
+                }
+            }
+        });
+
+        // onClickButton listener detects any click performed on buttons by touch
+        fuelRate_group.setOnClickedButtonListener(new RadioRealButtonGroup.OnClickedButtonListener() {
+            @Override
+            public void onClickedButton(RadioRealButton button, int position) {
+                if (position == 0){
+                    fuelRate_permission = "granted";
+                }
+                else {
+                    fuelRate_permission = "denied";
+
+                }
+            }
+        });
+
+
 
         return view;
     }
@@ -193,6 +239,8 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
         switch (id){
 
             case R.id.cs_openCreateSubButton:
+                contact1_et.setText("");
+                password_et.setText("");
                 view.findViewById(R.id.cs_CreateProfileRelativeLayout).setVisibility(View.VISIBLE);
                 //  view.findViewById(R.id.cd_InfoRelativeLayout).setVisibility(View.GONE);
                 YoYo.with(Techniques.FadeInLeft)
@@ -211,7 +259,7 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        contact1_et.setText("");
+
                         view.findViewById(R.id.cs_loadInfoRelativeLayout).setVisibility(View.GONE);
                         view.findViewById(R.id.cs_subAdminDataRelativeLayout).setVisibility(View.GONE);
                     }
@@ -338,6 +386,10 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                                 d_subAdminProfiles.child(contact1_tx).child("permissions").child("pump_permission").setValue("denied");
                                 d_subAdminProfiles.child(contact1_tx).child("permissions").child("driver_permission").setValue("denied");
 
+                                d_subAdminProfiles.child(contact1_tx).child("permissions").child("all_trips_permission").setValue("denied");
+                                d_subAdminProfiles.child(contact1_tx).child("permissions").child("schedule_trip_permission").setValue("denied");
+                                d_subAdminProfiles.child(contact1_tx).child("permissions").child("fuel_rate_permission").setValue("denied");
+
 
                                 Alerter.create(getActivity())
                                         .setTitle("Sub-Admin Account Created")
@@ -437,7 +489,7 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                                     .setBackgroundColorRes(R.color.black)
                                     .setIcon(R.drawable.no_internet)
                                     .show();
-                            //    Log.w("123", connected);
+
                             dialog_loading_data.dismiss();
                             return;
                         }
@@ -488,6 +540,9 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                                         truck_permission = dataSnapshot.child("permissions").child("truck_permission").getValue(String.class);
                                         pump_permission = dataSnapshot.child("permissions").child("pump_permission").getValue(String.class);
                                         driver_permission = dataSnapshot.child("permissions").child("driver_permission").getValue(String.class);
+                                        allTrips_permission = dataSnapshot.child("permissions").child("all_trips_permission").getValue(String.class);
+                                        scheduleTrip_permission = dataSnapshot.child("permissions").child("schedule_trip_permission").getValue(String.class);
+                                        fuelRate_permission = dataSnapshot.child("permissions").child("fuel_rate_permission").getValue(String.class);
 
                                         if (TextUtils.equals(truck_permission, "granted"))
                                             truck_group.setPosition(0);
@@ -503,6 +558,21 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                                             driver_group.setPosition(0);
                                         else
                                             driver_group.setPosition(1);
+
+                                        if (TextUtils.equals(allTrips_permission, "granted"))
+                                            allTrips_group.setPosition(0);
+                                        else
+                                            allTrips_group.setPosition(1);
+
+                                        if (TextUtils.equals(scheduleTrip_permission, "granted"))
+                                            scheduleTrip_group.setPosition(0);
+                                        else
+                                            scheduleTrip_group.setPosition(1);
+
+                                        if (TextUtils.equals(fuelRate_permission, "granted"))
+                                            fuelRate_group.setPosition(0);
+                                        else
+                                            fuelRate_group.setPosition(1);
 
 
 
@@ -629,6 +699,10 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                         d_SubAdminProfile.child("permissions").child("pump_permission").setValue(pump_permission);
                         d_SubAdminProfile.child("permissions").child("truck_permission").setValue(truck_permission);
                         d_SubAdminProfile.child("permissions").child("driver_permission").setValue(driver_permission);
+
+                        d_SubAdminProfile.child("permissions").child("all_trips_permission").setValue(allTrips_permission);
+                        d_SubAdminProfile.child("permissions").child("schedule_trip_permission").setValue(scheduleTrip_permission);
+                        d_SubAdminProfile.child("permissions").child("fuel_rate_permission").setValue(fuelRate_permission);
 
                         Alerter.create(getActivity())
                                 .setTitle("Profile Updated")
