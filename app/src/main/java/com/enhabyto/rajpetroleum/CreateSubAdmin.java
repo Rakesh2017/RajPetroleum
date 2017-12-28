@@ -50,7 +50,8 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
     AutoCompleteTextView contact2_et;
     String contact1_tx, contact2_tx, password_tx, name_tx, address_tx, birth_tx;
     RadioRealButtonGroup driver_group, pump_group, truck_group, allTrips_group, scheduleTrip_group, fuelRate_group;
-    String driver_permission, pump_permission, truck_permission, allTrips_permission, scheduleTrip_permission, fuelRate_permission ;
+    String driver_permission, pump_permission, truck_permission, allTrips_permission, scheduleTrip_permission
+            , fuelRate_permission;
 
     AlertDialog dialogCreatingSubAdmin ,dialog_loading_data, dialog_updating_data;
 
@@ -61,6 +62,8 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
     String connected, firebase_identity;
     Calendar myCalendar = Calendar.getInstance();
     Spinner spinner;
+
+
 
     public CreateSubAdmin() {
         // Required empty public constructor
@@ -95,6 +98,7 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
         allTrips_group = view.findViewById(R.id.cs_allTripsSelector);
         scheduleTrip_group = view.findViewById(R.id.cs_scheduleTripsSelector);
         fuelRate_group = view.findViewById(R.id.cs_fuelRateSelector);
+
 
 
         openCreateSubAdmin_btn.setOnClickListener(this);
@@ -224,6 +228,9 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                 }
             }
         });
+
+
+
 
 
 
@@ -389,6 +396,7 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                                 d_subAdminProfiles.child(contact1_tx).child("permissions").child("all_trips_permission").setValue("denied");
                                 d_subAdminProfiles.child(contact1_tx).child("permissions").child("schedule_trip_permission").setValue("denied");
                                 d_subAdminProfiles.child(contact1_tx).child("permissions").child("fuel_rate_permission").setValue("denied");
+                                d_subAdminProfiles.child(contact1_tx).child("permissions").child("sub_admin_permission").setValue("denied");
 
 
                                 Alerter.create(getActivity())
@@ -573,6 +581,7 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
                                             fuelRate_group.setPosition(0);
                                         else
                                             fuelRate_group.setPosition(1);
+
 
 
 

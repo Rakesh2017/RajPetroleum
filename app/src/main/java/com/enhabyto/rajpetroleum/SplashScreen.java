@@ -48,20 +48,23 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                checkPermissions();
 
-                SharedPreferences dataSave = getSharedPreferences("firstLog", 0);
+
+                SharedPreferences dataSave = getSharedPreferences("firstLog", MODE_PRIVATE);
 
                 try {
                     if(dataSave.getString("LaunchApplication","").equals("DashBoard")){
                         Intent intent = new Intent(SplashScreen.this, DashBoard.class);
                         startActivity(intent);
                         SplashScreen.this.finish();
+                        return;
                     }
                 }
                 catch (NullPointerException e){
                     e.printStackTrace();
                 }
+
+                checkPermissions();
 
                 button.setVisibility(View.VISIBLE);
                 YoYo.with(Techniques.FadeIn)

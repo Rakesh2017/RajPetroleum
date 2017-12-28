@@ -194,11 +194,51 @@
                 android:textSize="20sp" />
 
 
+            <!--capacity-->
+
+            <util.android.textviews.FontTextView
+                android:id="@+id/ct_truckCapacityTextView"
+                android:layout_below="@+id/ct_engineNumberEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="droidsansbold.ttf"
+                android:gravity="center"
+                android:text="Truck Capacity"
+                android:textColor="@color/blackNinety"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ct_truckCapacityEditText"
+                android:layout_below="@+id/ct_truckCapacityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_edit_text_black"
+                android:hint="   capacity    "
+                android:gravity="center"
+                android:textStyle="bold"
+                android:inputType="number"
+                android:maxLength="3"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackFifty"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Litres"
+                android:layout_toEndOf="@+id/ct_truckCapacityEditText"
+                android:layout_alignBottom="@+id/ct_truckCapacityEditText"
+                android:layout_marginStart="5dp"
+                android:textSize="20sp"
+                />
+
             <!--Owner-->
 
             <util.android.textviews.FontTextView
                 android:id="@+id/ct_ownerNameTextView"
-                android:layout_below="@+id/ct_engineNumberEditText"
+                android:layout_below="@+id/ct_truckCapacityEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

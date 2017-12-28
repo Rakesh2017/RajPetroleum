@@ -23,7 +23,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.database.DataSnapshot;
@@ -658,7 +657,7 @@ public class AllocateTruck extends Fragment {
     }
 
     public void setData(){
-        Toast.makeText(getContext(), ""+contact_tx, Toast.LENGTH_SHORT).show();
+
         dataRef_trip_schedule = d_root.child("trip_schedules_driver").child(contact_tx);
         dataRef_trip_schedule1 = d_root.child("trip_schedules_admin").child(scheduler_contact).child(contact_tx).child(secondKey);
 

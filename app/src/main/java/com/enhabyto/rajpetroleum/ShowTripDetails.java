@@ -48,7 +48,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
     private String contactUID_tx, startDate_tx, pumpName_tx, stateName_tx, cityName_tx, truckLocation_tx, moneyTaken_tx, petrolPrice_tx;
     FontTextView contact_tv, name_tv, truckNumber_tv, startDate_tv, pumpName_tv, stateName_tv
             , cityName_tv, truckLocation_tv, moneyTaken_tv, petrolPrice_tv, fuelTaken_tv, sideHeader_tv
-            , totalPetrolFilled_tv, petrolLeft_tv, endLocation_tv, endPumpName_tv, endStateName_tv, tripEndDate_tv;
+            , totalPetrolFilled_tv, petrolLeft_tv, endLocation_tv, endPumpName_tv, endStateName_tv, tripEndDate_tv, fuelLeft_tv;
 
     String contact_tx, name_tx, truckNumber_tx, totalPetrolFilled_tx;
 
@@ -120,6 +120,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         endPumpName_tv = view.findViewById(R.id.detail_endPumpNameTextView);
         endStateName_tv = view.findViewById(R.id.detail_endStateNameTextView);
         tripEndDate_tv = view.findViewById(R.id.detail_tripEndTextView);
+        fuelLeft_tv = view.findViewById(R.id.detail_petrolLeftTextView);
 
         stoppage_tv = view.findViewById(R.id.detail_text1);
         petrolFilling_tv = view.findViewById(R.id.detail_text2);
@@ -244,6 +245,12 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                         moneyTaken_tv.setText("NA");
                         moneyTaken_tv.setTextColor(Color.GRAY);
                     }
+                    if (pumpName_tx.equals("")){
+                        pumpName_tv.setText("NA");
+                        pumpName_tv.setTextColor(Color.GRAY);
+                    }
+
+
                 }
                 catch (NullPointerException e){
                     e.printStackTrace();
@@ -925,6 +932,15 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                         String endPumpName = dataSnapshot.child("end_trip").child("pump_name").getValue(String.class);
                         String endStateName = dataSnapshot.child("end_trip").child("state_name").getValue(String.class);
                         String endDate = dataSnapshot.child("end_trip").child("end_date").getValue(String.class);
+                        String fuelLeft = dataSnapshot.child("end_trip").child("fuel_left").getValue(String.class);
+
+
+
+                        if (TextUtils.isEmpty(fuelLeft) || TextUtils.equals(fuelLeft, null)){
+                            fuelLeft_tv.setText("NA");
+                            fuelLeft_tv.setTextColor(Color.GRAY);
+                        }
+                        else fuelLeft_tv.setText(fuelLeft+" Litres");
 
                         if (TextUtils.equals(endDate,"") || TextUtils.equals(endDate,null)){
                             tripEndDate_tv.setTextColor(getResources().getColor(R.color.lightGreen));
@@ -966,6 +982,14 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 });
 
 
+    }
+
+
+    public void onDestroy(){
+        super.onDestroy();
+        if (dialog_loading.isShowing()){
+            dialog_loading.dismiss();
+        }
     }
 
 

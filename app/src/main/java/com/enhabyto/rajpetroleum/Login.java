@@ -241,11 +241,8 @@ public class Login extends AppCompatActivity {
                                     editor.putString("LaunchApplication", "DashBoard");
                                     editor.putString("user_designation", "subAdmin");
                                     editor.putString("subAdmin_contact", contact_tx);
-                                    editor.apply();
+                                    editor.commit();
 
-
-                                    // editor2.putString("user_designation", "subAdmin");
-                                    // editor2.commit();
 
                                     sub_password_et.setText("");
 
@@ -304,6 +301,13 @@ public class Login extends AppCompatActivity {
 
     public static boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    public void onDestroy(){
+        super.onDestroy();
+        if (dialog.isShowing()){
+            dialog.dismiss();
+        }
     }
 
  /*   public void onStart(){

@@ -391,7 +391,7 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:text="Create Driver"
-                    android:textColor="@color/blackNinety"
+                    android:textColor="@color/saddleBrown"
                     android:textSize="16sp" />
 
                  <!--Selector-->
@@ -450,7 +450,7 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:text="Create Pump"
-                    android:textColor="@color/blackNinety"
+                    android:textColor="@color/saddleBrown"
                     android:textSize="16sp" />
 
                 <!--Selector-->
@@ -508,7 +508,7 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:text="Create Truck"
-                    android:textColor="@color/blackNinety"
+                    android:textColor="@color/saddleBrown"
                     android:textSize="16sp" />
 
                 <!--Selector-->
@@ -564,8 +564,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
-                    android:text="App Trips"
-                    android:textColor="@color/blackNinety"
+                    android:text="Trip Details"
+                    android:textColor="@color/saddleBrown"
                     android:textSize="16sp" />
 
                 <!--Selector-->
@@ -624,7 +624,7 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
                     android:text="Schedule Trip"
-                    android:textColor="@color/blackNinety"
+                    android:textColor="@color/saddleBrown"
                     android:textSize="16sp" />
 
                 <!--Selector-->
@@ -682,8 +682,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="droidsansbold.ttf"
-                    android:text="Schedule Trip"
-                    android:textColor="@color/blackNinety"
+                    android:text="Fuel Rate"
+                    android:textColor="@color/saddleBrown"
                     android:textSize="16sp" />
 
                 <!--Selector-->
@@ -728,6 +728,10 @@
                         app:rrb_text="Deny"
                         app:rrb_textColor="@color/black"/>
                 </co.ceryle.radiorealbutton.RadioRealButtonGroup>
+
+
+
+
 
 
                <mehdi.sakout.fancybuttons.FancyButton

@@ -54,7 +54,8 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
             , pollutionRenew_et, insuranceName_et, insuranceAmount_et, insuranceValid_et
             , insuranceRenew_et, hydro_et, hydroValid_et, hydroRenew_et, road_et
             ,roadValid_et, roadRenew_et, explosive_et, explosiveValid_et, explosiveRenew_et
-            , nationalPermit_et, statePermit_et, labourPermit_et, calibration_et, calibrationValid_et, calibrationRenew_et;
+            , nationalPermit_et, statePermit_et, labourPermit_et, calibration_et, calibrationValid_et, calibrationRenew_et
+            , truckTankCapacity_et;
 
     String truckNumber_tx1, truckNumber_tx2,  chsssis_tx, engine_tx, ownerName_tx, attached_tx
             , chamber_tx, capacity_tx, rc_tx, rcValid_tx, rcRenew_tx
@@ -63,7 +64,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
             , insuranceRenew_tx, hydro_tx, hydroValid_tx, hydroRenew_tx, road_tx
             ,roadValid_tx, roadRenew_tx, explosive_tx, explosiveValid_tx, explosiveRenew_tx
             , nationalPermit_tx, statePermit_tx, labourPermit_tx, connected, decider
-            , calibration_tx, calibrationValid_tx, calibrationRenew_tx;
+            , calibration_tx, calibrationValid_tx, calibrationRenew_tx, truckTankCapacity_tx;
 
     RelativeLayout relativeLayout;
 
@@ -132,6 +133,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
         calibration_et = view.findViewById(R.id.ct_caliEditText);
         calibrationValid_et = view.findViewById(R.id.ct_caliValidEditText);
         calibrationRenew_et = view.findViewById(R.id.ct_caliRenewEditText);
+        truckTankCapacity_et = view.findViewById(R.id.ct_truckCapacityEditText);
         relativeLayout = view.findViewById(R.id.ct_RelativeLayout2);
         spinner = view.findViewById(R.id.ct_spinner);
         remove_btn = view.findViewById(R.id.ct_removeTruckButton);
@@ -315,6 +317,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                                 nationalPermit_tx = dataSnapshot.child("national_permit").getValue(String.class);
                                 statePermit_tx = dataSnapshot.child("state_permit").getValue(String.class);
                                 labourPermit_tx = dataSnapshot.child("labour_permit").getValue(String.class);
+                                truckTankCapacity_tx = dataSnapshot.child("truck_tank_capacity").getValue(String.class);
 
 
                                 truckNumber_et2.setText(truckNumber_tx1);
@@ -352,6 +355,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                                 nationalPermit_et.setText(nationalPermit_tx);
                                 statePermit_et.setText(statePermit_tx);
                                 labourPermit_et.setText(labourPermit_tx);
+                                truckTankCapacity_et.setText(truckTankCapacity_tx);
 
                             }
 
@@ -449,6 +453,7 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                         nationalPermit_tx = nationalPermit_et.getText().toString().trim();
                         statePermit_tx = statePermit_et.getText().toString().trim();
                         labourPermit_tx = labourPermit_et.getText().toString().trim();
+                        truckTankCapacity_tx = truckTankCapacity_et.getText().toString().trim();
 
 
                         dataRef_truckDetails.child("truck_number").setValue(truckNumber_tx2);
@@ -486,6 +491,8 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
                         dataRef_truckDetails.child("national_permit").setValue(nationalPermit_tx);
                         dataRef_truckDetails.child("state_permit").setValue(statePermit_tx);
                         dataRef_truckDetails.child("labour_permit").setValue(labourPermit_tx);
+                        dataRef_truckDetails.child("truck_tank_capacity").setValue(truckTankCapacity_tx);
+
 
 
 

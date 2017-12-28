@@ -32,6 +32,8 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -77,7 +79,10 @@ public class DashBoard extends AppCompatActivity
     TextView noInternet;
     private Context context;
 
-    int counter = 1;
+    DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
+
+    String allTrips_permission, scheduleTrip_permission, createDriver_permission, createTruck_permission, createPump_permission
+            , fuelRate_permission;
 
 
     @Override
@@ -290,7 +295,6 @@ public class DashBoard extends AppCompatActivity
                        }
 
 
-
                     // Hiding the progress dialog.
                     progressDialog.dismiss();
                 }
@@ -363,10 +367,15 @@ public class DashBoard extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
+
+    // navigation drawer items
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
+        SharedPreferences dataSave = getSharedPreferences("permissions", MODE_PRIVATE);
+
         int id = item.getItemId();
 
         if (id == R.id.nav_dashboard) {
@@ -384,37 +393,32 @@ public class DashBoard extends AppCompatActivity
             else {
 
 
-                d_subProfile = d_root.child("sub_admin_profiles").child(sub_admin_contact).child("permissions");
-                d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String permission = dataSnapshot.child("driver_permission").getValue(String.class);
-                        if(TextUtils.equals(permission, "granted")){
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateDriver()).addToBackStack("DriverFragment").commit();
+                createDriver_permission = dataSave.getString("driver_permission","");
+                                if (TextUtils.equals(createDriver_permission, "granted")) {
+                                    try{
+                                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateDriver()).addToBackStack("TruckFragments").commit();
 
-                        }
-                        else {
-                            Alerter.create(DashBoard.this)
-                                    .setTitle("Access Denied!")
-                                    .setText("You do not have permission to Create Driver")
-                                    .setContentGravity(1)
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.error)
-                                    .show();
-                        }
+                                    }
+                                    catch (IllegalStateException e){
+                                        e.printStackTrace();
+                                    }
 
 
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                                } else {
+                                    Alerter.create(DashBoard.this)
+                                            .setTitle("Access Denied!")
+                                            .setText("You do not have permission to Create Driver Profile")
+                                            .setContentGravity(1)
+                                            .setBackgroundColorRes(R.color.black)
+                                            .setIcon(R.drawable.error)
+                                            .show();
+                                }
 
-                    }
-                });
+
+                            }
 
 
-            }
 
 
         } else if (id == R.id.nav_CreateAdmin) {
@@ -426,7 +430,7 @@ public class DashBoard extends AppCompatActivity
             else {
                 Alerter.create(DashBoard.this)
                         .setTitle("Access Denied!")
-                        .setText("You do not have permission to Create Sub-Admin")
+                        .setText("Only Admin can create sub-Admin")
                         .setContentGravity(1)
                         .setContentGravity(1)
                         .setBackgroundColorRes(R.color.black)
@@ -442,14 +446,17 @@ public class DashBoard extends AppCompatActivity
             }
             else {
 
+                createTruck_permission = dataSave.getString("truck_permission","");
 
-                d_subProfile = d_root.child("sub_admin_profiles").child(sub_admin_contact).child("permissions");
-                d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String permission = dataSnapshot.child("truck_permission").getValue(String.class);
-                        if (TextUtils.equals(permission, "granted")) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateTruck()).addToBackStack("TruckFragments").commit();
+                        if (TextUtils.equals(createTruck_permission, "granted")) {
+                            try{
+                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateTruck()).addToBackStack("TruckFragments").commit();
+
+                            }
+                            catch (IllegalStateException e){
+                                e.printStackTrace();
+                            }
+
 
                         } else {
                             Alerter.create(DashBoard.this)
@@ -462,13 +469,7 @@ public class DashBoard extends AppCompatActivity
                         }
 
 
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
             }
 
 
@@ -479,33 +480,30 @@ public class DashBoard extends AppCompatActivity
             }
             else {
 
-                d_subProfile = d_root.child("sub_admin_profiles").child(sub_admin_contact).child("permissions");
-                d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String permission = dataSnapshot.child("pump_permission").getValue(String.class);
-                        if (TextUtils.equals(permission, "granted")) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreatePump()).addToBackStack("PumpFragments").commit();
-
-                        } else {
-                            Alerter.create(DashBoard.this)
-                                    .setTitle("Access Denied!")
-                                    .setText("You do not have permission to Create Pump")
-                                    .setContentGravity(1)
-                                    .setBackgroundColorRes(R.color.black)
-                                    .setIcon(R.drawable.error)
-                                    .show();
-                        }
-
+                createPump_permission = dataSave.getString("pump_permission","");
+                if (TextUtils.equals(createPump_permission, "granted")) {
+                    try{
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new CreatePump()).addToBackStack("PumpFragments").commit();
 
                     }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
+                    catch (IllegalStateException e){
+                        e.printStackTrace();
                     }
-                });
+
+
+
+                } else {
+                    Alerter.create(DashBoard.this)
+                            .setTitle("Access Denied!")
+                            .setText("You do not have permission to Create Pump")
+                            .setContentGravity(1)
+                            .setBackgroundColorRes(R.color.black)
+                            .setIcon(R.drawable.error)
+                            .show();
+                }
             }
+
+
 
         } else if (id == R.id.nav_FuelRate) {
 
@@ -514,13 +512,17 @@ public class DashBoard extends AppCompatActivity
             }
             else {
 
-                d_subProfile = d_root.child("sub_admin_profiles").child(sub_admin_contact).child("permissions");
-                d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String permission = dataSnapshot.child("fuel_rate_permission").getValue(String.class);
-                        if (TextUtils.equals(permission, "granted")) {
-                            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new FuelRate()).addToBackStack("AdminFragment").commit();
+                fuelRate_permission = dataSave.getString("fuel_rate_permission","");
+                        if (TextUtils.equals(fuelRate_permission, "granted")) {
+                            try{
+                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new FuelRate()).addToBackStack("AdminFragment").commit();
+
+                            }
+                            catch (IllegalStateException e){
+                                e.printStackTrace();
+                            }
+
+
 
                         } else {
                             Alerter.create(DashBoard.this)
@@ -532,14 +534,6 @@ public class DashBoard extends AppCompatActivity
                                     .show();
                         }
 
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
             }
 
 
@@ -548,12 +542,75 @@ public class DashBoard extends AppCompatActivity
 
         }
         else if (id == R.id.nav_allocateTruck){
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new AllocateTruck()).addToBackStack("AdminFragment").commit();
+
+
+            if (TextUtils.equals(user_designation, "admin")){
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new AllocateTruck()).addToBackStack("AdminFragment").commit();
+            }
+            else {
+
+                fuelRate_permission = dataSave.getString("schedule_trip_permission","");
+                        if (TextUtils.equals(fuelRate_permission, "granted")) {
+                            try{
+                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new AllocateTruck()).addToBackStack("AdminFragment").commit();
+
+                            }
+                            catch (IllegalStateException e){
+                                e.printStackTrace();
+                            }
+
+
+
+                        } else {
+                            Alerter.create(DashBoard.this)
+                                    .setTitle("Access Denied!")
+                                    .setText("You do not have permission to Schedule trip")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.error)
+                                    .show();
+                        }
+
+
+
+            }
+
 
         }
 
         else if (id == R.id.nav_AllTrips){
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new AllTrips()).addToBackStack("AdminFragment").commit();
+
+
+            if (TextUtils.equals(user_designation, "admin")){
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new AllTrips()).addToBackStack("AdminFragment").commit();
+            }
+            else {
+
+                allTrips_permission = dataSave.getString("all_trips_permission","");
+
+                        if (TextUtils.equals(allTrips_permission, "granted")) {
+                            try{
+                                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new AllTrips()).addToBackStack("AdminFragment").commit();
+
+                            }
+                            catch (IllegalStateException e){
+                                e.printStackTrace();
+                            }
+
+                        } else {
+                            Alerter.create(DashBoard.this)
+                                    .setTitle("Access Denied!")
+                                    .setText("You do not have permission to check driver's trip details")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.error)
+                                    .show();
+                        }
+
+            }
+
+
+
 
         }
         else if (id == R.id.nav_emergencyContact){
@@ -683,7 +740,7 @@ public class DashBoard extends AppCompatActivity
         ConnectivityManager connectivityManager = (ConnectivityManager) (getApplication()).getSystemService(Context.CONNECTIVITY_SERVICE);
         assert connectivityManager != null;
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting() && activeNetworkInfo.isAvailable();
     }
 
     //internet checker
@@ -717,6 +774,135 @@ public class DashBoard extends AppCompatActivity
                 }
             }
         },15000);
+    }
+
+
+
+
+
+    public void onStart() {
+        super.onStart();
+
+
+        SharedPreferences dataSave = getSharedPreferences("permissions", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = dataSave.edit();
+
+
+
+        d_subProfile = d_root.child("sub_admin_profiles").child(sub_admin_contact).child("permissions");
+
+
+//        driver permission
+        d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String permission = dataSnapshot.child("driver_permission").getValue(String.class);
+                editor.putString("driver_permission",permission);
+                editor.apply();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        //        all trips
+        d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String permission = dataSnapshot.child("all_trips_permission").getValue(String.class);
+                editor.putString("all_trips_permission",permission);
+                editor.apply();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        //        schedule trip
+        d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String permission = dataSnapshot.child("schedule_trip_permission").getValue(String.class);
+                editor.putString("schedule_trip_permission",permission);
+                editor.apply();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        //       create truck
+        d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String permission = dataSnapshot.child("truck_permission").getValue(String.class);
+                editor.putString("truck_permission",permission);
+                editor.apply();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        //       pump
+        d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String permission = dataSnapshot.child("pump_permission").getValue(String.class);
+                editor.putString("pump_permission",permission);
+                editor.apply();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        //       fuel rate
+        d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String permission = dataSnapshot.child("fuel_rate_permission").getValue(String.class);
+                editor.putString("fuel_rate_permission",permission);
+                editor.apply();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    public void onDestroy(){
+        super.onDestroy();
+        if (progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
     }
 
     //end

@@ -39,7 +39,7 @@
             android:textStyle="bold"
             android:fontFamily="droidsansbold.ttf"
             android:textSize="14sp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:textColor="@color/lightRed"
             />
 

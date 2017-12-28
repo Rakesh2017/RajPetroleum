@@ -1,10 +1,12 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="true"
     android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     tools:context="com.enhabyto.rajpetroleum.FuelRate">
 
@@ -94,7 +96,6 @@
         android:layout_below="@+id/fr_openCreatePumpButton"
         android:padding="7dp"
         android:layout_marginBottom="3dp"
-
         android:visibility="gone"
         >
 
@@ -270,11 +271,12 @@
             android:layout_below="@+id/fr_submitButton"
             android:layout_marginTop="2dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/fr_recyclerView"
             android:fitsSystemWindows="true"
             android:layout_marginBottom="2dp"
             android:background="@color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             />
 
 
