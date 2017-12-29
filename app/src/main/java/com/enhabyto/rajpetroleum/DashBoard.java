@@ -183,7 +183,7 @@ public class DashBoard extends AppCompatActivity
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        throw databaseError.toException();
                     }
                 });
 
@@ -225,7 +225,7 @@ public class DashBoard extends AppCompatActivity
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
+                    throw databaseError.toException();
                 }
             });
 
@@ -301,9 +301,9 @@ public class DashBoard extends AppCompatActivity
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
                     // Hiding the progress dialog.
                     progressDialog.dismiss();
+                    throw databaseError.toException();
 
                 }
             });
@@ -453,7 +453,7 @@ public class DashBoard extends AppCompatActivity
                                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard,new CreateTruck()).addToBackStack("TruckFragments").commit();
 
                             }
-                            catch (IllegalStateException e){
+                            catch (IllegalStateException | NullPointerException e){
                                 e.printStackTrace();
                             }
 
@@ -486,7 +486,7 @@ public class DashBoard extends AppCompatActivity
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_DashBoard, new CreatePump()).addToBackStack("PumpFragments").commit();
 
                     }
-                    catch (IllegalStateException e){
+                    catch (IllegalStateException | NullPointerException e){
                         e.printStackTrace();
                     }
 
@@ -518,7 +518,7 @@ public class DashBoard extends AppCompatActivity
                                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new FuelRate()).addToBackStack("AdminFragment").commit();
 
                             }
-                            catch (IllegalStateException e){
+                            catch (IllegalStateException | NullPointerException e){
                                 e.printStackTrace();
                             }
 
@@ -555,7 +555,7 @@ public class DashBoard extends AppCompatActivity
                                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new AllocateTruck()).addToBackStack("AdminFragment").commit();
 
                             }
-                            catch (IllegalStateException e){
+                            catch (IllegalStateException | NullPointerException e){
                                 e.printStackTrace();
                             }
 
@@ -593,7 +593,7 @@ public class DashBoard extends AppCompatActivity
                                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new AllTrips()).addToBackStack("AdminFragment").commit();
 
                             }
-                            catch (IllegalStateException e){
+                            catch (IllegalStateException | NullPointerException e){
                                 e.printStackTrace();
                             }
 
@@ -666,7 +666,7 @@ public class DashBoard extends AppCompatActivity
                         mAuth.signOut();
 
 
-                    } catch (IllegalStateException e) {
+                    } catch (IllegalStateException | NullPointerException e) {
                         Alerter.create(DashBoard.this)
                                 .setTitle("Server Error Try Again!")
                                 .setContentGravity(1)
@@ -756,7 +756,7 @@ public class DashBoard extends AppCompatActivity
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                throw databaseError.toException();
             }
         });
 
@@ -804,7 +804,7 @@ public class DashBoard extends AppCompatActivity
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                throw databaseError.toException();
             }
         });
 
@@ -821,7 +821,7 @@ public class DashBoard extends AppCompatActivity
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                throw databaseError.toException();
             }
         });
 
@@ -838,7 +838,7 @@ public class DashBoard extends AppCompatActivity
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                throw databaseError.toException();
             }
         });
 
@@ -856,7 +856,7 @@ public class DashBoard extends AppCompatActivity
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                throw databaseError.toException();
             }
         });
 
@@ -874,7 +874,7 @@ public class DashBoard extends AppCompatActivity
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                throw databaseError.toException();
             }
         });
 
@@ -891,7 +891,7 @@ public class DashBoard extends AppCompatActivity
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                throw databaseError.toException();
             }
         });
 

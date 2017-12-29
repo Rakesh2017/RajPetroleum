@@ -121,7 +121,6 @@ public class AllocateTruck extends Fragment {
                             selected_truck_tx = spinner_truck.getSelectedItem().toString();
                             if (!TextUtils.equals(selected_truck_tx,"Select Truck")){
                                 truckNumber_et.setText(selected_truck_tx);
-
                             }
 
                         }
@@ -707,6 +706,15 @@ public class AllocateTruck extends Fragment {
 
     }
 
+
+    public void onDestroy(){
+        super.onDestroy();
+
+        if (dialog_scheduleTrip.isShowing()){
+            dialog_scheduleTrip.dismiss();
+        }
+
+    }
 
 
     //end

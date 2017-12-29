@@ -401,4 +401,17 @@ public class BreakDownDetail extends Fragment {
                 return view;
             }
 
+
+    public void onDestroy(){
+        super.onDestroy();
+
+        if (excelDialog.isShowing()){
+            excelDialog.dismiss();
+        }
+        if (progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+
+    }
+
         }

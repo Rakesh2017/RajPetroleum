@@ -807,5 +807,23 @@ public class CreateSubAdmin extends Fragment implements View.OnClickListener {
 
     }
 
+    public void onDestroy(){
+        super.onDestroy();
+
+        if (dialogCreatingSubAdmin.isShowing()){
+            dialogCreatingSubAdmin.dismiss();
+        }
+
+        if (dialog_loading_data.isShowing()){
+            dialog_loading_data.dismiss();
+        }
+
+        if (dialog_updating_data.isShowing()){
+            dialog_updating_data.dismiss();
+        }
+
+    }
+
+
     //end
 }

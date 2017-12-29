@@ -14,7 +14,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,6 @@ public class AllTrips extends Fragment {
     ProgressDialog progressDialog;
     DatabaseReference databaseReference;
 
-    private String contactUID_tx;
     private DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
     String key;
 

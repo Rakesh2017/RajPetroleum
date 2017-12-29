@@ -64,10 +64,6 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
     int total = 0;
 
 
-
-
-
-    ImageView profileImage;
     AlertDialog dialog_loading;
 
 
@@ -405,7 +401,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new StoppageDetail()).addToBackStack("stoppage").commit();
 
                     }
-                    catch (IllegalStateException e){
+                    catch (IllegalStateException | NullPointerException e){
                         e.printStackTrace();
                     }
 
@@ -439,7 +435,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new LoadDetail()).addToBackStack("load").commit();
 
                     }
-                    catch (IllegalStateException e){
+                    catch (IllegalStateException | NullPointerException e){
                         e.printStackTrace();
                     }
                 break;
@@ -467,7 +463,15 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 }
 
                 else
-                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new OtherFillingDetail()).addToBackStack("load").commit();
+                    try {
+                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new OtherFillingDetail()).addToBackStack("load").commit();
+
+                    }
+                    catch (IllegalStateException | NullPointerException e){
+                        e.printStackTrace();
+                    }
+
+
                 break;
 
 
@@ -495,7 +499,14 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
 
                 else
-                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new BreakDownDetail()).addToBackStack("load").commit();
+                    try {
+                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new BreakDownDetail()).addToBackStack("load").commit();
+
+                    }
+                    catch (IllegalStateException | NullPointerException e){
+                        e.printStackTrace();
+                    }
+
                 break;
 
 
@@ -609,7 +620,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                                 try {
                                     dialog_loading.dismiss();
                                 }
-                                catch (IllegalStateException e){
+                                catch (IllegalStateException | NullPointerException e){
                                     e.printStackTrace();
                                 }
 
@@ -807,16 +818,6 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
                     }
                 });
-
-
-
-
-
-
-
-
-
-
 
 
     }

@@ -1014,5 +1014,24 @@ public class CreateTruck extends Fragment implements View.OnClickListener {
 
 
     }
+
+    public void onDestroy(){
+        super.onDestroy();
+
+        if (dialog_removing_truck.isShowing()){
+            dialog_removing_truck.dismiss();
+        }
+
+        if (dialog_loading.isShowing()){
+            dialog_loading.dismiss();
+        }
+
+        if (dialog_updateTruck.isShowing()){
+            dialog_updateTruck.dismiss();
+        }
+
+    }
+
+
     //end
 }

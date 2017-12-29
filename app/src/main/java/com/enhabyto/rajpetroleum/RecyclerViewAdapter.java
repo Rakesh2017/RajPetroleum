@@ -110,22 +110,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 if (context.getApplicationContext() != null && uri != null) {
 
+                    try {
+                        Glide.with(context.getApplicationContext())
+                                .load(uri)
+                                .asBitmap()
+                                .fitCenter()
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(new BitmapImageViewTarget(holder.driverProfileImage) {
+                                    @Override
+                                    protected void setResource(Bitmap resource) {
+                                        RoundedBitmapDrawable circularBitmapDrawable =
+                                                RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                                        circularBitmapDrawable.setCircular(true);
+                                        holder.driverProfileImage.setImageDrawable(circularBitmapDrawable);
+                                    }
+                                });
+                    }
+                    catch (NullPointerException e){
+                        e.printStackTrace();
+                    }
 
-                    Glide.with(context.getApplicationContext())
-                            .load(uri)
-                            .asBitmap()
-                            .fitCenter()
-                            .centerCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(new BitmapImageViewTarget(holder.driverProfileImage) {
-                                @Override
-                                protected void setResource(Bitmap resource) {
-                                    RoundedBitmapDrawable circularBitmapDrawable =
-                                            RoundedBitmapDrawableFactory.create(context.getResources(), resource);
-                                    circularBitmapDrawable.setCircular(true);
-                                    holder.driverProfileImage.setImageDrawable(circularBitmapDrawable);
-                                }
-                            });
+
+
+
+
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -133,12 +142,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
                 if (context.getApplicationContext() != null) {
-                    Glide.with(context.getApplicationContext())
-                            .load(R.drawable.driver_default_image_icon)
-                            .fitCenter()
-                            .centerCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(holder.driverProfileImage);
+                    try {
+                        Glide.with(context.getApplicationContext())
+                                .load(R.drawable.driver_default_image_icon)
+                                .fitCenter()
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(holder.driverProfileImage);
+                    }
+                    catch (NullPointerException e){
+                        e.printStackTrace();
+                    }
+
+
+
                 }
             }
         });
@@ -162,7 +179,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             editor.apply();
 
             holder.tripStarted_tx.setText(day + "-" + month + "-" + year + ", " + hour + ":" + minute);
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | StringIndexOutOfBoundsException e) {
             e.printStackTrace();
         }
 
@@ -209,15 +226,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                                 activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_DashBoard, new ShowTripDetails()).addToBackStack("FragmentTripDetail").commit();
                                                 progressDialog.dismiss();
                                             }
-                                            catch (IllegalStateException e){
+                                            catch (IllegalStateException |NullPointerException e){
                                                 e.printStackTrace();
                                             }
+                                            progressDialog.dismiss();
 
                                         }
 
                                         @Override
                                         public void onCancelled(DatabaseError databaseError) {
-
+                                            progressDialog.dismiss();
                                         }
                                     });
 
@@ -228,7 +246,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        progressDialog.dismiss();
                     }
                 });
 
@@ -241,18 +259,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View v) {
                 String phone = UploadInfo.getContact_tx();
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phone, null));
-                //Intent intent = new Intent(Intent.ACTION_CALL);
-              //  intent.setData(Uri.parse(UploadInfo.getContact_tx()));
+
                 if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-
-                    Toast.makeText(context, "Give Call Permission from Settings", Toast.LENGTH_SHORT).show();
+                    ActivityCompat.requestPermissions((Activity) context, new String[]{android.Manifest.permission.CALL_PHONE}, 1);
                     return;
                 }
                 context.startActivity(intent);
@@ -370,6 +380,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected() && activeNetworkInfo.isAvailable();
     }
+
 
 
 }

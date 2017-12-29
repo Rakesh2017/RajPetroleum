@@ -27,7 +27,7 @@ public class BrokenRecyclerViewAdapter  extends RecyclerView.Adapter<BrokenRecyc
     Context context;
     List<BrokenRecyclerInfo> MainImageUploadInfoList;
     String month;
-    int position1;
+    private int position1;
     String day, year, hour, minute;
 
 

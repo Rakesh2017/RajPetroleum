@@ -21,10 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.util.List;
 
-import util.android.textviews.FontTextView;
 
 
 /**
@@ -101,43 +99,6 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
         });
 
 
-     /*   storageRef.child("driver_profiles").child(UploadInfo.getKey())
-                .child("/profile_image/image.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-
-
-
-                Glide.with(context)
-                        .load(uri)
-                        .asBitmap()
-                        .fitCenter()
-                        .centerCrop()
-                        .diskCacheStrategy( DiskCacheStrategy.ALL )
-                        .into(new BitmapImageViewTarget(holder.imageView) {
-                            @Override
-                            protected void setResource(Bitmap resource) {
-                                RoundedBitmapDrawable circularBitmapDrawable =
-                                        RoundedBitmapDrawableFactory.create(context.getResources(), resource);
-                                circularBitmapDrawable.setCircular(true);
-                                holder.imageView.setImageDrawable(circularBitmapDrawable);
-                            }
-                        });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-                Glide.with(context)
-                        .load(R.drawable.driver_default_image_icon)
-                        .fitCenter()
-                        .centerCrop()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(holder.imageView);
-            }
-        }); */
-
 
         holder.truckImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +144,7 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
 
 
         TextView name_tv, contact_tv, totalTrips_tv, index_tv;
-        ImageView imageView, truckImage;
+        ImageView truckImage;
 
 
         ViewHolder(View itemView) {

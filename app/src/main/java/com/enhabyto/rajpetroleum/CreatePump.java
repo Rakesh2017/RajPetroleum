@@ -42,17 +42,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.iceteck.silicompressorr.FileUtils;
 import com.tapadoo.alerter.Alerter;
-
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import dmax.dialog.SpotsDialog;
 import id.zelory.compressor.Compressor;
 import mehdi.sakout.fancybuttons.FancyButton;
-
 import static android.app.Activity.RESULT_OK;
 
 
@@ -85,7 +81,7 @@ public class CreatePump extends Fragment implements View.OnClickListener{
     Spinner spinner;
     String selected_val;
     FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReferenceFromUrl("gs://rajpetroleum-4d3fa.appspot.com/");
+    StorageReference storageRef = storage.getReference();
 
     ImageView imageView;
     String url;
@@ -128,6 +124,7 @@ public class CreatePump extends Fragment implements View.OnClickListener{
         selectImage_btn.setOnClickListener(this);
         uploadImage_btn.setOnClickListener(this);
         remove_pump.setOnClickListener(this);
+        imageView.setOnClickListener(this);
 
         dialog_updatePump = new SpotsDialog(getActivity(),R.style.dialog_updatingPump);
         dialog_loading = new SpotsDialog(getActivity(),R.style.loadingData);
@@ -399,6 +396,8 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                 UploadImageFileToFirebaseStorage();
 
 
+
+
                 break;
 
 
@@ -429,6 +428,7 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                                 }
 
                                 d_root.child("pump_details").child(pumpName2_tx).setValue(null);
+                                storageRef.child("pump_details").child(pumpName2_tx).child("pump_image.jpg").delete();
 
                                 view.findViewById(R.id.cp_relativeLayout2).setVisibility(View.GONE);
                                 Alerter.create(getActivity())
@@ -438,6 +438,8 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                                         .setBackgroundColorRes(R.color.black)
                                         .setIcon(R.drawable.no_internet)
                                         .show();
+
+
 
 
                                 pumpName1_et.setText("");
@@ -462,6 +464,27 @@ public class CreatePump extends Fragment implements View.OnClickListener{
                         .show();
 
                 break;
+
+            case R.id.cp_pumpImage:
+
+                d_root.child("pump_details").child(pumpName1_tx)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String url = dataSnapshot.child("pump_image").child("imageURL").getValue(String.class);
+                                Intent intent = new Intent();
+                                intent.setAction(Intent.ACTION_VIEW);
+                                intent.setDataAndType(Uri.parse(url), "image/*");
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                break;
+
 
         }
 
@@ -583,6 +606,12 @@ public class CreatePump extends Fragment implements View.OnClickListener{
 
                             d_root.child("pump_details").child(pumpName).child("pump_image").setValue(imageUploadInfo);
                             dialog_uploadingPump.dismiss();
+                            Alerter.create(getActivity())
+                                    .setTitle("Pump Image Successfully uploaded!")
+                                    .setContentGravity(1)
+                                    .setBackgroundColorRes(R.color.black)
+                                    .setIcon(R.drawable.success_icon)
+                                    .show();
                         }
                     })
                     // If something goes wrong .

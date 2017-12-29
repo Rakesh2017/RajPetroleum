@@ -26,6 +26,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.daimajia.androidanimations.library.Techniques;
@@ -96,7 +97,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
     //creating reference to firebase storage
     FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReferenceFromUrl("gs://rajpetroleum-4d3fa.appspot.com/");
+    StorageReference storageRef = storage.getReference();
 
     int PICK_IMAGE_REQUEST_L = 111;
     int PICK_IMAGE_REQUEST_H = 112;
@@ -191,6 +192,10 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
         drivingLicenceImage = view.findViewById(R.id.cd_drivingLicenceImage);
         hazardousDrivingLicenceImage = view.findViewById(R.id.cd_HazardousdrivingLicenceImage);
         driverImage = view.findViewById(R.id.cd_driverImage);
+
+        drivingLicenceImage.setOnClickListener(this);
+        hazardousDrivingLicenceImage.setOnClickListener(this);
+        driverImage.setOnClickListener(this);
 
 
         spinner.setOnTouchListener(new View.OnTouchListener() {
@@ -582,7 +587,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                             licenceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                 @Override
                                                 public void onSuccess(Uri uri) {
-                                                    if (uri != null){
+                                                    if (uri != null && !getActivity().isDestroyed()){
                                                         Glide.with(getActivity())
                                                                 .load(uri)
                                                                 .fitCenter()
@@ -604,7 +609,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                             hazardousLicenceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                 @Override
                                                 public void onSuccess(Uri uri) {
-                                                    if (uri != null){
+                                                    if (uri != null && !getActivity().isDestroyed()){
                                                         Glide.with(getActivity())
                                                                 .load(uri)
                                                                 .fitCenter()
@@ -626,7 +631,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                                             driverImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                 @Override
                                                 public void onSuccess(Uri uri) {
-                                                    if (uri != null){
+                                                    if (uri != null && !getActivity().isDestroyed()){
                                                         Glide.with(getActivity())
                                                                 .load(uri)
                                                                 .fitCenter()
@@ -668,7 +673,7 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
 
 
                                         }
-                                        catch (IllegalArgumentException e){
+                                        catch (IllegalArgumentException | NullPointerException e){
                                             e.printStackTrace();
                                         }
 
@@ -1175,6 +1180,82 @@ public class CreateDriver extends Fragment implements View.OnClickListener{
                 break;
 
 
+            // driving licence
+
+            case R.id.cd_drivingLicenceImage:
+                StorageReference licenceRef = storageRef.child("driver_profiles/").child(contact1_tx).child("/licence_image/").child("licence.jpg");
+                licenceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Intent intentImage = new Intent();
+                        intentImage.setAction(Intent.ACTION_VIEW);
+                        intentImage.setDataAndType(uri, "image/*");
+                        startActivity(intentImage);
+
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+
+                        Toast.makeText(getActivity(), "Unexpected Error!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                break;
+
+
+            // hazr driving licence
+
+            case R.id.cd_HazardousdrivingLicenceImage:
+                StorageReference hazardousLicenceRef = storageRef.child("driver_profiles/").child(contact1_tx).child("/hazardous_licence_image/").child("hazardous_licence.jpg");
+
+                hazardousLicenceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Intent intentImage = new Intent();
+                        intentImage.setAction(Intent.ACTION_VIEW);
+                        intentImage.setDataAndType(uri, "image/*");
+                        startActivity(intentImage);
+
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+
+                        Toast.makeText(getActivity(), "Unexpected Error!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                break;
+
+
+            // driver image
+
+            case R.id.cd_driverImage:
+                StorageReference driverImageRef = storageRef.child("driver_profiles/").child(contact1_tx).child("/profile_image/").child("image.jpg");
+
+                driverImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Intent intentImage = new Intent();
+                        intentImage.setAction(Intent.ACTION_VIEW);
+                        intentImage.setDataAndType(uri, "image/*");
+                        startActivity(intentImage);
+
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+
+                        Toast.makeText(getActivity(), "Unexpected Error!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                break;
 
         }
 
