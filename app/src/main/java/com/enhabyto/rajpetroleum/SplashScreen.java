@@ -1,5 +1,6 @@
 package com.enhabyto.rajpetroleum;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
@@ -90,14 +93,61 @@ public class SplashScreen extends AppCompatActivity {
 
 
         }
-
         else {
+            SharedPreferences dataSave = getSharedPreferences("termsConditions", 0);
+            String condition = dataSave.getString("EnhabytoTerms", "");
 
-            Intent i = new Intent(getBaseContext(), Login.class);
-            startActivity(i);
+            if (condition.equals("accepted")) {
+                Intent i = new Intent(getBaseContext(), Login.class);
+                startActivity(i);
+                SplashScreen.this.finish();
+            } else {
 
-            //Remove activity
-            SplashScreen.this.finish();
+                new MaterialDialog.Builder(this)
+                        .title("Accept Terms and Conditions")
+                        .titleColor(getResources().getColor(R.color.black))
+                        .content("Thank you for selecting the Services offered by Enhabyto IT Solutions Private Limited." +
+                                "\nAccept Terms and Conditions to Avail our Services.")
+                        .contentColor(getResources().getColor(R.color.colorPrimary))
+                        .positiveText("Accept")
+                        .positiveColor(getResources().getColor(R.color.lightGreen))
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(MaterialDialog dialog, DialogAction which) {
+                                SharedPreferences dataSave = getSharedPreferences("termsConditions", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = dataSave.edit();
+                                editor.putString("EnhabytoTerms", "accepted");
+                                editor.apply();
+                                Intent i = new Intent(getBaseContext(), Login.class);
+                                startActivity(i);
+                                SplashScreen.this.finish();
+                            }
+                        })
+                        .negativeText("Decline")
+                        .negativeColor(getResources().getColor(R.color.lightRed))
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(MaterialDialog dialog, DialogAction which) {
+                                SharedPreferences dataSave = getSharedPreferences("termsConditions", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = dataSave.edit();
+                                editor.putString("EnhabytoTerms", "decline");
+                                editor.apply();
+                                Toast.makeText(SplashScreen.this, "You have to accept terms and conditions to use application", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .neutralText("Terms/Conditions")
+                        .neutralColor(getResources().getColor(R.color.saddleBrown))
+                        .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(MaterialDialog dialog, DialogAction which) {
+                                Intent i = new Intent(getBaseContext(), TermAndCondition.class);
+                                startActivity(i);
+                            }
+                        })
+                        .show();
+
+            }
         }
+
     }
 }

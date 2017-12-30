@@ -288,7 +288,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingTop="10dp"
-        fancy:fb_borderColor="@color/black"
+        fancy:fb_borderColor="@color/lightGreen"
         fancy:fb_borderWidth="3dp"
         fancy:fb_defaultColor="@color/lightGreen"
         fancy:fb_focusColor="@color/black"

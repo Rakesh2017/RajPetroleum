@@ -44,6 +44,10 @@
             android:id="@+id/nav_emergencyContact"
             android:icon="@drawable/emergency_icon"
             android:title="Emergency Contact" />
+        <item
+            android:id="@+id/nav_terms"
+            android:icon="@drawable/disclaimer_icon"
+            android:title="Terms and Conditions" />
     </group>
 
 

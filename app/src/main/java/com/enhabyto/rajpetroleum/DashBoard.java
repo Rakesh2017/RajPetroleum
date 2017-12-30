@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -65,6 +66,7 @@ public class DashBoard extends AppCompatActivity
     FontTextView user_uid, user_name;
     private DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
     DatabaseReference d_subProfile;
+    ImageButton companyImage_btn;
 
     // Creating RecyclerView.
     RecyclerView recyclerView;
@@ -132,12 +134,11 @@ public class DashBoard extends AppCompatActivity
         InternetChecker();
 
 
-
-
         ImageButton logout_btn = findViewById(R.id.app_bar_dash_logoutButton);
         nav_profileImageView = navigationView.getHeaderView(0).findViewById(R.id.nav1_profile_image);
         user_uid = navigationView.getHeaderView(0).findViewById(R.id.nav1_uid);
         user_name = navigationView.getHeaderView(0).findViewById(R.id.nav1_name);
+        companyImage_btn = navigationView.getHeaderView(0).findViewById(R.id.header_companyIconImageView);
         noInternet = findViewById(R.id.no_internet);
 
 
@@ -233,6 +234,7 @@ public class DashBoard extends AppCompatActivity
 
 
         noInternet.setOnClickListener(this);
+        companyImage_btn.setOnClickListener(this);
         logout_btn.setOnClickListener(this);
 
         recyclerView = findViewById(R.id.dash_recyclerView);
@@ -623,6 +625,11 @@ public class DashBoard extends AppCompatActivity
 
         }
 
+        else if (id == R.id.nav_terms){
+             Intent intent = new Intent(DashBoard.this, TermAndCondition.class);
+             startActivity(intent);
+        }
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -634,6 +641,11 @@ public class DashBoard extends AppCompatActivity
         int id = v.getId();
 
         switch (id){
+
+            case R.id.header_companyIconImageView:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.enhabyto.com"));
+                startActivity(browserIntent);
+                break;
 
             case R.id.app_bar_dash_logoutButton:
 
@@ -787,113 +799,115 @@ public class DashBoard extends AppCompatActivity
         SharedPreferences dataSave = getSharedPreferences("permissions", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = dataSave.edit();
 
+        SharedPreferences shared = getSharedPreferences("firstLog", MODE_PRIVATE);
+        user_designation = (shared.getString("user_designation", ""));
 
 
-        d_subProfile = d_root.child("sub_admin_profiles").child(sub_admin_contact).child("permissions");
+        if (TextUtils.equals(user_designation, "subAdmin")) {
 
+            d_subProfile = d_root.child("sub_admin_profiles").child(sub_admin_contact).child("permissions");
 
 //        driver permission
-        d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String permission = dataSnapshot.child("driver_permission").getValue(String.class);
-                editor.putString("driver_permission",permission);
-                editor.apply();
+            d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String permission = dataSnapshot.child("driver_permission").getValue(String.class);
+                    editor.putString("driver_permission", permission);
+                    editor.apply();
 
-            }
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                throw databaseError.toException();
-            }
-        });
-
-
-        //        all trips
-        d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String permission = dataSnapshot.child("all_trips_permission").getValue(String.class);
-                editor.putString("all_trips_permission",permission);
-                editor.apply();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                throw databaseError.toException();
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    throw databaseError.toException();
+                }
+            });
 
 
-        //        schedule trip
-        d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String permission = dataSnapshot.child("schedule_trip_permission").getValue(String.class);
-                editor.putString("schedule_trip_permission",permission);
-                editor.apply();
+            //        all trips
+            d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String permission = dataSnapshot.child("all_trips_permission").getValue(String.class);
+                    editor.putString("all_trips_permission", permission);
+                    editor.apply();
 
-            }
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                throw databaseError.toException();
-            }
-        });
-
-
-
-        //       create truck
-        d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String permission = dataSnapshot.child("truck_permission").getValue(String.class);
-                editor.putString("truck_permission",permission);
-                editor.apply();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                throw databaseError.toException();
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    throw databaseError.toException();
+                }
+            });
 
 
+            //        schedule trip
+            d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String permission = dataSnapshot.child("schedule_trip_permission").getValue(String.class);
+                    editor.putString("schedule_trip_permission", permission);
+                    editor.apply();
 
-        //       pump
-        d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String permission = dataSnapshot.child("pump_permission").getValue(String.class);
-                editor.putString("pump_permission",permission);
-                editor.apply();
+                }
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                throw databaseError.toException();
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    throw databaseError.toException();
+                }
+            });
 
 
-        //       fuel rate
-        d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String permission = dataSnapshot.child("fuel_rate_permission").getValue(String.class);
-                editor.putString("fuel_rate_permission",permission);
-                editor.apply();
+            //       create truck
+            d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String permission = dataSnapshot.child("truck_permission").getValue(String.class);
+                    editor.putString("truck_permission", permission);
+                    editor.apply();
 
-            }
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                throw databaseError.toException();
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    throw databaseError.toException();
+                }
+            });
+
+
+            //       pump
+            d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String permission = dataSnapshot.child("pump_permission").getValue(String.class);
+                    editor.putString("pump_permission", permission);
+                    editor.apply();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    throw databaseError.toException();
+                }
+            });
+
+
+            //       fuel rate
+            d_subProfile.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String permission = dataSnapshot.child("fuel_rate_permission").getValue(String.class);
+                    editor.putString("fuel_rate_permission", permission);
+                    editor.apply();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    throw databaseError.toException();
+                }
+            });
+        }
 
 
     }
