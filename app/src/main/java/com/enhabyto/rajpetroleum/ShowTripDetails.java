@@ -15,17 +15,14 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.tapadoo.alerter.Alerter;
 import dmax.dialog.SpotsDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
@@ -39,18 +36,15 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
     private View view;
 
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReferenceFromUrl("gs://rajpetroleum-4d3fa.appspot.com/");
 
     private DatabaseReference d_root = FirebaseDatabase.getInstance().getReference();
-    private DatabaseReference databaseReference;
 
     private String contactUID_tx, startDate_tx, pumpName_tx, stateName_tx, cityName_tx, truckLocation_tx, moneyTaken_tx, petrolPrice_tx;
     FontTextView contact_tv, name_tv, truckNumber_tv, startDate_tv, pumpName_tv, stateName_tv
             , cityName_tv, truckLocation_tv, moneyTaken_tv, petrolPrice_tv, fuelTaken_tv, sideHeader_tv
-            , totalPetrolFilled_tv, petrolLeft_tv, endLocation_tv, endPumpName_tv, endStateName_tv, tripEndDate_tv, fuelLeft_tv;
+            , totalPetrolFilled_tv, petrolLeft_tv, endLocation_tv, endPumpName_tv, endStateName_tv, tripEndDate_tv, fuelLeft_tv, allocatedTo_tv;
 
-    String contact_tx, name_tx, truckNumber_tx, totalPetrolFilled_tx;
+    String name_tx, truckNumber_tx, totalPetrolFilled_tx;
 
     TextView stoppage_tv, petrolFilling_tv, otherFilling_tv, load_tv, breakDown_tv;
     FancyButton stoppage_btn, petrolFilling_btn, otherFilling_btn, load_btn, breakDown_btn;
@@ -62,6 +56,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
     int i = 0, j=0, k=0, l=0, m=0;
 
     int total = 0;
+    String index_key;
 
 
     AlertDialog dialog_loading;
@@ -117,6 +112,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
         endStateName_tv = view.findViewById(R.id.detail_endStateNameTextView);
         tripEndDate_tv = view.findViewById(R.id.detail_tripEndTextView);
         fuelLeft_tv = view.findViewById(R.id.detail_petrolLeftTextView);
+        allocatedTo_tv = view.findViewById(R.id.detail_allocated_toTextView);
 
         stoppage_tv = view.findViewById(R.id.detail_text1);
         petrolFilling_tv = view.findViewById(R.id.detail_text2);
@@ -192,6 +188,33 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 petrolPrice_tx = dataSnapshot.child("fuel_price").getValue(String.class);
                 startDate_tx = dataSnapshot.child("start_date").getValue(String.class);
                 fuelTaken_tx = dataSnapshot.child("fuel_taken").getValue(String.class);
+                String fuel_left_key = dataSnapshot.child("fuel_left_key").getValue(String.class);
+
+
+                if (!TextUtils.isEmpty(fuel_left_key)){
+                    FirebaseDatabase.getInstance().getReference().child("truck_trips")
+                            .child(truckNumber_tx).child(fuel_left_key).child("fuel_left")
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String fuel_left = dataSnapshot.getValue(String.class);
+                                    if (!TextUtils.isEmpty(fuel_left)){
+                                        fuelLeft_tv.setText(fuel_left+" Litres");
+                                    }
+                                    else {
+                                        fuelLeft_tv.setText("NA");
+                                        fuelLeft_tv.setTextColor(Color.GRAY);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                }
+
+
 
 //                        setting values
 
@@ -204,7 +227,7 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                 petrolPrice_tv.setText("Rs " + petrolPrice_tx + "/lit");
                 fuelTaken_tv.setText(fuelTaken_tx + " Litres");
 
-                String date = startDate_tx;
+                final String date = startDate_tx;
 
                 try {
                     String day = TextUtils.substring(date, 0, 2);
@@ -245,6 +268,53 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                         pumpName_tv.setText("NA");
                         pumpName_tv.setTextColor(Color.GRAY);
                     }
+
+
+                    Query query = d_root.child("truck_trips").child(truckNumber_tx);
+                    query.limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+
+                           for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                 index_key = snapshot.child("index_key").getValue(String.class);
+                           }
+
+
+                                if (!TextUtils.isEmpty(index_key)){
+                                    d_root.child("truck_trips").child(truckNumber_tx).child(index_key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            String driverName = dataSnapshot.child("driver_name").getValue(String.class);
+
+
+
+                                            if (!TextUtils.isEmpty(driverName)){
+                                                allocatedTo_tv.setText("Truck Number "+truckNumber_tx +" was allocated to "+driverName+
+                                                        " in last Trip");
+                                            }
+
+
+
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                }
+                            }
+
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
 
                 }
@@ -933,15 +1003,8 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
                         String endPumpName = dataSnapshot.child("end_trip").child("pump_name").getValue(String.class);
                         String endStateName = dataSnapshot.child("end_trip").child("state_name").getValue(String.class);
                         String endDate = dataSnapshot.child("end_trip").child("end_date").getValue(String.class);
-                        String fuelLeft = dataSnapshot.child("end_trip").child("fuel_left").getValue(String.class);
 
 
-
-                        if (TextUtils.isEmpty(fuelLeft) || TextUtils.equals(fuelLeft, null)){
-                            fuelLeft_tv.setText("NA");
-                            fuelLeft_tv.setTextColor(Color.GRAY);
-                        }
-                        else fuelLeft_tv.setText(fuelLeft+" Litres");
 
                         if (TextUtils.equals(endDate,"") || TextUtils.equals(endDate,null)){
                             tripEndDate_tv.setTextColor(getResources().getColor(R.color.lightGreen));
@@ -981,6 +1044,8 @@ public class ShowTripDetails extends Fragment implements View.OnClickListener {
 
                     }
                 });
+
+
 
 
     }

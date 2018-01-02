@@ -725,7 +725,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_edit_text_black"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="16dp"
             android:id="@+id/detail_relative2"
             android:layout_below="@+id/detail_tripEndTextView"
             >
@@ -910,6 +909,22 @@
 
 
         </RelativeLayout>
+
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_allocated_toTextView"
+            android:layout_marginStart="4dp"
+            android:text=""
+            android:textStyle="bold"
+            android:fontFamily="droidsansbold.ttf"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_below="@id/detail_relative2"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="16dp"
+            />
 
 
 
