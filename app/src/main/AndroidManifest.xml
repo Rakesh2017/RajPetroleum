@@ -65,7 +65,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TermAndCondition"></activity>
+        <activity android:name=".TermAndCondition" />
+        <activity android:name=".AppActivation"
+            android:theme="@style/DashBoardTheme"
+            />
     </application>
 
 </manifest>

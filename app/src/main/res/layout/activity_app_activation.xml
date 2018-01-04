@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@color/white"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    tools:context="com.enhabyto.rajpetroleum.AppActivation">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/black"
+        android:id="@+id/act_relative"
+        >
+
+
+
+
+                <util.android.textviews.FontTextView
+                    android:id="@+id/act_dayLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="80sp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    />
+                <util.android.textviews.FontTextView
+                    android:id="@+id/act_daysLeftTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="days Left"
+                    android:layout_toEndOf="@+id/act_dayLeft"
+                    android:layout_alignBottom="@+id/act_dayLeft"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/act_relative"
+        android:id="@+id/act_relative2"
+        android:visibility="gone"
+        >
+
+
+        <util.android.textviews.FontTextView
+            android:id="@+id/cp_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="droidsansbold.ttf"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Product Key"
+            android:textColor="@color/blackNinety"
+            android:layout_marginTop="30dp"
+            android:textAllCaps="true"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/act_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_below="@id/cp_text"
+            android:background="@drawable/rounded_edit_text_black"
+            android:hint="xxxxxxxxxxxxxx"
+            android:textColorHighlight="@color/black"
+            android:textStyle="bold"
+            android:inputType="text"
+            android:padding="5dp"
+            android:maxLength="14"
+            android:textColor="@color/black"
+            android:textColorHint="@color/blackFifty"
+            android:textSize="20sp" />
+
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/act_activationButton"
+            android:layout_below="@+id/act_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="7dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_focusColor="@color/whiteFifty"
+            fancy:fb_radius="3dp"
+            fancy:fb_text="Activate"
+            fancy:fb_textColor="#FFFFFF"
+            fancy:fb_fontIconResource="&#xf023;"
+            fancy:fb_iconPosition="right"
+            />
+
+        <util.android.textviews.FontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/act_activationButton"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Note: Please be patient and do not Click activate button multiple times until product key is validated.\nAlso be sure you have good internet connection."
+            />
+
+    </RelativeLayout>
+
+
+
+    </RelativeLayout>
+

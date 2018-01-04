@@ -48,6 +48,10 @@
             android:id="@+id/nav_terms"
             android:icon="@drawable/disclaimer_icon"
             android:title="Terms and Conditions" />
+        <item
+            android:id="@+id/nav_activation"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Validity" />
     </group>
 
 

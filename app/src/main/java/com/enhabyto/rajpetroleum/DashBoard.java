@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -49,6 +50,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tapadoo.alerter.Alerter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -81,10 +85,9 @@ public class DashBoard extends AppCompatActivity
     TextView noInternet;
     private Context context;
 
-    DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference().child("checkNetwork").child("isConnected");
 
-    String allTrips_permission, scheduleTrip_permission, createDriver_permission, createTruck_permission, createPump_permission
-            , fuelRate_permission;
+    String allTrips_permission, createDriver_permission, createTruck_permission, createPump_permission
+            , fuelRate_permission, appDateStart, appDateEnd;
 
 
     @Override
@@ -92,21 +95,111 @@ public class DashBoard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
 
+
+        // product key implementation
+        if (isNetworkAvailable()){
+            FirebaseDatabase.getInstance().getReference().child("validity_left")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            appDateStart = dataSnapshot.child("app_start_date").getValue(String.class);
+                            appDateEnd = dataSnapshot.child("app_end_date").getValue(String.class);
+
+                            SimpleDateFormat format = new SimpleDateFormat("dd_MM_yyyy");
+
+                            try {
+                                Date dateStart = format.parse(appDateStart);
+                                Date dateEnd = format.parse(appDateEnd);
+                                long diff = dateEnd.getTime() - dateStart.getTime();
+                                long diffDays = diff / (24 * 60 * 60 * 1000);
+                                int timeLeft = (int)(diffDays);
+
+                                if (timeLeft <= 0 ){
+                                    new MaterialDialog.Builder(DashBoard.this)
+                                            .title("Validity Expired")
+                                            .content("Please Enter the 14 digit Product Key to continue using Application.\nThank you.")
+                                            .positiveText("ProductKey")
+                                            .positiveColor(getResources().getColor(R.color.lightGreen))
+                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                                    Intent intent = new Intent(DashBoard.this, AppActivation.class);
+                                                    startActivity(intent);
+                                                    DashBoard.this.finish();
+                                                }
+                                            })
+                                            .negativeText("Exit")
+                                            .negativeColor(getResources().getColor(R.color.lightRed))
+                                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                                    DashBoard.this.finish();
+                                                }
+                                            })
+                                            .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(MaterialDialog dialog, DialogAction which) {
+                                                    DashBoard.this.finish();
+                                                }
+                                            })
+                                            .cancelable(false)
+                                            .dividerColor(Color.GRAY)
+                                            .show();
+
+
+
+                                }
+
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+        }
+
+
+        FirebaseDatabase.getInstance().getReference()
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                       // if (dataSnapshot.hasChild())
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
+
+
+
         this.context = this;
         Intent alarm = new Intent(this.context, AlarmReceiver.class);
         boolean alarmRunning = (PendingIntent.getBroadcast(this.context, 0, alarm, PendingIntent.FLAG_NO_CREATE) != null);
         if(!alarmRunning) {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this.context, 281234, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
 
-            Date dat  = new Date();//initializes to now
+            Date dat  = new Date(); //initializes to now
             Calendar cal_alarm = Calendar.getInstance();
             Calendar cal_now = Calendar.getInstance();
             cal_now.setTime(dat);
             cal_alarm.setTime(dat);
-            cal_alarm.set(Calendar.HOUR_OF_DAY, 13);//set the alarm time
+            cal_alarm.set(Calendar.HOUR_OF_DAY, 13); //set the alarm time
             cal_alarm.set(Calendar.MINUTE, 30);
             cal_alarm.set(Calendar.SECOND, 0);
-            if(cal_alarm.before(cal_now)){//if its in the past increment
+            if(cal_alarm.before(cal_now)){ //if its in the past increment
                 cal_alarm.add(Calendar.DATE,1);
             }
 
@@ -628,6 +721,22 @@ public class DashBoard extends AppCompatActivity
         else if (id == R.id.nav_terms){
              Intent intent = new Intent(DashBoard.this, TermAndCondition.class);
              startActivity(intent);
+        }
+
+        else if (id == R.id.nav_activation){
+            if (!isNetworkAvailable()){
+                Alerter.create(DashBoard.this)
+                        .setText("This needs active internet Connection!")
+                        .setContentGravity(1)
+                        .setBackgroundColorRes(R.color.black)
+                        .setIcon(R.drawable.no_internet)
+                        .show();
+            }
+            else {
+                Intent intent = new Intent(DashBoard.this, AppActivation.class);
+                startActivity(intent);
+            }
+
         }
 
 

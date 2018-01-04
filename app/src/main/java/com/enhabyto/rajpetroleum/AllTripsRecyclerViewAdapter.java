@@ -35,7 +35,7 @@ public class AllTripsRecyclerViewAdapter  extends RecyclerView.Adapter<AllTripsR
     List<AllTripsInfo> MainImageUploadInfoList;
     String month;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
-    private StorageReference storageRef = storage.getReferenceFromUrl("gs://rajpetroleum-4d3fa.appspot.com");
+    private StorageReference storageRef = storage.getReference();
 
 
 
